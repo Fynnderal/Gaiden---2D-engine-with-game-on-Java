@@ -47,7 +47,7 @@ public class Main {
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(num);
-        stringBuilder.append("=")
+        stringBuilder.append("=");
         int divisor = 2;
         while (num != 1) {
             while (num % divisor == 0) {
@@ -61,5 +61,6 @@ public class Main {
             divisor++;
         }
         return stringBuilder.toString();
+
     }
 }
