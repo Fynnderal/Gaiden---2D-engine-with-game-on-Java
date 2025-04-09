@@ -2,8 +2,13 @@ module cvut.cz {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
+    requires javafx.swing;
+    requires jdk.security.jgss;
+    requires java.logging;
 
 
-    opens cvut.cz to javafx.fxml;
+    opens cvut.cz to com.fasterxml.jackson.databind, javafx.fxml;
+    opens cvut.cz.items to com.fasterxml.jackson.databind, javafx.fxml;
+
     exports cvut.cz;
 }
