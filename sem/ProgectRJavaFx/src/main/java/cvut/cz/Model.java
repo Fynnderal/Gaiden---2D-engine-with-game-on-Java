@@ -80,7 +80,10 @@ public class Model {
         switch(character){
             case OFFICEWORKER:
                 mainPlayer = new OfficeWorker(attackPower, currentState, currentHealth, maxHeath, speed,  pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, worldX + map.getScreenCoordinateX(), worldY + map.getScreenCoordinateY(), screenWidth, screenHeight, worldX, worldY);
-                mainPlayer.readAvailableItems(pathToItems);
+                if (pathToItems != null) {
+                    mainPlayer.readAvailableItems(pathToItems);
+                }
+
                 break;
             default:
                 logger.severe("Invalid character");
