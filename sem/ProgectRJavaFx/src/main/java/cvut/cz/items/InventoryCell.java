@@ -13,4 +13,5 @@ public class InventoryCell {
 
     public int getCoordinateX() { return coordinateX; }
     public int getCoordinateY() { return coordinateY; }
+    public Item getItem() { return item; }
 }
