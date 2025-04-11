@@ -10,8 +10,13 @@ public class InventoryCellInformation {
     private int numberofCellsInRow;
     private int firstCellCoordinateX;
     private int firstCellCoordinateY;
+    private int itemWidth;
+    private int itemHeight;
+    private int itemCoordinateXRelativeToCell;
+    private int itemCoordinateYRelativeToCell;
 
-    public InventoryCellInformation(int cellWidth, int cellHeight, int gapBetweenCellsX, int gapBetweenCellsY, int numberOfCells, int numberOfCellsInRow, int firstCellCoordinateX, int firstCellCoordinateY) {
+
+    public InventoryCellInformation(int cellWidth, int cellHeight, int gapBetweenCellsX, int gapBetweenCellsY, int numberOfCells, int numberOfCellsInRow, int firstCellCoordinateX, int firstCellCoordinateY, int itemCoordinateXRelativeToCell, int itemCoordinateYRelativeToCell, int itemWidth, int itemHeight) {
         this.cellWidth = cellWidth;
         this.cellHeight = cellHeight;
         this.gapBetweenCellsX = gapBetweenCellsX;
@@ -20,6 +25,10 @@ public class InventoryCellInformation {
         this.numberofCellsInRow = numberOfCellsInRow;
         this.firstCellCoordinateX = firstCellCoordinateX;
         this.firstCellCoordinateY = firstCellCoordinateY;
+        this.itemCoordinateXRelativeToCell = itemCoordinateXRelativeToCell;
+        this.itemCoordinateYRelativeToCell = itemCoordinateYRelativeToCell;
+        this.itemWidth = itemWidth;
+        this.itemHeight = itemHeight;
     }
 
     public int getCellWidth() { return cellWidth; }
@@ -30,5 +39,10 @@ public class InventoryCellInformation {
     public int getNumberOfCellsInRow() { return numberofCellsInRow; }
     public int getFirstCellCoordinateX() { return firstCellCoordinateX; }
     public int getFirstCellCoordinateY() { return firstCellCoordinateY; }
+    public int getItemCoordinateXRelativeToCell() { return itemCoordinateXRelativeToCell; }
+    public int getItemCoordinateYRelativeToCell() { return itemCoordinateYRelativeToCell; }
+    public int getItemWidth() { return itemWidth; }
+    public int getItemHeight() { return itemHeight; }
+
 
 }
