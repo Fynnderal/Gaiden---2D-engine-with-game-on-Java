@@ -9,9 +9,8 @@ import java.util.Map;
 import java.net.URL;
 
 //@JsonFilter("itemFilter")
-public class Item {
-    @JsonProperty("ImageURL")
-    protected URL imageURL;
+public class Item extends GameSprite {
+
     @JsonProperty("Name")
     protected String name;
     @JsonProperty("IsBroken")
@@ -28,7 +27,16 @@ public class Item {
     protected boolean canBeDiscarded;
 
 
-    private Item() {}
+    public Item(URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, String name, boolean isBroken, int amount, Map<String, String> canBeCombinedWithInto, boolean canBeEquipped, boolean canBeUsed, boolean canBeDiscarded) {
+        super(pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, 0, 0, 0, 0, 0, 0);
+        this.name = name;
+        this.isBroken = isBroken;
+        this.amount = amount;
+        this.canBeCombinedWithInto = canBeCombinedWithInto;
+        this.canBeEquipped = canBeEquipped;
+        this.canBeUsed = canBeUsed;
+        this.canBeDiscarded = canBeDiscarded;
+    }
 
     public String getName() { return name; }
     public boolean geyIsBroken() { return isBroken; }
@@ -39,6 +47,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return "ImageURL: " + imageURL + "\nName: " + name + "\nBroken: " + isBroken + "\nAmount: " + amount + "\nCanBeCombinedWithInto: " + canBeCombinedWithInto.keySet() + ":" + canBeCombinedWithInto.values() + "\nCanEquipped: " + canBeEquipped + "\nCanBeUsed: " + canBeUsed +"\nCanBeDiscarded: " + canBeDiscarded;
+        return "Name: " + name + "\nBroken: " + isBroken + "\nAmount: " + amount + "\nCanBeCombinedWithInto: " + canBeCombinedWithInto.keySet() + ":" + canBeCombinedWithInto.values() + "\nCanEquipped: " + canBeEquipped + "\nCanBeUsed: " + canBeUsed +"\nCanBeDiscarded: " + canBeDiscarded;
     }
 }
