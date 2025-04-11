@@ -30,6 +30,17 @@ public abstract class GameSprite {
     public int getTargetHeight() { return targetHeight; }
 
 
+    public void setSourceCoordinateX(int sourceCoordinateX) { this.sourceCoordinateX = sourceCoordinateX; }
+    public void setSourceCoordinateY(int sourceCoordinateY) { this.sourceCoordinateY = sourceCoordinateY; }
+    public void setSourceWidth(int sourceWidth) { this.sourceWidth = sourceWidth; }
+    public void setSourceHeight(int sourceHeight) { this.sourceHeight = sourceHeight; }
+    public void setWorldCoordinateX(int worldCoordinateX) { this.worldCoordinateX = worldCoordinateX; }
+    public void setWorldCoordinateY(int worldCoordinateY) { this.worldCoordinateY = worldCoordinateY; }
+    public void setScreenCoordinateX(int screenCoordinateX) { this.screenCoordinateX = screenCoordinateX; }
+    public void setScreenCoordinateY(int screenCoordinateY) { this.screenCoordinateY = screenCoordinateY; }
+    public void setTargetWidth(int targetWidth) { this.targetWidth = targetWidth; }
+    public void setTargetHeight(int targetHeight) { this.targetHeight = targetHeight; }
+
 
     public GameSprite(URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY)
     {
