@@ -17,7 +17,7 @@ public class Inventory extends GameSprite {
     private Pointer pointer;
     private InventoryCellInformation cellInformation;
     private List<InventoryCell> cells;
-    private int currentCell = 0;
+    private int currentCell;
 
     public Inventory(InventoryCellInformation cellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
         super(pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight, 0, 0);
@@ -27,7 +27,7 @@ public class Inventory extends GameSprite {
             items = null;
             logger.warning("character items is null");
         }
-
+        this.currentCell = 0;
         this.pointer = pointer;
         this.cellInformation = cellInformation;
         cells = new ArrayList<>();
@@ -41,18 +41,29 @@ public class Inventory extends GameSprite {
     private void setCells() {
         int collumnCounter = 0;
         int rowCounter = 0;
+        int currentX, currentY;
         Item currentItem = null;
         for (int i = 0; i < cellInformation.getNumberOfCells(); i++) {
             if (collumnCounter == cellInformation.getNumberOfCellsInRow()) {
                 rowCounter++;
                 collumnCounter = 0;
             }
+
+            currentX = cellInformation.getFirstCellCoordinateX() + collumnCounter * (cellInformation.getCellWidth() + cellInformation.getGapBetweenCellsX());
+            currentY = cellInformation.getFirstCellCoordinateY() + rowCounter * (cellInformation.getCellHeight() + cellInformation.getGapBetweenCellsY());
+
             if (items == null || i >= items.size())
                 currentItem = null;
-            else
+            else {
                 currentItem = items.get(i);
+                currentItem.setScreenCoordinateX(currentX + cellInformation.getItemCoordinateXRelativeToCell());
+                currentItem.setScreenCoordinateY(currentY + cellInformation.getItemCoordinateYRelativeToCell());
+                currentItem.setTargetWidth(cellInformation.getItemWidth());
+                currentItem.setTargetHeight(cellInformation.getItemHeight());
+            }
 
-            cells.add(new InventoryCell(cellInformation.getFirstCellCoordinateX() + collumnCounter * (cellInformation.getCellWidth() + cellInformation.getGapBetweenCellsX()), cellInformation.getFirstCellCoordinateY() + rowCounter * (cellInformation.getCellHeight() + cellInformation.getGapBetweenCellsY()), currentItem));
+
+            cells.add(new InventoryCell(currentX, currentY, currentItem));
             collumnCounter++;
         }
     }
@@ -70,7 +81,6 @@ public class Inventory extends GameSprite {
                 currentCell = --currentCell % cells.size();
                 if (currentCell < 0)
                     currentCell = cells.size() +currentCell;
-
                 break;
 
             case DOWN:
@@ -87,6 +97,11 @@ public class Inventory extends GameSprite {
         pointer.setScreenCoordinateY(cells.get(currentCell).getCoordinateY());
     }
 
+    public InventoryCell getSelectedInventoryCell(){
+        return cells.get(currentCell);
+    }
+
     public Pointer getPointer() { return pointer; }
+    public List<InventoryCell> getCells() { return cells; }
 
 }
