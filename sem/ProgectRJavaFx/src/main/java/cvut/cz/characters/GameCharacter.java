@@ -85,4 +85,5 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
     protected abstract void takeDamage(int damage);
     public void setWorldCoordinateX(int worldCoordinateX) { this.worldCoordinateX = worldCoordinateX; }
     public void setWorldCoordinateY(int worldCoordinateY) { this.worldCoordinateY = worldCoordinateY; }
+    public void setItems(Item[] items) { this.items = items; }
 }
