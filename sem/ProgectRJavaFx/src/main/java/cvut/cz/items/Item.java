@@ -39,11 +39,18 @@ public class Item extends GameSprite {
     }
 
     public String getName() { return name; }
-    public boolean geyIsBroken() { return isBroken; }
+    public boolean getIsBroken() { return isBroken; }
     public int getAmount() { return amount; }
+    public Map<String, String> getCanBeCombinedWithInto() { return canBeCombinedWithInto; }
+    public boolean getCanBeEquipped() { return canBeEquipped; }
+    public boolean getCanBeUsed() { return canBeUsed; }
+    public boolean getCanBeDiscarded() { return canBeDiscarded; }
+
+
     public void setName(String name) { this.name = name; }
     public void setBroken(boolean broken) { isBroken = broken; }
     public void setAmount(int amount) { this.amount = amount; }
+
 
     @Override
     public String toString() {
