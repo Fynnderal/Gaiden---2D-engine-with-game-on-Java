@@ -1,16 +1,16 @@
-package cvut.cz;
+package cvut.cz.Map;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.io.File;
 
 import java.net.URL;
-import cvut.cz.characters.Directions;
-import cvut.cz.characters.OfficeWorker;
+
+import cvut.cz.items.Tile;
+import cvut.cz.characters.GameCharacter;
 
 public class MapConstructor {
     private static final Logger logger = Logger.getLogger(MapConstructor.class.getName());
@@ -22,6 +22,9 @@ public class MapConstructor {
     private List<Tile> sourceTiles;
     private List<Tile> mapTiles;
     private List<Collision> mapCollisions;
+    private List<GameCharacter> characters;
+    private List<GameCharacter> items;
+
 
     private int mapCoordinateX;
     private int mapCoordinateY;
@@ -60,6 +63,8 @@ public class MapConstructor {
     public Map createMap() {
         createMapTiles();
         createCollisions();
+        //placeCharacters
+        //placeItems
         map = new Map(null, 0, 0,this.mapImageWidth,this.mapImageHeight, this.mapCoordinateX, this.mapCoordinateY, this.mapImageWidth * this.mapTargetScaleFactorX, this.mapImageHeight * this.mapTargetScaleFactorY,  this.mapCollisions);
         return map;
     }
@@ -132,6 +137,14 @@ public class MapConstructor {
             logger.severe("Problem reading collisions file: " + e.getMessage());
         }
     }
+
+    private void placeCharacters() {
+    }
+
+    private void placeItems() {
+
+    }
+
 
     public int getMapImageWidth() { return mapImageWidth; }
     public int getMapImageHeight() { return mapImageHeight; }

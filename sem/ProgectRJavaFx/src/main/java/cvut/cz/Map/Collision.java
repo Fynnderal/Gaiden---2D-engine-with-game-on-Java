@@ -1,4 +1,4 @@
-package cvut.cz;
+package cvut.cz.Map;
 
 public class Collision {
     private int worldCoordinateX;

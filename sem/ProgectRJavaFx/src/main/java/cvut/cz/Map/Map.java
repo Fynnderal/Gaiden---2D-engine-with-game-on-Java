@@ -1,15 +1,16 @@
-package cvut.cz;
+package cvut.cz.Map;
 
+import cvut.cz.GameSprite;
 import cvut.cz.characters.Directions;
-import cvut.cz.characters.GameCharacter;
+import cvut.cz.items.Item;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
-public class Map extends GameSprite{
+public class Map extends GameSprite {
 
     private List<Collision> collisions;
+    private List<Item> items;
 
     public Map(URL pathToMap, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight, List<Collision> collisions)
     {
@@ -17,6 +18,9 @@ public class Map extends GameSprite{
         this.collisions = collisions;
     }
 
+    public void checkNearestAvailableItems(){
+
+    }
 
     public boolean checkCollisions(int pathRectXLeft, int pathRectYUp, int pathRectXRight, int pathRectYDown, Collision collidedWith) {
         for (Collision collision : collisions) {
@@ -49,6 +53,8 @@ public class Map extends GameSprite{
                 break;
         }
     }
+
+
 
     public void setPathToMap(URL pathToMap) { pathToImage = pathToMap; }
 }

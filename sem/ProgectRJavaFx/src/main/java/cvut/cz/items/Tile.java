@@ -1,6 +1,7 @@
-package cvut.cz;
+package cvut.cz.items;
 
-import java.util.logging.Logger;
+import cvut.cz.GameSprite;
+
 import java.net.URL;
 
 public class Tile extends GameSprite {
