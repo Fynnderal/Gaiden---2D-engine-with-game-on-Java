@@ -16,17 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GameCharacter extends GameSprite implements Updatable {
-    private final static ObjectMapper mapper = new ObjectMapper();
-//    private final static SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("itemFilter", SimpleBeanPropertyFilter.filterOutAllExcept("Name", "Broken", "Amount"));
 
-    protected Item[] items;
     protected States currentState;
     protected double speed;
     protected int maxHealth;
     protected int currentHealth;
     protected int attackPower;
-
-    public Item[] getItems() {return items;}
+    protected URL pathToItems;
 
     public States getCurrentState() {return currentState;}
 
@@ -50,6 +46,7 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
 
     public GameCharacter(URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
         this(0, States.IDLE, 0, 0,0, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, screenCoordinateX, screenCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
+
     }
 
     public GameCharacter(int attackPower, States currentState, int currentHealth, int maxHealth, double speed, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY){
@@ -59,25 +56,10 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         this.currentHealth = currentHealth;
         this.currentState = currentState;
         this.attackPower = attackPower;
-    }
-
-    public void readAvailableItems(URL fileName) {
-        try (FileReader fileReader = new FileReader(fileName.getPath())) {
-            items = mapper.readValue(fileReader, Item[].class);
-        }
-        catch (IOException e) {
-            System.err.println("[ERROR] Problem with reading json file. Problem: " + e.getMessage());
-        }
 
     }
-    public void writeAvailableItems(URL fileName) {
-        try (FileWriter fileWriter = new FileWriter(fileName.getPath())) {
-            mapper.writeValue(fileWriter, items);
-        }
-        catch (IOException e) {
-            System.err.println("[ERROR] Problem with writing into json file. Problem: " + e.getMessage());
-        }
-    }
+
+
 
     protected abstract void Attack();
     protected abstract void Move(Directions direction);
@@ -85,5 +67,4 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
     protected abstract void takeDamage(int damage);
     public void setWorldCoordinateX(int worldCoordinateX) { this.worldCoordinateX = worldCoordinateX; }
     public void setWorldCoordinateY(int worldCoordinateY) { this.worldCoordinateY = worldCoordinateY; }
-    public void setItems(Item[] items) { this.items = items; }
 }
