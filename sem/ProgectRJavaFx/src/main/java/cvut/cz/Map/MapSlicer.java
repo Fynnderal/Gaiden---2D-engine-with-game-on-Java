@@ -1,7 +1,5 @@
 package cvut.cz.Map;
 
-import cvut.cz.items.Tile;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.net.URL;

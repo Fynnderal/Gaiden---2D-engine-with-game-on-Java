@@ -1,6 +1,7 @@
 package cvut.cz;
 
 import cvut.cz.Map.MapSlicer;
+import cvut.cz.Map.Tile;
 import cvut.cz.characters.Directions;
 import cvut.cz.characters.GameCharacter;
 import cvut.cz.characters.States;

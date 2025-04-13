@@ -19,7 +19,6 @@ public class Merchant extends GameCharacter{
     }
 
     private void sortItems(){
-
     }
 
     @Override

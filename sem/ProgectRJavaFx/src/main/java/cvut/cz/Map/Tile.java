@@ -1,4 +1,4 @@
-package cvut.cz.items;
+package cvut.cz.Map;
 
 import cvut.cz.GameSprite;
 

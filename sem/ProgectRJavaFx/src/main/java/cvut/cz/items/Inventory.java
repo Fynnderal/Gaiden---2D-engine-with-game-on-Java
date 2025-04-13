@@ -101,7 +101,6 @@ public class Inventory extends GameSprite {
         return cells.get(currentCell);
     }
 
-
     public boolean combineCells(InventoryCell firstCell, InventoryCell secondCell){
         if (firstCell.getItem() == null || secondCell.getItem() == null)
             return false;

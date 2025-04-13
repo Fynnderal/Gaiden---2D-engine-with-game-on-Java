@@ -9,7 +9,6 @@ import java.io.File;
 
 import java.net.URL;
 
-import cvut.cz.items.Tile;
 import cvut.cz.characters.GameCharacter;
 
 public class MapConstructor {
