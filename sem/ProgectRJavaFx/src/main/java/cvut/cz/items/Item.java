@@ -10,7 +10,6 @@ import java.net.URL;
 
 //@JsonFilter("itemFilter")
 public class Item extends GameSprite {
-
     @JsonProperty("Name")
     protected String name;
     @JsonProperty("IsBroken")
@@ -27,15 +26,15 @@ public class Item extends GameSprite {
     protected boolean canBeDiscarded;
 
 
-    public Item(URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, String name, boolean isBroken, int amount, Map<String, String> canBeCombinedWithInto, boolean canBeEquipped, boolean canBeUsed, boolean canBeDiscarded) {
-        super(pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, 0, 0, 0, 0, 0, 0);
-        this.name = name;
-        this.isBroken = isBroken;
-        this.amount = amount;
-        this.canBeCombinedWithInto = canBeCombinedWithInto;
-        this.canBeEquipped = canBeEquipped;
-        this.canBeUsed = canBeUsed;
-        this.canBeDiscarded = canBeDiscarded;
+    public Item(ItemInformation itemInformation) {
+        super(itemInformation.getImage(), itemInformation.getSourceX(), itemInformation.getSourceY(), itemInformation.getSourceWidth(), itemInformation.getSourceHeight(), 0, 0, 0, 0, 0, 0);
+        this.name = itemInformation.getName();
+        this.isBroken = itemInformation.isBroken();
+        this.amount = itemInformation.getStandardAmount();
+        this.canBeCombinedWithInto = itemInformation.getCanBeCombinedWithInto();
+        this.canBeEquipped = itemInformation.isCanBeEquipped();
+        this.canBeUsed = itemInformation.isCanBeUsed();
+        this.canBeDiscarded = itemInformation.isCanBeDiscarded();
     }
 
     public String getName() { return name; }
