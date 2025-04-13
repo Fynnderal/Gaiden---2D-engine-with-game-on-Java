@@ -11,7 +11,15 @@ public class InventoryCell {
         this.item = item;
     }
 
+    public void useItem(){
+        item.setAmount(item.getAmount() - 1);
+        if (item.getAmount() <= 0)
+            this.item = null;
+    }
+
     public int getCoordinateX() { return coordinateX; }
     public int getCoordinateY() { return coordinateY; }
     public Item getItem() { return item; }
+
+    public void setItem(Item item) { this.item = item; }
 }
