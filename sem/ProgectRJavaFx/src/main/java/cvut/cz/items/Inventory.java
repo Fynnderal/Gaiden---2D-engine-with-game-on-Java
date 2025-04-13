@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.net.URL;
 import java.util.logging.Logger;
+import java.util.Map;
 
 public class Inventory extends GameSprite {
     Logger logger = Logger.getLogger(Inventory.class.getName());
@@ -18,8 +19,9 @@ public class Inventory extends GameSprite {
     private InventoryCellInformation cellInformation;
     private List<InventoryCell> cells;
     private int currentCell;
+    private Map<String, ItemInformation> possibleItems;
 
-    public Inventory(InventoryCellInformation cellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
+    public Inventory(Map<String, ItemInformation> possibleItems, InventoryCellInformation cellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
         super(pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight, 0, 0);
         if (character.getItems() != null)
             items = Arrays.asList(character.getItems());
@@ -30,6 +32,7 @@ public class Inventory extends GameSprite {
         this.currentCell = 0;
         this.pointer = pointer;
         this.cellInformation = cellInformation;
+        this.possibleItems = possibleItems;
         cells = new ArrayList<>();
         pointer.setScreenCoordinateX(cellInformation.getFirstCellCoordinateX());
         pointer.setScreenCoordinateY(cellInformation.getFirstCellCoordinateY());
@@ -56,10 +59,7 @@ public class Inventory extends GameSprite {
                 currentItem = null;
             else {
                 currentItem = items.get(i);
-                currentItem.setScreenCoordinateX(currentX + cellInformation.getItemCoordinateXRelativeToCell());
-                currentItem.setScreenCoordinateY(currentY + cellInformation.getItemCoordinateYRelativeToCell());
-                currentItem.setTargetWidth(cellInformation.getItemWidth());
-                currentItem.setTargetHeight(cellInformation.getItemHeight());
+                adjustItem(currentItem, currentX, currentY);
             }
 
 
@@ -101,7 +101,64 @@ public class Inventory extends GameSprite {
         return cells.get(currentCell);
     }
 
+
+    public boolean combineCells(InventoryCell firstCell, InventoryCell secondCell){
+        if (firstCell.getItem() == null || secondCell.getItem() == null)
+            return false;
+        if (firstCell.getItem().getCanBeCombinedWithInto() == null || secondCell.getItem().getCanBeCombinedWithInto() == null)
+            return false;
+
+        if (firstCell.getItem().getCanBeCombinedWithInto().containsKey(secondCell.getItem().getName())){
+            String resultItemName = firstCell.getItem().getCanBeCombinedWithInto().get(secondCell.getItem().getName());
+
+            ItemInformation combinedItem = possibleItems.get(resultItemName);
+            System.out.println(resultItemName);
+            for (InventoryCell inventoryCell: cells) {
+                if (inventoryCell.getItem() == null)
+                    continue;
+
+                if (inventoryCell.getItem().getName().equals(resultItemName)) {
+                    inventoryCell.getItem().setAmount(inventoryCell.getItem().getAmount() + 1);
+                    firstCell.useItem();
+                    secondCell.useItem();
+                    return true;
+                }
+            }
+            firstCell.setItem(adjustItem(new Item(possibleItems.get(resultItemName)), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
+            secondCell.useItem();
+            return true;
+        }
+        return false;
+    }
+
+    private Item adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
+
+        item.setScreenCoordinateX(inventoryCellX + cellInformation.getItemCoordinateXRelativeToCell());
+        item.setScreenCoordinateY(inventoryCellY + cellInformation.getItemCoordinateYRelativeToCell());
+        item.setTargetWidth(cellInformation.getItemWidth());
+        item.setTargetHeight(cellInformation.getItemHeight());
+        return item;
+    }
+
+    public boolean discardCell(InventoryCell inventoryCell){
+        System.out.println("discarded: " + inventoryCell.getItem().getName());
+        return false;
+    }
+
+    public boolean equipCell(InventoryCell inventoryCell){
+        System.out.println("equipped: " + inventoryCell.getItem().getName());
+
+        return false;
+    }
+
+    public boolean useCell(InventoryCell inventoryCell){
+        System.out.println("used: " + inventoryCell.getItem().getName());
+
+        return false;
+    }
+
+
     public Pointer getPointer() { return pointer; }
     public List<InventoryCell> getCells() { return cells; }
-
+    public InventoryCellInformation getCellInformation() { return cellInformation; }
 }
