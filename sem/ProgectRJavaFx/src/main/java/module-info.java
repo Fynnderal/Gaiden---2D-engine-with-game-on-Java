@@ -13,4 +13,6 @@ module cvut.cz {
     exports cvut.cz;
     exports cvut.cz.items;
     exports cvut.cz.characters;
+    exports cvut.cz.Map;
+    opens cvut.cz.Map to com.fasterxml.jackson.databind, javafx.fxml;
 }
