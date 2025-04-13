@@ -1,7 +1,13 @@
 package cvut.cz;
 
+import cvut.cz.Map.Collision;
+import cvut.cz.Map.Map;
+import cvut.cz.Map.MapConstructor;
+import cvut.cz.Map.MapSlicer;
 import cvut.cz.characters.*;
 import cvut.cz.items.*;
+
+import java.util.HashMap;
 import java.util.logging.Logger;
 import java.net.URL;
 
@@ -76,23 +82,13 @@ public class Model {
     }
 
 
-    public void setMainPlayer(URL pathToItems, PlayableCharacters character, URL pathToSprite, int sourceX, int sourceY, int sourceWidth, int sourceHeight, int screenWidth, int screenHeight, int worldX, int worldY, int attackPower, States currentState, int currentHealth, int maxHeath, double speed) {
-        switch(character){
-            case OFFICEWORKER:
-                mainPlayer = new OfficeWorker(attackPower, currentState, currentHealth, maxHeath, speed,  pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, worldX + map.getScreenCoordinateX(), worldY + map.getScreenCoordinateY(), screenWidth, screenHeight, worldX, worldY);
-                if (pathToItems != null) {
-                    mainPlayer.readAvailableItems(pathToItems);
-                }
+    public void setMainPlayer(URL pathToItems, URL pathToSprite, int sourceX, int sourceY, int sourceWidth, int sourceHeight, int screenWidth, int screenHeight, int worldX, int worldY, int attackPower, States currentState, int currentHealth, int maxHeath, double speed) {
+        mainPlayer = new OfficeWorker(attackPower, currentState, currentHealth, maxHeath, speed, pathToItems, pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, worldX + map.getScreenCoordinateX(), worldY + map.getScreenCoordinateY(), screenWidth, screenHeight, worldX, worldY);
 
-                break;
-            default:
-                logger.severe("Invalid character");
-                break;
-        }
     }
 
-    public void createInventory(InventoryCellInformation inventoryCellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
-        inventory = new Inventory(inventoryCellInformation, pointer, character, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight);
+    public void createInventory(HashMap<String, ItemInformation> possibleItems, InventoryCellInformation inventoryCellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
+        inventory = new Inventory(possibleItems, inventoryCellInformation, pointer, character, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight);
     }
 
     public PlayableCharacter getMainPlayer() { return mainPlayer; }
