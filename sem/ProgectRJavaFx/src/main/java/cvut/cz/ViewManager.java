@@ -345,7 +345,7 @@ public class ViewManager extends Application {
     }
 
     private void createMainCharacter(URL pathToItems, URL pathToSprite, int sourceX, int sourceY, int sourceWidth, int sourceHeight, int screenWidth, int screenHeight, int worldX, int worldY, int attackPower, States currentState, int currentHealth, int maxHealth, int speed) {
-        model.setMainPlayer(pathToItems, pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, screenWidth, screenHeight, worldX, worldY, attackPower, currentState, currentHealth, maxHealth, speed);
+        model.createMainPlayer(pathToItems, pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, screenWidth, screenHeight, worldX, worldY, attackPower, currentState, currentHealth, maxHealth, speed);
         drawableObjects.add(1, model.getMainPlayer());
     }
 

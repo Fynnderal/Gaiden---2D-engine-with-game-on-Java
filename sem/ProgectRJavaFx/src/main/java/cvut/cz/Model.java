@@ -81,8 +81,7 @@ public class Model {
 
     }
 
-
-    public void setMainPlayer(URL pathToItems, URL pathToSprite, int sourceX, int sourceY, int sourceWidth, int sourceHeight, int screenWidth, int screenHeight, int worldX, int worldY, int attackPower, States currentState, int currentHealth, int maxHeath, double speed) {
+    public void createMainPlayer(URL pathToItems, URL pathToSprite, int sourceX, int sourceY, int sourceWidth, int sourceHeight, int screenWidth, int screenHeight, int worldX, int worldY, int attackPower, States currentState, int currentHealth, int maxHeath, double speed) {
         mainPlayer = new OfficeWorker(attackPower, currentState, currentHealth, maxHeath, speed, pathToItems, pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, worldX + map.getScreenCoordinateX(), worldY + map.getScreenCoordinateY(), screenWidth, screenHeight, worldX, worldY);
 
     }
