@@ -237,7 +237,6 @@ public class ViewManager extends Application {
         logger.info(String.format("Finished setting stage\nScreen Width: %f\n Screen Height: %f, Scaling factor: %f", Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight(), RENDER_SCALE_FACTOR));
     }
 
-
     private void drawSprite(GameSprite sprite, GraphicsContext gc) {
         gc.drawImage(new Image(String.valueOf(sprite.getPathImage())), sprite.sourceCoordinateX, sprite.sourceCoordinateY, sprite.sourceWidth, sprite.sourceHeight, sprite.screenCoordinateX * RENDER_SCALE_FACTOR, sprite.screenCoordinateY * RENDER_SCALE_FACTOR, sprite.targetWidth * RENDER_SCALE_FACTOR, sprite.targetHeight * RENDER_SCALE_FACTOR);
     }
@@ -282,7 +281,6 @@ public class ViewManager extends Application {
         }
     }
 
-
     private void checkControls() {
         if (pressedKeys.contains(KeyCode.W))
             movePlayer(Directions.UP);
@@ -297,6 +295,7 @@ public class ViewManager extends Application {
     private void moveInventoryPointer(Directions direction) {
         model.getInventory().movePointer(direction);
     }
+
     private void movePlayer(Directions direction) {
         model.movePlayer(direction);
     }
@@ -358,6 +357,4 @@ public class ViewManager extends Application {
         return inventoryCanvas.getGraphicsContext2D();
     }
 
-    private void offLoggers() {
-    }
 }

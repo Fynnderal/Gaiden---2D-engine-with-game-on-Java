@@ -91,6 +91,9 @@ public class Model {
         inventory = new Inventory(possibleItems, inventoryCellInformation, pointer, character, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight);
     }
 
+    private void offLoggers() {
+    }
+
     public PlayableCharacter getMainPlayer() { return mainPlayer; }
     public MapConstructor getMapConstructor() { return mapConstructor; }
     public Map getMap() { return map; }
