@@ -9,13 +9,13 @@ import java.io.File;
 
 import java.net.URL;
 
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
 import cvut.cz.characters.GameCharacter;
 
 public class MapConstructor {
     private static final Logger logger = Logger.getLogger(MapConstructor.class.getName());
 
-
-    private static MapConstructor singleInstance = null;
     private Map map;
 
     private List<Tile> sourceTiles;
@@ -25,38 +25,28 @@ public class MapConstructor {
     private List<GameCharacter> items;
 
 
-    private int mapCoordinateX;
-    private int mapCoordinateY;
     private int mapImageHeight;
     private int mapImageWidth;
     private int mapTargetWidth;
     private int mapTargetHeight;
-    private int mapTargetScaleFactorX;
-    private int mapTargetScaleFactorY;
 
-    private URL mapFilePath;
-    private MapSlicer mapSlicer;
-    private URL mapCollisionsPath;
+    private final int mapCoordinateX;
+    private final int mapCoordinateY;
+    private final int mapTargetScaleFactorX;
+    private final int mapTargetScaleFactorY;
 
+    private final URL mapFilePath;
+    private final MapSlicer mapSlicer;
+    private final URL mapCollisionsPath;
 
-
-
-    public MapConstructor(MapSlicer mapSlicer, URL mapFilePath, int mapCoordinateX, int mapCoordinateY, int mapScaleFactorX, int mapScaleFactorY, URL mapCollisionsPath) {
-        if (singleInstance != null)
-            return;
-
+    public MapConstructor(MapSlicer mapSlicer, URL mapCollisionsPath, URL mapFilePath, int mapCoordinateX, int mapCoordinateY, int mapScaleFactorX, int mapScaleFactorY) {
         this.mapSlicer = mapSlicer;
         this.mapCoordinateX = mapCoordinateX;
         this.mapCoordinateY = mapCoordinateY;
         this.mapFilePath = mapFilePath;
         this.mapTargetScaleFactorX = mapScaleFactorX;
         this.mapTargetScaleFactorY = mapScaleFactorY;
-
         this.mapCollisionsPath = mapCollisionsPath;
-
-        singleInstance = this;
-
-
     }
 
     public Map createMap() {
@@ -64,9 +54,10 @@ public class MapConstructor {
         createCollisions();
         //placeCharacters
         //placeItems
-        map = new Map(null, 0, 0,this.mapImageWidth,this.mapImageHeight, this.mapCoordinateX, this.mapCoordinateY, this.mapImageWidth * this.mapTargetScaleFactorX, this.mapImageHeight * this.mapTargetScaleFactorY,  this.mapCollisions);
+        map = new Map(mapCollisions, new GameSpriteSourceInformation(null, 0, 0, mapImageWidth, mapImageHeight),  new GameSpriteRenderInformation(this.mapCoordinateX, this.mapCoordinateY, this.mapImageWidth * this.mapTargetScaleFactorX, this.mapImageHeight * this.mapTargetScaleFactorY, 0, 0));
         return map;
     }
+
     private void readSourceTiles()
     {
         mapSlicer.sliceMap();
@@ -74,15 +65,13 @@ public class MapConstructor {
         logger.info("Got source tiles: " + sourceTiles.size());
     }
 
-    private List<Tile> createMapTiles() {
+    private void createMapTiles() {
         readSourceTiles();
-        Tile currentTile;
         mapTiles = new ArrayList<>();
-        int counter = 0;
-        int currentRow = 0;
-        int idx;
-        try (Scanner scanner = new Scanner(new File(mapFilePath.getPath()))){
 
+        Tile currentTile;
+        int counter = 0, currentRow = 0, idx;
+        try (Scanner scanner = new Scanner(new File(mapFilePath.getPath()))){
             while (scanner.hasNextInt()) {
                 idx = scanner.nextInt();
                 if (idx < 0) {
@@ -96,8 +85,8 @@ public class MapConstructor {
                 }
                 try {
                     currentTile = sourceTiles.get(idx);
-                    currentTile.setWorldCoordinateX(counter * Tile.getSourceTileSize());
-                    currentTile.setWorldCoordinateY(currentRow * Tile.getSourceTileSize());
+                    currentTile.getGameSpriteRenderInformation().setWorldCoordinateX(counter * Tile.getSourceTileSize());
+                    currentTile.getGameSpriteRenderInformation().setWorldCoordinateY(currentRow * Tile.getSourceTileSize());
 
                     mapTiles.add(currentTile);
                 }catch(NullPointerException e) {
@@ -109,10 +98,10 @@ public class MapConstructor {
             logger.severe("Map File was not found");
         }
         this.mapImageHeight = Tile.getSourceTileSize() * currentRow;
+
         logger.info("Created Map tiles: " + mapTiles.size());
         logger.info("Map Image Height: " + this.mapImageHeight);
         logger.info("Map Image Width: " + this.mapImageWidth);
-        return mapTiles;
     }
 
     private void createCollisions() {
@@ -130,7 +119,6 @@ public class MapConstructor {
                 }
                 mapCollisions.add(new Collision(x, y, w, h));
             }
-
         }
         catch (Exception e) {
             logger.severe("Problem reading collisions file: " + e.getMessage());
@@ -143,7 +131,6 @@ public class MapConstructor {
     private void placeItems() {
 
     }
-
 
     public int getMapImageWidth() { return mapImageWidth; }
     public int getMapImageHeight() { return mapImageHeight; }

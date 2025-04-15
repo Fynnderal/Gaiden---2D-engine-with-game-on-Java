@@ -1,59 +1,57 @@
 package cvut.cz.items;
 
 import cvut.cz.GameSprite;
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
 import cvut.cz.characters.Directions;
-import cvut.cz.characters.GameCharacter;
+import cvut.cz.characters.PlayableCharacter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.net.URL;
-import java.util.logging.Logger;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Inventory extends GameSprite {
     Logger logger = Logger.getLogger(Inventory.class.getName());
 
-    private List<Item> items;
-    private Pointer pointer;
-    private InventoryCellInformation cellInformation;
-    private List<InventoryCell> cells;
+    private final InventoryInformation inventoryInformation;
+    private final List<Item> items;
+    private final List<InventoryCell> cells;
     private int currentCell;
-    private Map<String, ItemInformation> possibleItems;
 
-    public Inventory(Map<String, ItemInformation> possibleItems, InventoryCellInformation cellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
-        super(pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight, 0, 0);
+    public Inventory(InventoryInformation inventoryInformation, PlayableCharacter character, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        super(gameSpriteSourceInformation, gameSpriteRenderInformation);
+        this.gameSpriteRenderInformation.setWorldCoordinateY(0);
+        this.gameSpriteRenderInformation.setWorldCoordinateX(0);
+        this.inventoryInformation = inventoryInformation;
+
         if (character.getItems() != null)
             items = Arrays.asList(character.getItems());
         else {
             items = null;
             logger.warning("character items is null");
         }
+
         this.currentCell = 0;
-        this.pointer = pointer;
-        this.cellInformation = cellInformation;
-        this.possibleItems = possibleItems;
         cells = new ArrayList<>();
-        pointer.setScreenCoordinateX(cellInformation.getFirstCellCoordinateX());
-        pointer.setScreenCoordinateY(cellInformation.getFirstCellCoordinateY());
-        pointer.setTargetWidth(cellInformation.getCellWidth());
-        pointer.setTargetHeight(cellInformation.getCellHeight());
+
         setCells();
     }
 
     private void setCells() {
-        int collumnCounter = 0;
+        int columnCounter = 0;
         int rowCounter = 0;
         int currentX, currentY;
-        Item currentItem = null;
-        for (int i = 0; i < cellInformation.getNumberOfCells(); i++) {
-            if (collumnCounter == cellInformation.getNumberOfCellsInRow()) {
+        Item currentItem;
+        for (int i = 0; i < inventoryInformation.numberOfCells(); i++) {
+            if (columnCounter == inventoryInformation.numberOfCellsInRow()) {
                 rowCounter++;
-                collumnCounter = 0;
+                columnCounter = 0;
             }
 
-            currentX = cellInformation.getFirstCellCoordinateX() + collumnCounter * (cellInformation.getCellWidth() + cellInformation.getGapBetweenCellsX());
-            currentY = cellInformation.getFirstCellCoordinateY() + rowCounter * (cellInformation.getCellHeight() + cellInformation.getGapBetweenCellsY());
+            currentX = inventoryInformation.firstCellCoordinateX() + columnCounter * (inventoryInformation.inventoryCellGeneralInformation().cellWidth() + inventoryInformation.gapBetweenCellsX());
+            currentY = inventoryInformation.firstCellCoordinateY() + rowCounter * (inventoryInformation.inventoryCellGeneralInformation().cellHeight() + inventoryInformation.gapBetweenCellsY());
 
             if (items == null || i >= items.size())
                 currentItem = null;
@@ -64,12 +62,12 @@ public class Inventory extends GameSprite {
 
 
             cells.add(new InventoryCell(currentX, currentY, currentItem));
-            collumnCounter++;
+            columnCounter++;
         }
     }
 
     public void movePointer(Directions direction) {
-        if (cells.size() == 0)
+        if (cells.isEmpty())
             logger.severe("There is no inventory cells");
 
         switch(direction){
@@ -84,80 +82,75 @@ public class Inventory extends GameSprite {
                 break;
 
             case DOWN:
-                currentCell = (currentCell + cellInformation.getNumberOfCellsInRow()) % cells.size();
+                currentCell = (currentCell + inventoryInformation.numberOfCellsInRow()) % cells.size();
                 break;
             case UP:
-                currentCell = (currentCell - cellInformation.getNumberOfCellsInRow()) % cells.size();
+                currentCell = (currentCell - inventoryInformation.numberOfCellsInRow()) % cells.size();
                 if (currentCell < 0)
                     currentCell = cells.size() +currentCell;
                 break;
 
         }
-        pointer.setScreenCoordinateX(cells.get(currentCell).getCoordinateX());
-        pointer.setScreenCoordinateY(cells.get(currentCell).getCoordinateY());
-    }
-
-    public InventoryCell getSelectedInventoryCell(){
-        return cells.get(currentCell);
+        inventoryInformation.pointer().getGameSpriteRenderInformation().setScreenCoordinateX(cells.get(currentCell).getCoordinateX());
+        inventoryInformation.pointer().getGameSpriteRenderInformation().setScreenCoordinateY(cells.get(currentCell).getCoordinateY());
     }
 
     public boolean combineCells(InventoryCell firstCell, InventoryCell secondCell){
         if (firstCell.getItem() == null || secondCell.getItem() == null)
             return false;
-        if (firstCell.getItem().getCanBeCombinedWithInto() == null || secondCell.getItem().getCanBeCombinedWithInto() == null)
+
+        Map<String, String> canBeCombinedWithInto1 = firstCell.getItem().getItemInformation().canBeCombinedWithInto();
+        Map<String, String> canBeCombinedWithInto2 = secondCell.getItem().getItemInformation().canBeCombinedWithInto();
+
+        if (canBeCombinedWithInto1 == null || canBeCombinedWithInto2 == null)
             return false;
 
-        if (firstCell.getItem().getCanBeCombinedWithInto().containsKey(secondCell.getItem().getName())){
-            String resultItemName = firstCell.getItem().getCanBeCombinedWithInto().get(secondCell.getItem().getName());
+        if (canBeCombinedWithInto1.containsKey(secondCell.getItem().getItemInformation().name())){
+            String resultItemName = canBeCombinedWithInto1.get(secondCell.getItem().getItemInformation().name());
 
-            ItemInformation combinedItem = possibleItems.get(resultItemName);
-            System.out.println(resultItemName);
             for (InventoryCell inventoryCell: cells) {
                 if (inventoryCell.getItem() == null)
                     continue;
 
-                if (inventoryCell.getItem().getName().equals(resultItemName)) {
-                    inventoryCell.getItem().setAmount(inventoryCell.getItem().getAmount() + 1);
+                if (inventoryCell.getItem().getItemInformation().name().equals(resultItemName)) {
+                    inventoryCell.setItemAmount(inventoryCell.getItemAmount() + 1);
                     firstCell.useItem();
                     secondCell.useItem();
                     return true;
                 }
             }
-            firstCell.setItem(adjustItem(new Item(possibleItems.get(resultItemName)), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
+            firstCell.setItem(adjustItem(new Item(inventoryInformation.possibleItems().get(resultItemName)), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
             secondCell.useItem();
             return true;
         }
         return false;
     }
 
-    private Item adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
-
-        item.setScreenCoordinateX(inventoryCellX + cellInformation.getItemCoordinateXRelativeToCell());
-        item.setScreenCoordinateY(inventoryCellY + cellInformation.getItemCoordinateYRelativeToCell());
-        item.setTargetWidth(cellInformation.getItemWidth());
-        item.setTargetHeight(cellInformation.getItemHeight());
-        return item;
-    }
-
     public boolean discardCell(InventoryCell inventoryCell){
-        System.out.println("discarded: " + inventoryCell.getItem().getName());
+        System.out.println("discarded: " + inventoryCell.getItem().getItemInformation().name());
         return false;
     }
 
     public boolean equipCell(InventoryCell inventoryCell){
-        System.out.println("equipped: " + inventoryCell.getItem().getName());
+        System.out.println("equipped: " + inventoryCell.getItem().getItemInformation().name());
 
         return false;
     }
 
     public boolean useCell(InventoryCell inventoryCell){
-        System.out.println("used: " + inventoryCell.getItem().getName());
-
+        System.out.println("used: " + inventoryCell.getItem().getItemInformation().name());
         return false;
     }
 
+    private Item adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
+        item.getGameSpriteRenderInformation().setScreenCoordinateX(inventoryCellX + inventoryInformation.inventoryCellGeneralInformation().itemCoordinateXRelativeToCell());
+        item.getGameSpriteRenderInformation().setScreenCoordinateY(inventoryCellY + inventoryInformation.inventoryCellGeneralInformation().itemCoordinateYRelativeToCell());
+        item.getGameSpriteRenderInformation().setTargetWidth(inventoryInformation.inventoryCellGeneralInformation().itemWidthInCell());
+        item.getGameSpriteRenderInformation().setTargetHeight(inventoryInformation.inventoryCellGeneralInformation().itemHeightInCell());
+        return item;
+    }
 
-    public Pointer getPointer() { return pointer; }
+    public InventoryCell getSelectedInventoryCell(){ return cells.get(currentCell); }
     public List<InventoryCell> getCells() { return cells; }
-    public InventoryCellInformation getCellInformation() { return cellInformation; }
+    public InventoryInformation getInventoryInformation() { return inventoryInformation; }
 }
