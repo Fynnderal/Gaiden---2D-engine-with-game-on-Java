@@ -7,7 +7,6 @@ import cvut.cz.Map.MapSlicer;
 import cvut.cz.characters.*;
 import cvut.cz.items.*;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 import java.net.URL;
 
@@ -25,68 +24,70 @@ public class Model {
     public Model() {
     }
 
-    public void createMap(MapSlicer mapSlicer, URL pathToMap, int mapCoordinateX, int mapCoordinateY, int mapTargetScaleFactorX, int mapTargetScaleFactorY, URL pathToCollisions) {
-        mapConstructor = new MapConstructor(mapSlicer, pathToMap, mapCoordinateX, mapCoordinateY, mapTargetScaleFactorX, mapTargetScaleFactorY, pathToCollisions);
+    public void createMap(MapSlicer mapSlicer, URL pathToCollisions, URL pathToMap, int mapCoordinateX, int mapCoordinateY, int mapTargetScaleFactorX, int mapTargetScaleFactorY) {
+        mapConstructor = new MapConstructor(mapSlicer, pathToCollisions, pathToMap, mapCoordinateX, mapCoordinateY, mapTargetScaleFactorX, mapTargetScaleFactorY);
         map = mapConstructor.createMap();
     }
 
     public void movePlayer(Directions direction) {
-        int oldX = mainPlayer.worldCoordinateX;
-        int oldY = mainPlayer.worldCoordinateY;
+        int oldX = mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX();
+        int oldY = mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY();
         Collision collidedWith = new Collision(0, 0, 0, 0);
         switch (direction) {
             case UP:
                 mainPlayer.Move(Directions.UP);
 
-                if (map.checkCollisions(mainPlayer.getWorldCoordinateX(), mainPlayer.getWorldCoordinateY(),mainPlayer.getWorldCoordinateX() + mainPlayer.getTargetWidth(), oldY + mainPlayer.getTargetHeight(), collidedWith)) {
-                    mainPlayer.setWorldCoordinateY(collidedWith.getWorldCoordinateY() + collidedWith.getHeight());
-                    map.translateMap(Directions.UP, oldY - mainPlayer.getWorldCoordinateY());
+                if (map.checkCollisions(mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX(), mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY(),mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX() + mainPlayer.getGameSpriteRenderInformation().getTargetWidth(), oldY + mainPlayer.getGameSpriteRenderInformation().getTargetHeight(), collidedWith)) {
+                    mainPlayer.getGameSpriteRenderInformation().setWorldCoordinateY(collidedWith.getWorldCoordinateY() + collidedWith.getHeight());
+                    map.translateMap(Directions.UP, oldY - mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY());
                     break;
                 }
-                map.translateMap(Directions.UP, mainPlayer.getSpeed());
+                map.translateMap(Directions.UP, mainPlayer.getCharacterInformation().getSpeed());
 
                 break;
             case DOWN:
                 mainPlayer.Move(Directions.DOWN);
 
-                if (map.checkCollisions(mainPlayer.getWorldCoordinateX(), oldY, mainPlayer.getWorldCoordinateX() + mainPlayer.getTargetWidth(), mainPlayer.getWorldCoordinateY() + mainPlayer.getTargetHeight(), collidedWith)) {
-                    mainPlayer.setWorldCoordinateY(collidedWith.getWorldCoordinateY() - mainPlayer.getTargetHeight());
-                    map.translateMap(Directions.DOWN, mainPlayer.getWorldCoordinateY() - oldY);
+                if (map.checkCollisions(mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX(), oldY, mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX() + mainPlayer.getGameSpriteRenderInformation().getTargetWidth(), mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY() + mainPlayer.getGameSpriteRenderInformation().getTargetHeight(), collidedWith)) {
+                    mainPlayer.getGameSpriteRenderInformation().setWorldCoordinateY(collidedWith.getWorldCoordinateY() - mainPlayer.getGameSpriteRenderInformation().getTargetHeight());
+                    map.translateMap(Directions.DOWN, mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY() - oldY);
                     break;
                 }
-                map.translateMap(Directions.DOWN, mainPlayer.getSpeed());
+                map.translateMap(Directions.DOWN, mainPlayer.getCharacterInformation().getSpeed());
                 break;
             case LEFT:
                 mainPlayer.Move(Directions.LEFT);
 
-                if (map.checkCollisions(mainPlayer.getWorldCoordinateX(), mainPlayer.getWorldCoordinateY(), oldX + mainPlayer.getTargetWidth(), mainPlayer.getWorldCoordinateY() + mainPlayer.getTargetHeight(), collidedWith)) {
-                    mainPlayer.setWorldCoordinateX(collidedWith.getWorldCoordinateX() + collidedWith.getWidth());
-                    map.translateMap(Directions.LEFT, oldX - mainPlayer.getWorldCoordinateX());
+                if (map.checkCollisions(mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX(), mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY(), oldX + mainPlayer.getGameSpriteRenderInformation().getTargetWidth(), mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY() + mainPlayer.getGameSpriteRenderInformation().getTargetHeight(), collidedWith)) {
+                    mainPlayer.getGameSpriteRenderInformation().setWorldCoordinateX(collidedWith.getWorldCoordinateX() + collidedWith.getWidth());
+                    map.translateMap(Directions.LEFT, oldX - mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX());
                     break;
                 }
-                map.translateMap(Directions.LEFT, mainPlayer.getSpeed());
+                map.translateMap(Directions.LEFT, mainPlayer.getCharacterInformation().getSpeed());
                 break;
             case RIGHT:
 
                 mainPlayer.Move(Directions.RIGHT);
 
-                if (map.checkCollisions(oldX, mainPlayer.getWorldCoordinateY(), mainPlayer.getWorldCoordinateX() + mainPlayer.getTargetWidth(), mainPlayer.getWorldCoordinateY() + mainPlayer.getTargetHeight(), collidedWith)) {
-                    mainPlayer.setWorldCoordinateX(collidedWith.getWorldCoordinateX() - mainPlayer.getTargetWidth());
-                    map.translateMap(Directions.RIGHT, mainPlayer.getWorldCoordinateX() - oldX);
+                if (map.checkCollisions(oldX, mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY(), mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX() + mainPlayer.getGameSpriteRenderInformation().getTargetWidth(), mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY() + mainPlayer.getGameSpriteRenderInformation().getTargetHeight(), collidedWith)) {
+                    mainPlayer.getGameSpriteRenderInformation().setWorldCoordinateX(collidedWith.getWorldCoordinateX() - mainPlayer.getGameSpriteRenderInformation().getTargetWidth());
+                    map.translateMap(Directions.RIGHT, mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX() - oldX);
                     break;
                 }
-                map.translateMap(Directions.RIGHT, mainPlayer.getSpeed());
+                map.translateMap(Directions.RIGHT, mainPlayer.getCharacterInformation().getSpeed());
                 break;
         }
 
     }
 
-    public void createMainPlayer(URL pathToItems, URL pathToSprite, int sourceX, int sourceY, int sourceWidth, int sourceHeight, int screenWidth, int screenHeight, int worldX, int worldY, int attackPower, States currentState, int currentHealth, int maxHeath, double speed) {
-        mainPlayer = new OfficeWorker(attackPower, currentState, currentHealth, maxHeath, speed, pathToItems, pathToSprite, sourceX, sourceY, sourceWidth, sourceHeight, worldX + map.getScreenCoordinateX(), worldY + map.getScreenCoordinateY(), screenWidth, screenHeight, worldX, worldY);
+    public void createMainPlayer(URL pathToItems, CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        mainPlayer = new OfficeWorker(pathToItems, characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
+        mainPlayer.getGameSpriteRenderInformation().setScreenCoordinateX(mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateX() + map.getGameSpriteRenderInformation().getScreenCoordinateX());
+        mainPlayer.getGameSpriteRenderInformation().setScreenCoordinateY(mainPlayer.getGameSpriteRenderInformation().getWorldCoordinateY() + map.getGameSpriteRenderInformation().getScreenCoordinateY());
     }
 
-    public void createInventory(HashMap<String, ItemInformation> possibleItems, InventoryCellInformation inventoryCellInformation, Pointer pointer, GameCharacter character, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight) {
-        inventory = new Inventory(possibleItems, inventoryCellInformation, pointer, character, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight);
+    public void createInventory(InventoryInformation inventoryInformation, PlayableCharacter character, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        inventory = new Inventory(inventoryInformation, character, gameSpriteSourceInformation, gameSpriteRenderInformation);
     }
 
     private void offLoggers() {
