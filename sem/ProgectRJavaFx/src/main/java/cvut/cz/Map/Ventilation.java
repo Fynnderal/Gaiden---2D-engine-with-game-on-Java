@@ -1,5 +1,7 @@
 package cvut.cz.Map;
 
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
 import cvut.cz.characters.PlayableCharacter;
 import cvut.cz.items.Item;
 
@@ -9,8 +11,8 @@ public class Ventilation extends MapSpot{
 
     private Ventilation spotToTeleport;
 
-    public Ventilation(URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
-        super(pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
+    public Ventilation(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        super(gameSpriteSourceInformation, gameSpriteRenderInformation);
     }
 
     public void teleportPlayer(PlayableCharacter playableCharacter){
