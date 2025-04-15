@@ -1,20 +1,24 @@
 package cvut.cz.Map;
 
 import cvut.cz.GameSprite;
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
 import cvut.cz.characters.Directions;
 import cvut.cz.items.Item;
 
-import java.net.URL;
 import java.util.List;
 
 public class Map extends GameSprite {
 
-    private List<Collision> collisions;
+    private final List<Collision> collisions;
     private List<Item> items;
 
-    public Map(URL pathToMap, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight, List<Collision> collisions)
+    public Map(List<Collision> collisions, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation)
     {
-        super(pathToMap, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight,0, 0);
+        super(gameSpriteSourceInformation, gameSpriteRenderInformation);
+        this.gameSpriteRenderInformation.setWorldCoordinateX(0);
+        this.gameSpriteRenderInformation.setWorldCoordinateY(0);
+
         this.collisions = collisions;
     }
 
@@ -36,25 +40,20 @@ public class Map extends GameSprite {
         return false;
     }
 
-
-    public void translateMap(Directions direction, double offset) {
+    public void translateMap(Directions direction, int offset) {
         switch (direction) {
             case UP:
-                screenCoordinateY += offset;
+                this.gameSpriteRenderInformation.setScreenCoordinateY(gameSpriteRenderInformation.getScreenCoordinateY() + offset);
                 break;
             case DOWN:
-                screenCoordinateY -= offset;
+                this.gameSpriteRenderInformation.setScreenCoordinateY(gameSpriteRenderInformation.getScreenCoordinateY() - offset);
                 break;
             case LEFT:
-                screenCoordinateX += offset;
+                this.gameSpriteRenderInformation.setScreenCoordinateX(gameSpriteRenderInformation.getScreenCoordinateX() + offset);
                 break;
             case RIGHT:
-                screenCoordinateX -= offset;
+                this.gameSpriteRenderInformation.setScreenCoordinateX(gameSpriteRenderInformation.getScreenCoordinateX() - offset);
                 break;
         }
     }
-
-
-
-    public void setPathToMap(URL pathToMap) { pathToImage = pathToMap; }
 }
