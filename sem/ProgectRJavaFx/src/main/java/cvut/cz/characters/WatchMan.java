@@ -1,10 +1,14 @@
 package cvut.cz.characters;
 
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
+
 import java.net.URL;
 
 public class WatchMan extends Enemy {
-    public WatchMan(int attackPower, States currentState, int currentHealth, int maxHelath, double speed, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
-        super(attackPower, currentState, currentHealth, maxHelath, speed, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, screenCoordinateX, screenCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
+
+    public WatchMan(CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
     }
 
     @Override

@@ -1,15 +1,16 @@
 package cvut.cz.characters;
 
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
+
 import java.net.URL;
 
 public class OfficeWorker extends PlayableCharacter{
-    public OfficeWorker(URL pathToItems, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY){
-        this(0, States.IDLE, 0, 0, 0, pathToItems, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
+
+    public OfficeWorker(URL pathToItems, CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        super(pathToItems, characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
     }
 
-    public OfficeWorker(int attackPower, States currentState, int currentHealth, int maxHealth, double speed, URL pathToItems, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int targetCoordinateX, int targetCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
-        super(attackPower, currentState, currentHealth, maxHealth, speed, pathToItems, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, targetCoordinateX, targetCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
-    }
     @Override
     protected void Attack() {
         System.out.println("Not implemented yet");

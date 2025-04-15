@@ -1,6 +1,8 @@
 package cvut.cz.characters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
 import cvut.cz.items.Item;
 
 import java.io.FileReader;
@@ -16,20 +18,10 @@ public abstract class PlayableCharacter extends GameCharacter{
 //    private final static SimpleFilterProvider filters = new SimpleFilterProvider().addFilter("itemFilter", SimpleBeanPropertyFilter.filterOutAllExcept("Name", "Broken", "Amount"));
 
     protected Item[] items;
-    private URL pathToItems;
+    private final URL pathToItems;
 
-
-
-    public void setItems(Item[] items) { this.items = items; }
-
-    public Item[] getItems() {return items;}
-
-    public PlayableCharacter(URL pathToInventory, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY ) {
-        this(0, States.IDLE, 0, 0, 0,pathToInventory, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, screenCoordinateX, screenCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
-    }
-
-    public PlayableCharacter(int attackPower, States currentState, int currentHealth, int maxHealth, double speed, URL pathToItems, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
-        super(attackPower, currentState, currentHealth, maxHealth, speed, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, screenCoordinateX, screenCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
+    public PlayableCharacter(URL pathToItems, CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
         this.pathToItems = pathToItems;
         if (pathToItems != null) {
             readAvailableItems(this.pathToItems);
@@ -37,24 +29,23 @@ public abstract class PlayableCharacter extends GameCharacter{
     }
 
     public void Move(Directions direction) {
-        currentState = States.WALKING;
+        characterInformation.setCurrentState(States.WALKING);
         switch (direction) {
             case UP:
-                this.worldCoordinateY -= speed;
+                this.gameSpriteRenderInformation.setWorldCoordinateY(gameSpriteRenderInformation.getWorldCoordinateY() - characterInformation.getSpeed());
                 break;
             case DOWN:
-                this.worldCoordinateY += speed;
+                this.gameSpriteRenderInformation.setWorldCoordinateY(gameSpriteRenderInformation.getWorldCoordinateY() + characterInformation.getSpeed());
                 break;
             case RIGHT:
-                this.worldCoordinateX += speed;
+                this.gameSpriteRenderInformation.setWorldCoordinateX(gameSpriteRenderInformation.getWorldCoordinateX() + characterInformation.getSpeed());
                 break;
             case LEFT:
-                this.worldCoordinateX -= speed;
+                this.gameSpriteRenderInformation.setWorldCoordinateX(gameSpriteRenderInformation.getWorldCoordinateX() - characterInformation.getSpeed());
                 break;
         }
-        currentState = States.IDLE;
+        characterInformation.setCurrentState(States.IDLE);
     }
-
 
     public void readAvailableItems(URL fileName) {
         try (FileReader fileReader = new FileReader(fileName.getPath())) {
@@ -65,6 +56,7 @@ public abstract class PlayableCharacter extends GameCharacter{
         }
 
     }
+
     public void writeAvailableItems(URL fileName) {
         try (FileWriter fileWriter = new FileWriter(fileName.getPath())) {
             mapper.writeValue(fileWriter, items);
@@ -73,4 +65,8 @@ public abstract class PlayableCharacter extends GameCharacter{
             System.err.println("[ERROR] Problem with writing into json file. Problem: " + e.getMessage());
         }
     }
+
+    public Item[] getItems() {return items;}
+
+    public void setItems(Item[] items) { this.items = items; }
 }

@@ -1,18 +1,18 @@
 package cvut.cz.characters;
 
+import cvut.cz.GameSpriteRenderInformation;
+import cvut.cz.GameSpriteSourceInformation;
+
 import java.util.Map;
 import java.net.URL;
 
 public class Merchant extends GameCharacter{
     private Map<String, Integer> itemsPrices;
 
-    public Merchant(Map<String, Integer> itemsPrices, URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight, int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
-        super(0, States.IDLE, 0, 0, 0, pathToImage, sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, screenCoordinateX, screenCoordinateY, targetWidth, targetHeight, worldCoordinateX, worldCoordinateY);
+    public Merchant(Map<String, Integer> itemsPrices, CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation){
+        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
         this.itemsPrices = itemsPrices;
     }
-
-
-
 
     private void sellItem(){
 
