@@ -1,20 +1,16 @@
 package cvut.cz.Map;
 
-import cvut.cz.GameSprite;
-import cvut.cz.GameSpriteRenderInformation;
-import cvut.cz.GameSpriteSourceInformation;
-
-import java.net.URL;
+import cvut.cz.GameSprite.GameSprite;
+import cvut.cz.GameSprite.GameSpriteRenderInformation;
+import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 public class MapSpot extends GameSprite {
+    protected Collision collision;
 
-    public MapSpot(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+    public MapSpot(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation, Collision collision) {
         super(gameSpriteSourceInformation, gameSpriteRenderInformation);
+        this.collision = collision;
     }
 
-
-    public void interact() {
-
-    }
-
+    public Collision getCollision() { return collision; }
 }

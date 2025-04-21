@@ -1,10 +1,8 @@
 package cvut.cz.items;
 
-import cvut.cz.GameSprite;
-import cvut.cz.GameSpriteRenderInformation;
-import cvut.cz.GameSpriteSourceInformation;
-
-import java.net.URL;
+import cvut.cz.GameSprite.GameSprite;
+import cvut.cz.GameSprite.GameSpriteRenderInformation;
+import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 public class Pointer extends GameSprite {
 

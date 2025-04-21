@@ -1,10 +1,9 @@
 package cvut.cz.characters;
 
-import cvut.cz.GameSpriteRenderInformation;
-import cvut.cz.GameSpriteSourceInformation;
+import cvut.cz.GameSprite.GameSpriteRenderInformation;
+import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 import java.util.Map;
-import java.net.URL;
 
 public class Merchant extends GameCharacter{
     private Map<String, Integer> itemsPrices;
@@ -28,17 +27,12 @@ public class Merchant extends GameCharacter{
 
 
     @Override
-    protected void Attack() {
+    protected void move(Directions direction) {
 
     }
 
     @Override
-    protected void Move(Directions direction) {
-
-    }
-
-    @Override
-    protected void takeDamage(int damage) {
+    public void takeDamage(int damage) {
 
     }
 
