@@ -1,6 +1,6 @@
-package cvut.cz;
+package cvut.cz.GameSprite;
 
-public class GameSpriteRenderInformation {
+public class GameSpriteRenderInformation implements Cloneable {
     protected int screenCoordinateX;
     protected int screenCoordinateY;
     protected int worldCoordinateX;
@@ -17,6 +17,14 @@ public class GameSpriteRenderInformation {
         this.worldCoordinateY = worldCoordinateY;
     }
 
+    @Override
+    public GameSpriteRenderInformation clone() {
+        try {
+            return (GameSpriteRenderInformation) super.clone();
+        }catch(CloneNotSupportedException e) {
+            return null;
+        }
+    }
 
     public int getWorldCoordinateX() { return worldCoordinateX; }
     public int getWorldCoordinateY() { return worldCoordinateY; }
