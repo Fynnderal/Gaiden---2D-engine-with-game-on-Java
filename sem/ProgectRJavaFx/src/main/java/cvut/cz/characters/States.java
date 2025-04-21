@@ -7,6 +7,5 @@ public enum States {
     ATTACKING,
     WALKING,
     RUNNING,
-    CRAWLING,
-
+    CHASING
 }

@@ -15,4 +15,8 @@ module cvut.cz {
     exports cvut.cz.characters;
     exports cvut.cz.Map;
     opens cvut.cz.Map to com.fasterxml.jackson.databind, javafx.fxml;
+    exports cvut.cz.GameSprite;
+    opens cvut.cz.GameSprite to com.fasterxml.jackson.databind, javafx.fxml;
+    exports cvut.cz.Model;
+    opens cvut.cz.Model to com.fasterxml.jackson.databind, javafx.fxml;
 }
