@@ -1,19 +1,24 @@
 package cvut.cz.Map;
 
-import cvut.cz.GameSpriteRenderInformation;
-import cvut.cz.GameSpriteSourceInformation;
+import cvut.cz.GameSprite.GameSpriteRenderInformation;
+import cvut.cz.GameSprite.GameSpriteSourceInformation;
 import cvut.cz.items.Item;
 
 public class Door extends MapSpot{
 
     private Item neededItem;
-    private Collision collision;
 
-    public Door(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
-        super(gameSpriteSourceInformation, gameSpriteRenderInformation);
+
+    public Door(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation, Collision collision, Item neededItem) {
+        super(gameSpriteSourceInformation, gameSpriteRenderInformation, collision);
+        this.neededItem = neededItem;
     }
 
-    public void openDoor(Item item){
-
+    public boolean openDoor(Item item){
+        if (neededItem == item) {
+            collision.setActive(false);
+            return true;
+        }
+        return false;
     }
 }
