@@ -1,19 +1,18 @@
 package cvut.cz.characters;
 
-import cvut.cz.GameSpriteRenderInformation;
-import cvut.cz.GameSpriteSourceInformation;
-
-import java.net.URL;
+import cvut.cz.GameSprite.GameSpriteRenderInformation;
+import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 public class Zombie extends Enemy{
 
-    public Zombie(CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
-        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
+    public Zombie(CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation, PlayableCharacter mainPlayer, EnemyInformation enemyInformation) {
+        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation, mainPlayer, enemyInformation);
     }
 
-    @Override
-    protected void spotPlayer() {
 
+    @Override
+    public void update() {
+        super.update();
     }
 
     @Override
@@ -21,28 +20,4 @@ public class Zombie extends Enemy{
 
     }
 
-    @Override
-    protected void chooseDirection() {
-
-    }
-
-    @Override
-    protected void Attack() {
-
-    }
-
-    @Override
-    protected void Move(Directions direction) {
-
-    }
-
-    @Override
-    protected void takeDamage(int damage) {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
 }
