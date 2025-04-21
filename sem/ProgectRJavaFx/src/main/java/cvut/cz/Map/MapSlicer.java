@@ -34,7 +34,7 @@ public class MapSlicer {
                 columnCounter = 0;
                 rowCounter++;
             }
-            slicedTiles.add(new Tile(pathToTiles, columnCounter * (sourceTileSize + gapBetweenTilesX), rowCounter * (sourceTileSize + gapBetweenTilesY), sourceTileSize));
+            slicedTiles.add(new Tile(pathToTiles, columnCounter * (sourceTileSize + gapBetweenTilesX), rowCounter * (sourceTileSize + gapBetweenTilesY)));
             columnCounter++;
         }
     }
