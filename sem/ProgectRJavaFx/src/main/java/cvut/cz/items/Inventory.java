@@ -1,13 +1,12 @@
 package cvut.cz.items;
 
-import cvut.cz.GameSprite;
-import cvut.cz.GameSpriteRenderInformation;
-import cvut.cz.GameSpriteSourceInformation;
+import cvut.cz.GameSprite.GameSprite;
+import cvut.cz.GameSprite.GameSpriteRenderInformation;
+import cvut.cz.GameSprite.GameSpriteSourceInformation;
 import cvut.cz.characters.Directions;
 import cvut.cz.characters.PlayableCharacter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -15,28 +14,53 @@ import java.util.logging.Logger;
 public class Inventory extends GameSprite {
     Logger logger = Logger.getLogger(Inventory.class.getName());
 
+    private final PlayableCharacter character;
     private final InventoryInformation inventoryInformation;
     private final List<Item> items;
     private final List<InventoryCell> cells;
     private int currentCell;
+    private InventoryCell equippedCell;
 
     public Inventory(InventoryInformation inventoryInformation, PlayableCharacter character, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
         super(gameSpriteSourceInformation, gameSpriteRenderInformation);
         this.gameSpriteRenderInformation.setWorldCoordinateY(0);
         this.gameSpriteRenderInformation.setWorldCoordinateX(0);
         this.inventoryInformation = inventoryInformation;
-
-        if (character.getItems() != null)
-            items = Arrays.asList(character.getItems());
-        else {
-            items = null;
-            logger.warning("character items is null");
-        }
-
+        this.character = character;
+        this.items = character.getItems();
         this.currentCell = 0;
-        cells = new ArrayList<>();
+        this.cells = new ArrayList<>();
 
         setCells();
+    }
+
+    public boolean addItemToInventory(Item item) {
+        if (item == null)
+            return false;
+
+        InventoryCell emptyCell = null;
+
+        for (InventoryCell cell : cells) {
+            if (cell.getItem() == null) {
+                if (emptyCell == null)
+                    emptyCell = cell;
+                continue;
+            }
+            if (cell.getItem().getItemInformation().name().equals(item.getItemInformation().name())) {
+                cell.setItemAmount(cell.getItemAmount() + item.getAmount());
+                adjustItem(item, cell.getCoordinateX(), cell.getCoordinateY());
+                items.add(item);
+                return true;
+            }
+        }
+        if (emptyCell != null) {
+            items.add(item);
+            adjustItem(item, emptyCell.getCoordinateX(), emptyCell.getCoordinateY());
+            emptyCell.setItem(item);
+            return true;
+        }
+
+        return false;
     }
 
     private void setCells() {
@@ -96,6 +120,9 @@ public class Inventory extends GameSprite {
     }
 
     public boolean combineCells(InventoryCell firstCell, InventoryCell secondCell){
+        if (firstCell == null || secondCell == null)
+            return false;
+
         if (firstCell.getItem() == null || secondCell.getItem() == null)
             return false;
 
@@ -113,33 +140,69 @@ public class Inventory extends GameSprite {
                     continue;
 
                 if (inventoryCell.getItem().getItemInformation().name().equals(resultItemName)) {
-                    inventoryCell.setItemAmount(inventoryCell.getItemAmount() + 1);
-                    firstCell.useItem();
-                    secondCell.useItem();
+                    inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() + 1);
+                    discardCell(firstCell);
+                    discardCell(secondCell);
                     return true;
                 }
             }
-            firstCell.setItem(adjustItem(new Item(inventoryInformation.possibleItems().get(resultItemName)), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
-            secondCell.useItem();
+            firstCell.setItem(adjustItem(inventoryInformation.possibleItems().get(resultItemName).clone(), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
+            discardCell(secondCell);
             return true;
         }
         return false;
     }
 
     public boolean discardCell(InventoryCell inventoryCell){
-        System.out.println("discarded: " + inventoryCell.getItem().getItemInformation().name());
-        return false;
+        if (inventoryCell == null)
+            return false;
+
+        if (inventoryCell.getItem() == null)
+            return false;
+
+        if (!inventoryCell.getItem().getItemInformation().canBeDiscarded())
+            return false;
+
+        inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() - 1);
+        return true;
     }
 
     public boolean equipCell(InventoryCell inventoryCell){
-        System.out.println("equipped: " + inventoryCell.getItem().getItemInformation().name());
+        if (inventoryCell == null)
+            return false;
 
-        return false;
+        if (inventoryCell.getItem() == null)
+            return false;
+
+        if (!inventoryCell.getItem().getItemInformation().canBeEquipped())
+            return false;
+
+        if (equippedCell == inventoryCell) {
+            equippedCell = null;
+            inventoryCell.setIsItemEquipped(false);
+        }else{
+            if (equippedCell != null)
+                equippedCell.setIsItemEquipped(false);
+            inventoryCell.setIsItemEquipped(true);
+            equippedCell = inventoryCell;
+        }
+        return true;
     }
 
-    public boolean useCell(InventoryCell inventoryCell){
-        System.out.println("used: " + inventoryCell.getItem().getItemInformation().name());
-        return false;
+    public boolean useCell(InventoryCell inventoryCell) {
+        if (inventoryCell == null)
+            return false;
+
+        if (inventoryCell.getItem() == null)
+            return false;
+
+        if (!inventoryCell.getItem().getItemInformation().canBeUsed())
+            return false;
+
+        character.useItem(inventoryCell.getItem());
+
+        inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() - 1);
+        return true;
     }
 
     private Item adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
@@ -153,4 +216,5 @@ public class Inventory extends GameSprite {
     public InventoryCell getSelectedInventoryCell(){ return cells.get(currentCell); }
     public List<InventoryCell> getCells() { return cells; }
     public InventoryInformation getInventoryInformation() { return inventoryInformation; }
+    public InventoryCell getEquippedCell() { return equippedCell; }
 }
