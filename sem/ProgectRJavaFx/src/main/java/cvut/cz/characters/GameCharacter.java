@@ -12,17 +12,25 @@ import cvut.cz.GameSprite.GameSpriteSourceInformation;
 import cvut.cz.Model.Updatable;
 
 
+/**
+ * Represents a character in the game. Manages animation, taking damage and dying of a character.
+ */
 public abstract class GameCharacter extends GameSprite implements Updatable {
 
     protected CharacterInformation characterInformation;
     protected CharacterAnimation characterAnimation;
 
+    // Time (in milliseconds) when method die() was called
     protected long startedDyingTime;
+    // Time (in milliseconds) for which the character is dying
     protected long dyingTime;
 
+    // Time (in milliseconds) when method takeDamage() was called
     protected long startedGettingDamage;
+    // Time (in milliseconds) for which the character is taking damage
     protected long gettingDamageTime;
 
+    // Current time (in milliseconds)
     protected long now;
 
     protected boolean isBlocked;
@@ -37,12 +45,14 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         this.now = System.currentTimeMillis();
     }
 
-    public CharacterInformation getCharacterInformation() { return characterInformation; }
 
     protected int calculateLengthOfVector(int x1, int y1, int x2, int y2) {
         return (int) Math.ceil(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
     }
 
+    /**
+     * Selects animation based on the current state of the animation
+     */
     protected void animate(){
         if (characterAnimation.previousAnimationState != characterAnimation.currentAnimationState) {
             characterAnimation.previousAnimationState = characterAnimation.currentAnimationState;
@@ -50,35 +60,35 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         }
 
         switch (characterAnimation.currentAnimationState){
-            case IdleUP:
+            case IdleUp:
                 applyAnimation(characterAnimation.idleUpAnimation);
                 break;
 
-            case IdleDOWN:
+            case IdleDown:
                 applyAnimation(characterAnimation.idleDownAnimation);
                 break;
 
-            case IdleLEFT:
+            case IdleLeft:
                 applyAnimation(characterAnimation.idleLeftAnimation);
                 break;
 
-            case IdleRIGHT:
+            case IdleRight:
                 applyAnimation(characterAnimation.idleRightAnimation);
                 break;
 
-            case WalkingUP:
+            case WalkingUp:
                 applyAnimation(characterAnimation.moveUpAnimation);
                 break;
 
-            case WalkingDOWN:
+            case WalkingDown:
                 applyAnimation(characterAnimation.moveDownAnimation);
                 break;
 
-            case WalkingLEFT:
+            case WalkingLeft:
                 applyAnimation(characterAnimation.moveLeftAnimation);
                 break;
 
-            case WalkingRIGHT:
+            case WalkingRight:
                 applyAnimation(characterAnimation.moveRightAnimation);
                 break;
 
@@ -124,25 +134,39 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         }
     }
 
+    /**
+     * Manages animation and apply it to the character
+     *
+     * @param animation - animation to be applied
+     */
     protected void applyAnimation(AnimationInformation[] animation) {
         if (animation == null)
             return;
 
         this.gameSpriteSourceInformation.setSourceCoordinateX(animation[characterAnimation.currentAnimation].sourceX());
         this.gameSpriteSourceInformation.setSourceCoordinateY(animation[characterAnimation.currentAnimation].sourceY());
+
         this.gameSpriteSourceInformation.setSourceWidth(animation[characterAnimation.currentAnimation].sourceWidth());
         this.gameSpriteSourceInformation.setSourceHeight(animation[characterAnimation.currentAnimation].sourceHeight());
+
         this.gameSpriteRenderInformation.setTargetHeight(animation[characterAnimation.currentAnimation].targetHeight());
         this.gameSpriteRenderInformation.setTargetWidth(animation[characterAnimation.currentAnimation].targetWidth());
 
+        //next frame is ready to be drawn
         characterAnimation.currentAnimation++;
         characterAnimation.currentAnimation %= animation.length;
     }
 
+    /**
+     * Resets state of the player animation to idle
+     */
     protected void idle(){
-        setAnimationStateDirection(new AnimationStates[]{IdleUP, IdleDOWN, IdleLEFT, IdleRIGHT});
+        setAnimationStateDirection(new AnimationStates[]{IdleUp, IdleDown, IdleLeft, IdleRight});
     }
 
+    /**
+     * Updates state of the character. Should be called every frame.
+     */
     @Override
     public void update() {
         if (isDead)
@@ -156,31 +180,38 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         }
     }
 
+    /**
+     * Set the animation state based on the direction of the previous animation.
+     *
+     * @param animationStates - Array of animation states that should be applied. it must consist of 4 elements, one for each direction.
+     */
     protected void setAnimationStateDirection(AnimationStates[] animationStates){
         switch (characterAnimation.currentAnimationState) {
-            case IdleUP, WalkingUP, AttackingUp, ShootingPistolUp, ShootingShotGunUp, TakingDamageUp, DyingUp, AimingPistolUp, AimingShotGunUp, ChasingUp:
+            case IdleUp, WalkingUp, AttackingUp, ShootingPistolUp, ShootingShotGunUp, TakingDamageUp, DyingUp, AimingPistolUp, AimingShotGunUp, ChasingUp:
                 characterAnimation.currentAnimationState = animationStates[0];
                 break;
-            case IdleDOWN, WalkingDOWN, AttackingDown, ShootingPistolDown, ShootingShotGunDown, TakingDamageDown, DyingDown, AimingPistolDown, AimingShotGunDown, ChasingDown:
+            case IdleDown, WalkingDown, AttackingDown, ShootingPistolDown, ShootingShotGunDown, TakingDamageDown, DyingDown, AimingPistolDown, AimingShotGunDown, ChasingDown:
                 characterAnimation.currentAnimationState = animationStates[1];
                 break;
-            case IdleLEFT, WalkingLEFT, AttackingLeft, ShootingPistolLeft, ShootingShotGunLeft, TakingDamageLeft, DyingLeft, AimingPistolLeft, AimingShotGunLeft, ChasingLeft:
+            case IdleLeft, WalkingLeft, AttackingLeft, ShootingPistolLeft, ShootingShotGunLeft, TakingDamageLeft, DyingLeft, AimingPistolLeft, AimingShotGunLeft, ChasingLeft:
                 characterAnimation.currentAnimationState = animationStates[2];
                 break;
-            case IdleRIGHT, WalkingRIGHT, AttackingRight, ShootingPistolRight, ShootingShotGunRight, TakingDamageRight, DyingRight, AimingPistolRight, AimingShotGunRight, ChasingRight:
+            case IdleRight, WalkingRight, AttackingRight, ShootingPistolRight, ShootingShotGunRight, TakingDamageRight, DyingRight, AimingPistolRight, AimingShotGunRight, ChasingRight:
                 characterAnimation.currentAnimationState = animationStates[3];
                 break;
         }
     }
 
-    public void setCharacterAnimation(CharacterAnimation characterAnimation) {
-        this.characterAnimation = characterAnimation;
-        this.characterAnimation.previousAnimationState = null;
-        this.characterAnimation.currentAnimationState = IdleDOWN;
-    }
 
+
+    /**
+     * Manages taking damage by the character
+     *
+     * @param damage - amount of damage to be taken
+     */
     public void takeDamage(int damage) {
         characterInformation.setCurrentHealth(characterInformation.getCurrentHealth() - damage);
+
         if (characterInformation.getCurrentHealth() <= 0) {
             die();
             return;
@@ -190,16 +221,26 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         setAnimationStateDirection(new AnimationStates[]{TakingDamageUp, TakingDamageDown, TakingDamageLeft, TakingDamageRight});
     }
 
+    /**
+     * Manages dying of the character
+     */
     public void die(){
         isBlocked = true;
         startedDyingTime = now;
         setAnimationStateDirection(new AnimationStates[]{DyingUp, DyingDown, DyingLeft, DyingRight});
     }
 
-    public boolean isDead() {return isDead; }
-    public boolean isBlocked(){ return isBlocked; }
+    public CharacterInformation getCharacterInformation() { return characterInformation; }
     public CharacterAnimation getCharacterAnimation() { return characterAnimation; }
 
+    public boolean isDead() {return isDead; }
+    public boolean isBlocked(){ return isBlocked; }
+
+    public void setCharacterAnimation(CharacterAnimation characterAnimation) {
+        this.characterAnimation = characterAnimation;
+        this.characterAnimation.previousAnimationState = null;
+        this.characterAnimation.currentAnimationState = IdleDown;
+    }
 
     protected abstract void move(Directions direction, int speed);
     protected  abstract void attack();
