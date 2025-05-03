@@ -6,6 +6,5 @@ public enum States {
     DAMAGED,
     ATTACKING,
     WALKING,
-    RUNNING,
     CHASING
 }
