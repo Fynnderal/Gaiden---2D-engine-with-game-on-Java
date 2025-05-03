@@ -15,15 +15,9 @@ import cvut.cz.GameSprite.GameSpriteSourceInformation;
 public class MapConstructor {
     private static final Logger logger = Logger.getLogger(MapConstructor.class.getName());
 
-    private Map map;
-
     private List<Tile> sourceTiles;
-//    private List<Tile> mapTiles;
     private List<Collision> mapCollisions;
     private List<MapSection> mapSections;
-
-//    private int mapImageHeight;
-//    private int mapImageWidth;
 
     private final int mapCoordinateX;
     private final int mapCoordinateY;
@@ -46,14 +40,11 @@ public class MapConstructor {
         this.mapCollisionsPath = mapCollisionsPath;
     }
 
-    public Map createMap() {
+    public GameMap createMap() {
         createMapSections();
         createCollisions();
 
-
-        map = new Map(mapCollisions, mapSections, this.mapInformation);
-
-        return map;
+        return new GameMap(mapCollisions, mapSections, this.mapInformation);
     }
 
     private void readSourceTiles()
@@ -65,60 +56,58 @@ public class MapConstructor {
 
     private void createMapSections() {
         readSourceTiles();
-//        mapTiles = new ArrayList<>();
         mapSections = new ArrayList<>();
 
-        Tile currentTile;
-        int currentSectionWidth, currentSectionHeight, currentSectionWorldX = 0, currentSectionWorldY = 0;
-        int collumn, row, idx;
-        List <Tile> sectionTiles;
         for (URL url: mapSectionsPaths) {
-            sectionTiles = new ArrayList<>();
-            currentSectionWidth = 0;
-            currentSectionHeight = 0;
-            collumn = 0;
-            row = 0;
-
-            try (Scanner scanner = new Scanner(new File(url.getPath()))) {
-                currentSectionWorldX = scanner.nextInt();
-                currentSectionWorldY = scanner.nextInt();
-
-                while (scanner.hasNextInt()) {
-                    idx = scanner.nextInt();
-                    if (idx < 0) {
-                        int temp = Tile.getSourceTileSize() * collumn;
-                        if (temp > currentSectionWidth)
-                            currentSectionWidth = temp;
-
-                        collumn = 0;
-                        row++;
-                        continue;
-                    }
-                    try {
-                        currentTile = sourceTiles.get(idx).clone();
-                        currentTile.getGameSpriteRenderInformation().setWorldCoordinateX(currentSectionWorldX + collumn * Tile.getSourceTileSize());
-                        currentTile.getGameSpriteRenderInformation().setWorldCoordinateY(currentSectionWorldY + row * Tile.getSourceTileSize());
-
-                        sectionTiles.add(currentTile);
-                    } catch (NullPointerException e) {
-                        logger.severe("Null instead of tile. Row " + row + "Column " + collumn + "Idx = " + idx);
-                    }
-                    collumn++;
-                }
-            } catch (FileNotFoundException e) {
-                logger.severe("Map File was not found");
-            }
-            currentSectionHeight = Tile.getSourceTileSize() * row;
-
-
-            GameSpriteSourceInformation mapSectionSourceInformation = new GameSpriteSourceInformation(null, 0, 0, currentSectionWidth, currentSectionHeight);
-            GameSpriteRenderInformation mapSectionRenderInformation = new GameSpriteRenderInformation(currentSectionWorldX + this.mapCoordinateX, currentSectionWorldY + this.mapCoordinateY, currentSectionWidth * this.mapTargetScaleFactorX, currentSectionHeight * this.mapTargetScaleFactorY, currentSectionWorldX, currentSectionWorldY);
-            MapSection mapSection = new MapSection(mapSectionSourceInformation, mapSectionRenderInformation, sectionTiles);
-            mapSections.add(mapSection);
-
-            logger.info("MapSection Height: " + currentSectionHeight);
-            logger.info("MapSection Width: " + currentSectionWidth);
+            readSection(url);
         }
+    }
+
+    private void readSection(URL pathToSection) {
+        Tile currentTile;
+        int currentSectionWidth = 0, currentSectionHeight, currentSectionWorldX = 0, currentSectionWorldY = 0;
+        int column = 0, row = 0, idx;
+        List <Tile> sectionTiles = new ArrayList<>();
+
+        try (Scanner scanner = new Scanner(new File(pathToSection.getPath()))) {
+            currentSectionWorldX = scanner.nextInt();
+            currentSectionWorldY = scanner.nextInt();
+
+            while (scanner.hasNextInt()) {
+                idx = scanner.nextInt();
+                if (idx < 0) {
+                    int temp = Tile.getSourceTileSize() * column;
+                    if (temp > currentSectionWidth)
+                        currentSectionWidth = temp;
+
+                    column = 0;
+                    row++;
+                    continue;
+                }
+                try {
+                    currentTile = sourceTiles.get(idx).clone();
+                    currentTile.getGameSpriteRenderInformation().setWorldCoordinateX(currentSectionWorldX + column * Tile.getSourceTileSize());
+                    currentTile.getGameSpriteRenderInformation().setWorldCoordinateY(currentSectionWorldY + row * Tile.getSourceTileSize());
+
+                    sectionTiles.add(currentTile);
+                } catch (NullPointerException e) {
+                    logger.severe("Null instead of tile. Row " + row + "Column " + column + "Idx = " + idx);
+                }
+                column++;
+            }
+        } catch (FileNotFoundException e) {
+            logger.severe("Map File was not found");
+        }
+
+        currentSectionHeight = Tile.getSourceTileSize() * row;
+
+        GameSpriteSourceInformation mapSectionSourceInformation = new GameSpriteSourceInformation(null, 0, 0, currentSectionWidth, currentSectionHeight);
+        GameSpriteRenderInformation mapSectionRenderInformation = new GameSpriteRenderInformation(currentSectionWorldX + this.mapCoordinateX, currentSectionWorldY + this.mapCoordinateY, currentSectionWidth * this.mapTargetScaleFactorX, currentSectionHeight * this.mapTargetScaleFactorY, currentSectionWorldX, currentSectionWorldY);
+        MapSection mapSection = new MapSection(mapSectionSourceInformation, mapSectionRenderInformation, sectionTiles);
+        mapSections.add(mapSection);
+
+        logger.info("MapSection Height: " + currentSectionHeight);
+        logger.info("MapSection Width: " + currentSectionWidth);
     }
 
     private void createCollisions() {
@@ -142,6 +131,5 @@ public class MapConstructor {
         }
     }
 
-    public List<MapSection> getMapSections() { return mapSections; }
 
 }
