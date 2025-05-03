@@ -27,6 +27,10 @@ public class CharacterInformation implements Cloneable{
         }
     }
 
+    /**
+     * Sets current health of character
+     * @param currentHealth - value to set, if it's greater than maxHealth, currentHealth will equal maxHealth
+     */
     public void setCurrentHealth(int currentHealth) {
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         this.currentHealth = currentHealth;
