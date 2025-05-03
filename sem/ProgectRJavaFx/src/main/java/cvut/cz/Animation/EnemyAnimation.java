@@ -1,5 +1,8 @@
 package cvut.cz.Animation;
 
+/**
+ * Saves animations for enemies
+ */
 public class EnemyAnimation extends CharacterAnimation{
     public AnimationInformation[] attackUpAnimation;
     public AnimationInformation[] attackDownAnimation;
