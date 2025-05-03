@@ -1,18 +1,25 @@
 package cvut.cz.items;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cvut.cz.GameSprite.GameSprite;
 import cvut.cz.GameSprite.GameSpriteRenderInformation;
 import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 public class Item extends GameSprite implements Cloneable {
-    private ItemInformation itemInformation;
+    private final ItemInformation itemInformation;
     private int amount;
 
-    public Item(GameSpriteSourceInformation gameSpriteSourceInformation, ItemInformation itemInformation, int amount) {
+    @JsonCreator
+    public Item(@JsonProperty("gameSpriteSourceInformation") GameSpriteSourceInformation gameSpriteSourceInformation,
+                @JsonProperty("itemInformation") ItemInformation itemInformation, @JsonProperty("amount") int amount) {
+
         this(gameSpriteSourceInformation, new GameSpriteRenderInformation(0, 0, 0, 0,0, 0), itemInformation, amount);
     }
 
-    public Item(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation, ItemInformation itemInformation, int amount) {
+    public Item(GameSpriteSourceInformation gameSpriteSourceInformation,  GameSpriteRenderInformation gameSpriteRenderInformation,
+                ItemInformation itemInformation, int amount) {
+
         super(gameSpriteSourceInformation, gameSpriteRenderInformation);
         this.itemInformation = itemInformation;
         this.amount = amount;
@@ -34,5 +41,4 @@ public class Item extends GameSprite implements Cloneable {
     public int getAmount() { return amount; }
 
     public void setAmount(int amount) { this.amount = amount; }
-    public void setItemInformation(ItemInformation itemInformation) { this.itemInformation = itemInformation; }
 }

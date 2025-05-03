@@ -1,11 +1,16 @@
 package cvut.cz.items;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cvut.cz.GameSprite.GameSprite;
 import cvut.cz.GameSprite.GameSpriteRenderInformation;
 import cvut.cz.GameSprite.GameSpriteSourceInformation;
 import cvut.cz.characters.Directions;
 import cvut.cz.characters.PlayableCharacter;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,29 +19,41 @@ import java.util.logging.Logger;
 public class Inventory extends GameSprite {
     Logger logger = Logger.getLogger(Inventory.class.getName());
 
-    private final PlayableCharacter character;
+    private final static ObjectMapper mapper = new ObjectMapper();
+
+    protected static final String pathToItems = "playerItems.json";
+
     private final InventoryInformation inventoryInformation;
     private final List<Item> items;
     private final List<InventoryCell> cells;
+    private final InventoryCellGeneralInformation inventoryCellGeneralInformation;
+
     private int currentCell;
     private InventoryCell equippedCell;
+    private Pointer pointer;
+    private Map<String, Item> possibleItems;
 
-    public Inventory(InventoryInformation inventoryInformation, PlayableCharacter character, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+    private PlayableCharacter character;
+
+    public Inventory(InventoryInformation inventoryInformation, InventoryCellGeneralInformation inventoryCellGeneralInformation,
+                     GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
+
         super(gameSpriteSourceInformation, gameSpriteRenderInformation);
         this.gameSpriteRenderInformation.setWorldCoordinateY(0);
         this.gameSpriteRenderInformation.setWorldCoordinateX(0);
         this.inventoryInformation = inventoryInformation;
-        this.character = character;
-        this.items = character.getItems();
+        this.inventoryCellGeneralInformation = inventoryCellGeneralInformation;
         this.currentCell = 0;
         this.cells = new ArrayList<>();
+        this.items =  new ArrayList<>();
 
+        readAvailableItems();
         setCells();
     }
 
-    public boolean addItemToInventory(Item item) {
+    public void addItemToInventory(Item item) {
         if (item == null)
-            return false;
+            return;
 
         InventoryCell emptyCell = null;
 
@@ -49,18 +66,14 @@ public class Inventory extends GameSprite {
             if (cell.getItem().getItemInformation().name().equals(item.getItemInformation().name())) {
                 cell.setItemAmount(cell.getItemAmount() + item.getAmount());
                 adjustItem(item, cell.getCoordinateX(), cell.getCoordinateY());
-                items.add(item);
-                return true;
+                return;
             }
         }
+
         if (emptyCell != null) {
-            items.add(item);
             adjustItem(item, emptyCell.getCoordinateX(), emptyCell.getCoordinateY());
             emptyCell.setItem(item);
-            return true;
         }
-
-        return false;
     }
 
     private void setCells() {
@@ -74,8 +87,8 @@ public class Inventory extends GameSprite {
                 columnCounter = 0;
             }
 
-            currentX = inventoryInformation.firstCellCoordinateX() + columnCounter * (inventoryInformation.inventoryCellGeneralInformation().cellWidth() + inventoryInformation.gapBetweenCellsX());
-            currentY = inventoryInformation.firstCellCoordinateY() + rowCounter * (inventoryInformation.inventoryCellGeneralInformation().cellHeight() + inventoryInformation.gapBetweenCellsY());
+            currentX = inventoryInformation.firstCellCoordinateX() + columnCounter * (inventoryCellGeneralInformation.cellWidth() + inventoryInformation.gapBetweenCellsX());
+            currentY = inventoryInformation.firstCellCoordinateY() + rowCounter * (inventoryCellGeneralInformation.cellHeight() + inventoryInformation.gapBetweenCellsY());
 
             if (items == null || i >= items.size())
                 currentItem = null;
@@ -91,6 +104,9 @@ public class Inventory extends GameSprite {
     }
 
     public void movePointer(Directions direction) {
+        if (pointer == null)
+            return;
+
         if (cells.isEmpty())
             logger.severe("There is no inventory cells");
 
@@ -115,22 +131,25 @@ public class Inventory extends GameSprite {
                 break;
 
         }
-        inventoryInformation.pointer().getGameSpriteRenderInformation().setScreenCoordinateX(cells.get(currentCell).getCoordinateX());
-        inventoryInformation.pointer().getGameSpriteRenderInformation().setScreenCoordinateY(cells.get(currentCell).getCoordinateY());
+        pointer.getGameSpriteRenderInformation().setScreenCoordinateX(cells.get(currentCell).getCoordinateX());
+        pointer.getGameSpriteRenderInformation().setScreenCoordinateY(cells.get(currentCell).getCoordinateY());
     }
 
-    public boolean combineCells(InventoryCell firstCell, InventoryCell secondCell){
+    public void combineCells(InventoryCell firstCell, InventoryCell secondCell){
+        if (possibleItems == null)
+            return;
+
         if (firstCell == null || secondCell == null)
-            return false;
+            return;
 
         if (firstCell.getItem() == null || secondCell.getItem() == null)
-            return false;
+            return;
 
         Map<String, String> canBeCombinedWithInto1 = firstCell.getItem().getItemInformation().canBeCombinedWithInto();
         Map<String, String> canBeCombinedWithInto2 = secondCell.getItem().getItemInformation().canBeCombinedWithInto();
 
         if (canBeCombinedWithInto1 == null || canBeCombinedWithInto2 == null)
-            return false;
+            return;
 
         if (canBeCombinedWithInto1.containsKey(secondCell.getItem().getItemInformation().name())){
             String resultItemName = canBeCombinedWithInto1.get(secondCell.getItem().getItemInformation().name());
@@ -143,39 +162,36 @@ public class Inventory extends GameSprite {
                     inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() + 1);
                     discardCell(firstCell);
                     discardCell(secondCell);
-                    return true;
+                    return;
                 }
             }
-            firstCell.setItem(adjustItem(inventoryInformation.possibleItems().get(resultItemName).clone(), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
+            firstCell.setItem(adjustItem(possibleItems.get(resultItemName).clone(), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
             discardCell(secondCell);
-            return true;
         }
-        return false;
     }
 
-    public boolean discardCell(InventoryCell inventoryCell){
+    public void discardCell(InventoryCell inventoryCell){
         if (inventoryCell == null)
-            return false;
+            return;
 
         if (inventoryCell.getItem() == null)
-            return false;
+            return;
 
         if (!inventoryCell.getItem().getItemInformation().canBeDiscarded())
-            return false;
+            return;
 
         inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() - 1);
-        return true;
     }
 
-    public boolean equipCell(InventoryCell inventoryCell){
+    public void equipCell(InventoryCell inventoryCell){
         if (inventoryCell == null)
-            return false;
+            return;
 
         if (inventoryCell.getItem() == null)
-            return false;
+            return;
 
         if (!inventoryCell.getItem().getItemInformation().canBeEquipped())
-            return false;
+            return;
 
         if (equippedCell == inventoryCell) {
             equippedCell = null;
@@ -186,35 +202,110 @@ public class Inventory extends GameSprite {
             inventoryCell.setIsItemEquipped(true);
             equippedCell = inventoryCell;
         }
-        return true;
     }
 
-    public boolean useCell(InventoryCell inventoryCell) {
+    public void useCell(InventoryCell inventoryCell) {
         if (inventoryCell == null)
-            return false;
+            return;
 
         if (inventoryCell.getItem() == null)
-            return false;
+            return;
 
         if (!inventoryCell.getItem().getItemInformation().canBeUsed())
-            return false;
+            return;
 
         character.useItem(inventoryCell.getItem());
 
         inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() - 1);
-        return true;
+    }
+
+    public InventoryCell getInventoryCellByName(String nameOfItem){
+        for (InventoryCell inventoryCell: cells) {
+            if (inventoryCell.getItem() == null)
+                continue;
+
+            if (inventoryCell.getItem().getItemInformation().name().equals(nameOfItem))
+                return inventoryCell;
+        }
+        return null;
     }
 
     private Item adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
-        item.getGameSpriteRenderInformation().setScreenCoordinateX(inventoryCellX + inventoryInformation.inventoryCellGeneralInformation().itemCoordinateXRelativeToCell());
-        item.getGameSpriteRenderInformation().setScreenCoordinateY(inventoryCellY + inventoryInformation.inventoryCellGeneralInformation().itemCoordinateYRelativeToCell());
-        item.getGameSpriteRenderInformation().setTargetWidth(inventoryInformation.inventoryCellGeneralInformation().itemWidthInCell());
-        item.getGameSpriteRenderInformation().setTargetHeight(inventoryInformation.inventoryCellGeneralInformation().itemHeightInCell());
+        double widthScaleFactor = (double)inventoryCellGeneralInformation.itemWidthInCell() / item.getGameSpriteSourceInformation().getSourceWidth();
+        double heightScaleFactor = (double)inventoryCellGeneralInformation.itemHeightInCell() / item.getGameSpriteSourceInformation().getSourceHeight();
+        double scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
+
+        item.getGameSpriteRenderInformation().setTargetWidth((int) (item.getGameSpriteSourceInformation().getSourceWidth() * scaleFactor));
+        item.getGameSpriteRenderInformation().setTargetHeight((int) (item.getGameSpriteSourceInformation().getSourceHeight() * scaleFactor));
+
+        int cellCenterX =  inventoryCellGeneralInformation.itemCoordinateXRelativeToCell() + inventoryCellGeneralInformation.itemWidthInCell() / 2;
+        int cellCenterY = inventoryCellGeneralInformation.itemCoordinateYRelativeToCell() + inventoryCellGeneralInformation.itemHeightInCell() / 2;
+
+        int itemCoordinateX = cellCenterX - item.getGameSpriteRenderInformation().getTargetWidth() / 2;
+        int itemCoordinateY = cellCenterY - item.getGameSpriteRenderInformation().getTargetHeight() / 2;
+
+        item.getGameSpriteRenderInformation().setScreenCoordinateX(inventoryCellX + itemCoordinateX);
+        item.getGameSpriteRenderInformation().setScreenCoordinateY(inventoryCellY + itemCoordinateY);
+
         return item;
+    }
+
+    public void readAvailableItems() {
+        try (FileReader fileReader = new FileReader(pathToItems)) {
+            Object[] temp = mapper.readValue(fileReader, Item[].class);
+            for (Object object: temp){
+                if (object instanceof Item){
+                    items.add((Item) object);
+                }
+            }
+        } catch (IOException | ClassCastException e) {
+            System.err.println("[ERROR] Problem with reading json file. Problem: " + e.getMessage());
+        }
+
+    }
+
+    public void writeAvailableItems() {
+        try (FileWriter fileWriter = new FileWriter(pathToItems)) {
+            mapper.writeValue(fileWriter, getItems().toArray());
+        } catch (IOException e) {
+            System.err.println("[ERROR] Problem with writing into json file. Problem: " + e.getMessage());
+        }
+    }
+
+    public List<Item> getItems() {
+        items.clear();
+        for (InventoryCell cell: cells) {
+            if (cell == null || cell.getItem() == null)
+                continue;
+            items.add(cell.getItem());
+        }
+        return items;
     }
 
     public InventoryCell getSelectedInventoryCell(){ return cells.get(currentCell); }
     public List<InventoryCell> getCells() { return cells; }
-    public InventoryInformation getInventoryInformation() { return inventoryInformation; }
     public InventoryCell getEquippedCell() { return equippedCell; }
+    public InventoryCellGeneralInformation getInventoryCellGeneralInformation() { return inventoryCellGeneralInformation; }
+    public Pointer getPointer() { return pointer; }
+    public Map<String, Item> getPossibleItems() {return possibleItems;}
+
+    public void setPointer(Pointer pointer) {
+        pointer.getGameSpriteRenderInformation().setScreenCoordinateX(inventoryInformation.firstCellCoordinateX());
+        pointer.getGameSpriteRenderInformation().setScreenCoordinateY(inventoryInformation.firstCellCoordinateY());
+        pointer.getGameSpriteRenderInformation().setTargetWidth(inventoryCellGeneralInformation.cellWidth());
+        pointer.getGameSpriteRenderInformation().setTargetHeight(inventoryCellGeneralInformation.cellHeight());
+        this.pointer = pointer;
+    }
+
+    public void setItems(List<Item> items) {
+        if (items == null)
+            return;
+
+        for (Item item : items) {
+            addItemToInventory(item);
+        }
+    }
+
+    public void setPossibleItems(Map<String, Item> possibleItems) {this.possibleItems = possibleItems; }
+    public void setCharacter(PlayableCharacter character) { this.character = character; }
 }

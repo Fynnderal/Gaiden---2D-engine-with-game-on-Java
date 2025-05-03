@@ -8,7 +8,10 @@ public class GunSight extends GameSprite {
     private final int centerXRelativeToGunSight;
     private final int centerYRelativeToGunSight;
 
-    public GunSight(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation, int centerXRelativeToGunSight, int centerYRelativeToGunSight) {
+    public GunSight( GameSpriteSourceInformation gameSpriteSourceInformation,
+                     GameSpriteRenderInformation gameSpriteRenderInformation,
+                    int centerXRelativeToGunSight, int centerYRelativeToGunSight) {
+
         super(gameSpriteSourceInformation, gameSpriteRenderInformation);
         this.centerXRelativeToGunSight = centerXRelativeToGunSight;
         this.centerYRelativeToGunSight = centerYRelativeToGunSight;
