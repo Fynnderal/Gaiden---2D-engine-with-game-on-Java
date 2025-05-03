@@ -1,7 +1,10 @@
 package cvut.cz.Animation;
 
+/**
+ * Saves animations for playable characters
+ */
 public class PlayerAnimation extends CharacterAnimation {
-    
+
     public AnimationInformation[] shootingPistolUpAnimation;
     public AnimationInformation[] shootingPistolDownAnimation;
     public AnimationInformation[] shootingPistolLeftAnimation;
