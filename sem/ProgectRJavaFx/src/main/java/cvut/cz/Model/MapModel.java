@@ -1,66 +1,70 @@
 package cvut.cz.Model;
 
+import cvut.cz.GameSprite.GameSprite;
 import cvut.cz.Map.*;
-import cvut.cz.characters.GameCharacter;
+import cvut.cz.characters.NPC;
 import cvut.cz.items.Item;
 
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 
-class MapModel {
+public class MapModel {
     private static MapModel instance;
 
-    private static MapConstructor mapConstructor;
-    private static Map map;
-    private static List<GameCharacter> charactersInWorld;
+    private GameMap gameMap;
+
+    private final List<GameSprite> drawableObjects = new LinkedList<>();
+    private final List<Updatable> updatableObjects = new LinkedList<>();
 
     private MapModel() {}
 
-    Map createMap(MapSlicer mapSlicer, URL pathToCollisions, List<URL> pathsToSections, MapInformation mapInformation) {
-        mapConstructor = new MapConstructor(mapSlicer, pathToCollisions, pathsToSections,mapInformation);
-        map = mapConstructor.createMap();
-        Model.getDrawableObjects().addAll(mapConstructor.getMapSections());
-        return map;
+    public void createMap(MapSlicer mapSlicer, URL pathToCollisions, List<URL> pathsToSections, MapInformation mapInformation) {
+        MapConstructor mapConstructor = new MapConstructor(mapSlicer, pathToCollisions, pathsToSections,mapInformation);
+        gameMap = mapConstructor.createMap();
+        drawableObjects.addAll(gameMap.getMapSections());
     }
 
-    void setItemsInWorld(List<Item> itemsInWorld) {
+    public void setItemsInWorld(List<Item> itemsInWorld) {
         for (Item item : itemsInWorld) {
-            item.getGameSpriteRenderInformation().setScreenCoordinateX(item.getGameSpriteRenderInformation().getWorldCoordinateX() + map.getMapInformation().mapCoordinateX());
-            item.getGameSpriteRenderInformation().setScreenCoordinateY(item.getGameSpriteRenderInformation().getWorldCoordinateY() + map.getMapInformation().mapCoordinateY());
-            Model.getDrawableObjects().add(item);
+            item.getGameSpriteRenderInformation().setScreenCoordinateX(item.getGameSpriteRenderInformation().getWorldCoordinateX() + gameMap.getMapInformation().mapCoordinateX());
+            item.getGameSpriteRenderInformation().setScreenCoordinateY(item.getGameSpriteRenderInformation().getWorldCoordinateY() + gameMap.getMapInformation().mapCoordinateY());
+            drawableObjects.add(item);
         }
-        map.setItemsOnMap(itemsInWorld);
+        gameMap.setItemsOnMap(itemsInWorld);
 
     }
 
-    void setMapSpots(List<MapSpot> mapSpots) {
+    public void setMapSpots(List<MapSpot> mapSpots) {
         for (MapSpot mapSpot : mapSpots) {
-            mapSpot.getGameSpriteRenderInformation().setScreenCoordinateX(mapSpot.getGameSpriteRenderInformation().getWorldCoordinateX() + map.getMapInformation().mapCoordinateX());
-            mapSpot.getGameSpriteRenderInformation().setScreenCoordinateY(mapSpot.getGameSpriteRenderInformation().getWorldCoordinateY() + map.getMapInformation().mapCoordinateY());
-            Model.getDrawableObjects().add(mapSpot);
+            mapSpot.getGameSpriteRenderInformation().setScreenCoordinateX(mapSpot.getGameSpriteRenderInformation().getWorldCoordinateX() + gameMap.getMapInformation().mapCoordinateX());
+            mapSpot.getGameSpriteRenderInformation().setScreenCoordinateY(mapSpot.getGameSpriteRenderInformation().getWorldCoordinateY() + gameMap.getMapInformation().mapCoordinateY());
+            drawableObjects.add(mapSpot);
         }
-        map.setMapSpots(mapSpots);
+        gameMap.setMapSpots(mapSpots);
     }
 
-    void setCharactersInWorld(List<GameCharacter> charactersInWorld) {
-        for (GameCharacter character : charactersInWorld) {
-            character.getGameSpriteRenderInformation().setScreenCoordinateX(character.getGameSpriteRenderInformation().getWorldCoordinateX() + map.getMapInformation().mapCoordinateX());
-            character.getGameSpriteRenderInformation().setScreenCoordinateY(character.getGameSpriteRenderInformation().getWorldCoordinateY() + map.getMapInformation().mapCoordinateY());
-            Model.getDrawableObjects().add(character);
-            Model.getUpdatableObjects().add(character);
+   public void setCharactersInWorld(List<NPC> charactersInWorld) {
+        for (NPC character : charactersInWorld) {
+            character.getGameSpriteRenderInformation().setScreenCoordinateX(character.getGameSpriteRenderInformation().getWorldCoordinateX() + gameMap.getMapInformation().mapCoordinateX());
+            character.getGameSpriteRenderInformation().setScreenCoordinateY(character.getGameSpriteRenderInformation().getWorldCoordinateY() + gameMap.getMapInformation().mapCoordinateY());
+            drawableObjects.add(character);
+            updatableObjects.add(character);
         }
-        MapModel.charactersInWorld = charactersInWorld;
-        if (map != null) {
-            map.setCharactersOnMap(charactersInWorld);
+
+        if (gameMap != null) {
+            gameMap.setCharactersOnMap(charactersInWorld);
         }
     }
 
-    MapConstructor getMapConstructor() { return mapConstructor; }
-
-    static MapModel getMapModel() {
+    public static MapModel getMapModel() {
         if (instance == null)
             instance = new MapModel();
 
         return instance;
     }
+
+    public  GameMap getMap() { return gameMap; }
+    public List<GameSprite> getDrawableObjects() { return drawableObjects; }
+    public List<Updatable> getUpdatableObjects() { return updatableObjects; }
 }
