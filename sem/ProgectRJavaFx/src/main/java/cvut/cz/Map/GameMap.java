@@ -1,54 +1,85 @@
 package cvut.cz.Map;
 
+
 import cvut.cz.GameSprite.GameSprite;
-import cvut.cz.GameSprite.GameSpriteRenderInformation;
-import cvut.cz.GameSprite.GameSpriteSourceInformation;
 import cvut.cz.characters.Directions;
 import cvut.cz.characters.GameCharacter;
+import cvut.cz.characters.NPC;
 import cvut.cz.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map {
+public class GameMap {
 
     private final List<Collision> collisions;
-    private List<Item> itemsOnMap;
-    private List<GameCharacter> charactersOnMap;
-    private List<MapSpot> mapSpots;
-    private List<MapSection> mapSections;
-    private MapInformation mapInformation;
 
-    public Map(List<Collision> collisions, List<MapSection> mapSections, MapInformation mapInformation)
+    private List<Item> itemsOnMap;
+    private List<NPC> charactersOnMap;
+
+    private List<MapSpot> mapSpots;
+
+    private final List<MapSection> mapSections;
+    private final MapInformation mapInformation;
+
+    public GameMap(List<Collision> collisions, List<MapSection> mapSections, MapInformation mapInformation)
     {
         this.mapInformation = mapInformation;
         this.mapSections = mapSections;
         this.collisions = collisions;
     }
 
-    public Item checkNearestAvailableItems(GameCharacter gameCharacter) {
+    private boolean isObjectNear(GameCharacter gameCharacter, GameSprite object) {
         int gameCharacterX = gameCharacter.getGameSpriteRenderInformation().getScreenCoordinateX();
         int gameCharacterY = gameCharacter.getGameSpriteRenderInformation().getScreenCoordinateY();
         int gameCharacterWidth = gameCharacter.getGameSpriteRenderInformation().getTargetWidth();
         int gameCharacterHeight = gameCharacter.getGameSpriteRenderInformation().getTargetHeight();
 
-        int currentItemX, currentItemY, currentItemWidth, currentItemHeight;
+        int currentObjectX = object.getGameSpriteRenderInformation().getScreenCoordinateX();
+        int currentObjectY = object.getGameSpriteRenderInformation().getScreenCoordinateY();
+        int currentObjectWidth = object.getGameSpriteRenderInformation().getTargetWidth();
+        int currentObjectHeight = object.getGameSpriteRenderInformation().getTargetHeight();
+
+        return  (gameCharacterX <= currentObjectX + currentObjectWidth + 5 &&
+                gameCharacterX + gameCharacterWidth >= currentObjectX - 5 &&
+                gameCharacterY <= currentObjectHeight + currentObjectY + 5 &&
+                gameCharacterY + gameCharacterHeight >= currentObjectY - 5);
+    }
+
+    public NPC getNearestNPC(GameCharacter gameCharacter) {
+        if (charactersOnMap == null || charactersOnMap.isEmpty())
+            return null;
+
+        for (NPC character : charactersOnMap){
+            if (isObjectNear(gameCharacter, character))
+                return  character;
+        }
+
+        return null;
+    }
+
+    public Item getNearestAvailableItem(GameCharacter gameCharacter) {
+        if (itemsOnMap == null || itemsOnMap.isEmpty())
+            return null;
+
         for(Item item: itemsOnMap){
-            currentItemX = item.getGameSpriteRenderInformation().getScreenCoordinateX();
-            currentItemY = item.getGameSpriteRenderInformation().getScreenCoordinateY();
-            currentItemWidth = item.getGameSpriteRenderInformation().getTargetWidth();
-            currentItemHeight = item.getGameSpriteRenderInformation().getTargetHeight();
-
-            if (gameCharacterX <= currentItemX + currentItemWidth + 5 &&
-                gameCharacterX + gameCharacterWidth >= currentItemX - 5 &&
-                gameCharacterY <= currentItemHeight + currentItemY + 5 &&
-                gameCharacterY + gameCharacterHeight >= currentItemHeight - 5)
-            {
-
+            if (isObjectNear(gameCharacter, item))
                 return item;
-            }
         }
         return null;
+    }
+
+    public List<MapSpot> getNearestMapSpots(GameCharacter gameCharacter) {
+        if (mapSpots == null)
+            return null;
+
+        List<MapSpot> availableMapSpots = new ArrayList<>();
+
+        for(MapSpot mapSpot: mapSpots){
+            if (isObjectNear(gameCharacter, mapSpot))
+                availableMapSpots.add(mapSpot);
+        }
+        return availableMapSpots;
     }
 
     public boolean checkCollisions(int pathRectXLeft, int pathRectYUp, int pathRectXRight, int pathRectYDown, Collision collidedWith) {
@@ -70,35 +101,6 @@ public class Map {
             }
         }
         return false;
-    }
-
-    public List<MapSpot> checkNearestMapSpots(GameCharacter gameCharacter) {
-        if (mapSpots == null)
-            return null;
-
-        List<MapSpot> availableMapSpots = new ArrayList<>();
-
-        int gameCharacterX = gameCharacter.getGameSpriteRenderInformation().getScreenCoordinateX();
-        int gameCharacterY = gameCharacter.getGameSpriteRenderInformation().getScreenCoordinateY();
-        int gameCharacterWidth = gameCharacter.getGameSpriteRenderInformation().getTargetWidth();
-        int gameCharacterHeight = gameCharacter.getGameSpriteRenderInformation().getTargetHeight();
-
-        int currentItemX, currentItemY, currentItemWidth, currentItemHeight;
-        for(MapSpot mapSpot: mapSpots){
-            currentItemX = mapSpot.getGameSpriteRenderInformation().getScreenCoordinateX();
-            currentItemY = mapSpot.getGameSpriteRenderInformation().getScreenCoordinateY();
-            currentItemWidth = mapSpot.getGameSpriteRenderInformation().getTargetWidth();
-            currentItemHeight = mapSpot.getGameSpriteRenderInformation().getTargetHeight();
-
-            if (gameCharacterX <= currentItemX + currentItemWidth + 5 &&
-                gameCharacterX + gameCharacterWidth >= currentItemX - 5 &&
-                gameCharacterY <= currentItemHeight + currentItemY + 5 &&
-                gameCharacterY + gameCharacterHeight >= currentItemHeight - 5)
-            {
-                availableMapSpots.add(mapSpot);
-            }
-        }
-        return availableMapSpots;
     }
 
     public void translateMap(Directions direction, int offset) {
@@ -148,19 +150,13 @@ public class Map {
         }
     }
 
-    private void moveSections(int offsetX, int offsetY) {
-
-    }
-
-    public void addCollision(Collision collision) { collisions.add(collision);}
-
     public MapInformation getMapInformation() { return mapInformation; }
-    public List<Collision> getCollisions() { return collisions; }
-    public List<GameCharacter> getCharactersOnMap() { return charactersOnMap; }
     public List<Item> getItemsOnMap() { return itemsOnMap; }
+    public List<NPC> getCharactersOnMap() { return charactersOnMap; }
+    public List<MapSection> getMapSections() { return mapSections; }
 
     public void setItemsOnMap(List<Item> itemsOnMap) { this.itemsOnMap = itemsOnMap; }
-    public void setCharactersOnMap(List<GameCharacter> charactersOnMap) { this.charactersOnMap = charactersOnMap; }
+    public void setCharactersOnMap(List<NPC> charactersOnMap) { this.charactersOnMap = charactersOnMap; }
 
     public void setMapSpots(List<MapSpot> mapSpots) {
         this.mapSpots = mapSpots;

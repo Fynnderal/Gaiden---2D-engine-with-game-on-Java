@@ -1,5 +1,8 @@
 package cvut.cz.GameSprite;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GameSpriteRenderInformation implements Cloneable {
     protected int screenCoordinateX;
     protected int screenCoordinateY;
@@ -8,7 +11,10 @@ public class GameSpriteRenderInformation implements Cloneable {
     protected int targetWidth;
     protected int targetHeight;
 
-    public GameSpriteRenderInformation(int screenCoordinateX, int screenCoordinateY, int targetWidth, int targetHeight, int worldCoordinateX, int worldCoordinateY) {
+    @JsonCreator
+    public GameSpriteRenderInformation(@JsonProperty("screenCoordinateX") int screenCoordinateX, @JsonProperty("screenCoordinateY") int screenCoordinateY,
+                                       @JsonProperty("worldCoordinateX") int targetWidth, @JsonProperty("worldCoordinateY") int targetHeight,
+                                       @JsonProperty("targetWidth") int worldCoordinateX, @JsonProperty("targetHeight") int worldCoordinateY) {
         this.screenCoordinateX = screenCoordinateX;
         this.screenCoordinateY = screenCoordinateY;
         this.targetWidth = targetWidth;

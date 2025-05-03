@@ -1,10 +1,14 @@
 package cvut.cz.GameSprite;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public abstract class GameSprite {
     protected GameSpriteSourceInformation gameSpriteSourceInformation;
     protected GameSpriteRenderInformation gameSpriteRenderInformation;
 
-    public GameSprite(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation)
+    @JsonCreator
+    public GameSprite(@JsonProperty("gameSpriteSourceInformation") GameSpriteSourceInformation gameSpriteSourceInformation, @JsonProperty("gameSpriteRenderInformation") GameSpriteRenderInformation gameSpriteRenderInformation)
     {
         this.gameSpriteSourceInformation = gameSpriteSourceInformation.clone();
         this.gameSpriteRenderInformation = gameSpriteRenderInformation.clone();

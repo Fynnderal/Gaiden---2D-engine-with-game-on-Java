@@ -1,6 +1,10 @@
 package cvut.cz.GameSprite;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.net.URL;
+import java.util.Objects;
 
 public class GameSpriteSourceInformation implements Cloneable {
     protected URL pathToImage;
@@ -10,7 +14,9 @@ public class GameSpriteSourceInformation implements Cloneable {
     protected int sourceWidth;
     protected int sourceHeight;
 
-    public GameSpriteSourceInformation(URL pathToImage, int sourceCoordinateX, int sourceCoordinateY, int sourceWidth, int sourceHeight) {
+    @JsonCreator
+    public GameSpriteSourceInformation(@JsonProperty("pathToImage") URL pathToImage, @JsonProperty("sourceCoordinateX") int sourceCoordinateX,
+                                       @JsonProperty("sourceCoordinateY") int sourceCoordinateY, @JsonProperty("sourceWidth") int sourceWidth, @JsonProperty("sourceHeight") int sourceHeight) {
         this.sourceCoordinateX = sourceCoordinateX;
         this.sourceCoordinateY = sourceCoordinateY;
         this.sourceWidth = sourceWidth;
@@ -25,6 +31,25 @@ public class GameSpriteSourceInformation implements Cloneable {
         }catch (CloneNotSupportedException e) {
             return null;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+
+        GameSpriteSourceInformation other = (GameSpriteSourceInformation) obj;
+        return (sourceCoordinateX == other.sourceCoordinateX && sourceCoordinateY == other.sourceCoordinateY &&
+                sourceWidth == other.sourceWidth && sourceHeight == other.sourceHeight
+                && pathToImage.getPath().equals(other.pathToImage.getPath()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sourceCoordinateX, sourceCoordinateY, sourceWidth, sourceHeight, pathToImage.getPath());
     }
 
     public int getSourceCoordinateX() { return sourceCoordinateX; }
