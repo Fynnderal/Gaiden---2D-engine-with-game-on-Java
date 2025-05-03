@@ -1,18 +1,18 @@
 package cvut.cz.characters;
 
+
 public class CharacterInformation implements Cloneable{
-    protected States currentState;
-    protected int speed;
-    protected int maxHealth;
-    protected int currentHealth;
-    protected int attackPower;
+    private States currentState;
+    private int speed;
+    private final int maxHealth;
+    private int currentHealth;
+    private final int attackPower;
 
-
-    public CharacterInformation(int attackPower, States currentState, int currentHealth, int maxHealth, int speed) {
+    public CharacterInformation(int attackPower, States currentState, int maxHealth, int speed) {
         this.currentState = currentState;
         this.speed = speed;
         this.maxHealth = maxHealth;
-        this.currentHealth = currentHealth;
+        this.currentHealth = maxHealth;
         this.attackPower = attackPower;
     }
 
@@ -24,6 +24,11 @@ public class CharacterInformation implements Cloneable{
         }
     }
 
+    public void setCurrentHealth(int currentHealth) {
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        this.currentHealth = currentHealth;
+    }
+
     public States getCurrentState() {return currentState;}
     public int getSpeed() { return speed; }
     public int getMaxHealth() { return maxHealth; }
@@ -31,11 +36,5 @@ public class CharacterInformation implements Cloneable{
     public int getAttackPower() { return attackPower;}
 
     public void setSpeed(int speed) { this.speed = speed;}
-    public void setMaxHealth(int maxHealth) { this.maxHealth = maxHealth;}
-    public void setCurrentHealth(int currentHealth) {
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-        this.currentHealth = currentHealth;
-    }
-    public void setAttackPower(int attackPower) { this.attackPower = attackPower;}
     public void setCurrentState(States currentState) {this.currentState = currentState;}
 }

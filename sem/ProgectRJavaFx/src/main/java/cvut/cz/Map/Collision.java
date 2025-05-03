@@ -14,11 +14,13 @@ public class Collision {
         this.height = height;
         this.active = true;
     }
+
     public boolean isActive() { return active; }
     public int getWorldCoordinateX() { return worldCoordinateX; }
     public int getWorldCoordinateY() { return worldCoordinateY; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+
     public void setWorldCoordinateX(int worldCoordinateX) { this.worldCoordinateX = worldCoordinateX; }
     public void setWorldCoordinateY(int worldCoordinateY) { this.worldCoordinateY = worldCoordinateY; }
     public void setWidth(int width) { this.width = width; }

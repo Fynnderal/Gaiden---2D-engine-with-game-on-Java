@@ -6,8 +6,7 @@ import cvut.cz.items.Item;
 
 public class Door extends MapSpot{
 
-    private Item neededItem;
-
+    private final Item neededItem;
 
     public Door(GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation, Collision collision, Item neededItem) {
         super(gameSpriteSourceInformation, gameSpriteRenderInformation, collision);
