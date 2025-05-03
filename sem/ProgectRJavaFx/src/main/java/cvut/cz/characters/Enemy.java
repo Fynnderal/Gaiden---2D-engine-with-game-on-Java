@@ -1,176 +1,207 @@
 package cvut.cz.characters;
 
+import static cvut.cz.Animation.AnimationStates.*;
+
+import cvut.cz.Animation.EnemyAnimation;
 import cvut.cz.GameSprite.GameSpriteRenderInformation;
 import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 
-public abstract class Enemy extends GameCharacter{
 
-    protected PlayableCharacter mainCharacter;
-    protected EnemyInformation enemyInformation;
+public abstract class Enemy extends NPC{
+    protected long intervalBetweenAttacks;
+    protected long lastTimeAttacked;
 
-    protected long intervalBetweenAttacks = 1200;
-    protected long lastTimeAttacked = 0;
-    protected long now;
     protected Directions currentHorizontalDirection;
     protected Directions currentVerticalDirection;
 
     public Enemy(CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation,
-                 GameSpriteRenderInformation gameSpriteRenderInformation, PlayableCharacter mainCharacter, EnemyInformation enemyInformation) {
-        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation);
-        this.mainCharacter = mainCharacter;
-        this.enemyInformation = enemyInformation;
+                 GameSpriteRenderInformation gameSpriteRenderInformation, ActionAreaInformation actionAreaInformation, PlayableCharacter mainCharacter)
+    {
+        super(characterInformation, gameSpriteSourceInformation, gameSpriteRenderInformation, actionAreaInformation, mainCharacter);
+        isInteractable = false;
+        intervalBetweenAttacks = 1000;
     }
 
     @Override
     public void update() {
+        if (isDead)
+            return;
+
+        if (mainCharacter == null)
+            return;
+
         now = System.currentTimeMillis();
+        isBlocked = ( (now - lastTimeAttacked < intervalBetweenAttacks) || (now - startedDyingTime < dyingTime) ||
+                        (now - startedGettingDamage < gettingDamageTime));
+
         spotPlayer();
-        attack();
         Directions[] direction = chooseDirection();
         if (direction != null) {
             currentVerticalDirection = direction[1];
             currentHorizontalDirection = direction[0];
         }
 
-        if (currentHorizontalDirection != null)
-            move(currentHorizontalDirection);
-        if (currentVerticalDirection != null)
-            move(currentVerticalDirection);
+        if (currentHorizontalDirection != null && currentVerticalDirection != null) {
+            move(currentHorizontalDirection,(int) Math.ceil(characterInformation.getSpeed() / 1.414));
+            move(currentVerticalDirection,(int) Math.ceil(characterInformation.getSpeed() / 1.414));
+
+        }
+        else {
+            if (currentHorizontalDirection != null)
+                move(currentHorizontalDirection, characterInformation.getSpeed());
+            if (currentVerticalDirection != null)
+                move(currentVerticalDirection, characterInformation.getSpeed());
+        }
+
+        attack();
+
+        super.update();
     }
 
-    protected void spotPlayer() {
+
+
+    protected Directions chooseHorizontalDirection() {
+        int dx = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX() - this.gameSpriteRenderInformation.getWorldCoordinateX();
+        if (Math.abs(dx) > this.getCharacterInformation().getSpeed()){
+            if (dx > 0) {
+                return Directions.RIGHT;
+            }
+            if (dx < 0) {
+                return Directions.LEFT;
+            }
+        }
+        else{
+            this.getGameSpriteRenderInformation().setWorldCoordinateX(this.getGameSpriteRenderInformation().getWorldCoordinateX());
+            this.getGameSpriteRenderInformation().setScreenCoordinateX(this.getGameSpriteRenderInformation().getScreenCoordinateX());
+            return null;
+        }
+
+        return null;
+    }
+
+    protected Directions chooseVerticalDirection() {
+        int dy = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY() - this.gameSpriteRenderInformation.getWorldCoordinateY();
+        if (Math.abs(dy) > this.getCharacterInformation().getSpeed()){
+            if (dy > 0) {
+                return Directions.DOWN;
+            }
+            if (dy < 0) {
+                return  Directions.UP;
+            }
+        }
+        else{
+            this.getGameSpriteRenderInformation().setWorldCoordinateY(this.getGameSpriteRenderInformation().getWorldCoordinateY());
+            this.getGameSpriteRenderInformation().setScreenCoordinateY(this.getGameSpriteRenderInformation().getScreenCoordinateY());
+            return null;
+        }
+
+        return null;
+    }
+
+
+    protected Directions[] chooseDirection(){
+        if (isBlocked)
+            return new Directions[]{null, null};
+
+        Directions[] directions = {null, null};
+        if (this.characterInformation.getCurrentState() == States.CHASING) {
+            directions[0] = chooseHorizontalDirection();
+            directions[1] = chooseVerticalDirection();
+        }
+
+        return directions;
+    }
+
+    @Override
+    protected void animate() {
+        super.animate();
+        switch (characterAnimation.currentAnimationState) {
+            case AttackingUp:
+                applyAnimation(((EnemyAnimation) characterAnimation).attackUpAnimation);
+                break;
+
+            case AttackingDown:
+                applyAnimation(((EnemyAnimation) characterAnimation).attackDownAnimation);
+                break;
+
+            case AttackingLeft:
+                applyAnimation(((EnemyAnimation) characterAnimation).attackLeftAnimation);
+                break;
+
+            case AttackingRight:
+                applyAnimation(((EnemyAnimation) characterAnimation).attackRightAnimation);
+                break;
+            case ChasingUp:
+                applyAnimation(((EnemyAnimation) characterAnimation).chasingUpAnimation);
+                break;
+
+            case ChasingDown:
+                applyAnimation(((EnemyAnimation) characterAnimation).chasingDownAnimation);
+                break;
+
+            case ChasingLeft:
+                applyAnimation(((EnemyAnimation) characterAnimation).chasingLeftAnimation);
+                break;
+
+            case ChasingRight:
+                applyAnimation(((EnemyAnimation) characterAnimation).chasingRightAnimation);
+                break;
+        }
+    }
+
+    public boolean isPlayerWithinAttackZone(){
         int mainCharacterX = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX();
         int mainCharacterY = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY();
         int mainCharacterWidth = mainCharacter.getGameSpriteRenderInformation().getTargetWidth();
         int mainCharacterHeight = mainCharacter.getGameSpriteRenderInformation().getTargetHeight();
 
-
-        if (mainCharacterX < enemyInformation.actionAreaX() + enemyInformation.actionAreaWidth() &&
-            mainCharacterX + mainCharacterWidth >= enemyInformation.actionAreaX() &&
-            mainCharacterY < enemyInformation.actionAreaY() + enemyInformation.actionAreaHeight() &&
-            mainCharacterY + mainCharacterHeight >= enemyInformation.actionAreaY()
-        ){
-            int distance = calculateLengthOfVector(this.gameSpriteRenderInformation.getWorldCoordinateX(), this.gameSpriteRenderInformation.getWorldCoordinateY(), mainCharacterX, mainCharacterY);
-
-            if (distance <= enemyInformation.spottingRadius())
-                this.characterInformation.setCurrentState(States.CHASING);
-        }
-    }
-
-    protected boolean isPlayerInActionArea() {
-        return (
-            mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX() < enemyInformation.actionAreaX() + enemyInformation.actionAreaWidth() &&
-            mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX() + mainCharacter.getGameSpriteRenderInformation().getTargetWidth() >= enemyInformation.actionAreaX() &&
-            mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY() < enemyInformation.actionAreaY() + enemyInformation.actionAreaHeight() &&
-            mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY() + mainCharacter.getGameSpriteRenderInformation().getTargetHeight() >= enemyInformation.actionAreaY()
-        );
-    }
-
-    protected Directions[] chooseDirection(){
-        Directions[] directions = {null, null};
-        if (this.characterInformation.getCurrentState() == States.CHASING) {
-            int dx = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX() - this.gameSpriteRenderInformation.getWorldCoordinateX();
-            int dy = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY() - this.gameSpriteRenderInformation.getWorldCoordinateY();
-            if (Math.abs(dx) > this.getCharacterInformation().getSpeed()){
-                if (dx > 0) {
-                    directions[0] = (Directions.RIGHT);
-                }
-                if (dx < 0) {
-                    directions[0] = (Directions.LEFT);
-                }
-            }
-            else{
-                this.getGameSpriteRenderInformation().setWorldCoordinateX(this.getGameSpriteRenderInformation().getWorldCoordinateX());
-                this.getGameSpriteRenderInformation().setScreenCoordinateX(this.getGameSpriteRenderInformation().getScreenCoordinateX());
-                directions[0] = null;
-            }
-
-            if (Math.abs(dy) > this.getCharacterInformation().getSpeed()){
-                if (dy > 0) {
-                    directions[1] =  (Directions.DOWN);
-                }
-                if (dy < 0) {
-                    directions[1] =  (Directions.UP);
-                }
-            }
-            else{
-                this.getGameSpriteRenderInformation().setWorldCoordinateY(this.getGameSpriteRenderInformation().getWorldCoordinateY());
-                this.getGameSpriteRenderInformation().setScreenCoordinateY(this.getGameSpriteRenderInformation().getScreenCoordinateY());
-                directions[1] = null;
-            }
-        }
-        return directions;
+        return (mainCharacterX < gameSpriteRenderInformation.getWorldCoordinateX() + gameSpriteRenderInformation.getTargetWidth() / 2 &&
+                mainCharacterX + mainCharacterWidth / 2 >= gameSpriteRenderInformation.getWorldCoordinateX() &&
+                mainCharacterY < gameSpriteRenderInformation.getTargetHeight() / 2 + gameSpriteRenderInformation.getWorldCoordinateY() &&
+                mainCharacterY + mainCharacterHeight / 2 >= gameSpriteRenderInformation.getWorldCoordinateY());
     }
 
     @Override
-    protected void move(Directions direction) {
-        int currentWorldCoordinateY;
-        int currentWorldCoordinateX;
-        switch (direction) {
-            case UP:
-                currentWorldCoordinateY = gameSpriteRenderInformation.getWorldCoordinateY() - characterInformation.getSpeed();
-
-                if (currentWorldCoordinateY >= enemyInformation.actionAreaY()){
-                    this.gameSpriteRenderInformation.setWorldCoordinateY(currentWorldCoordinateY);
-                    this.gameSpriteRenderInformation.setScreenCoordinateY(gameSpriteRenderInformation.getScreenCoordinateY() - characterInformation.getSpeed());
-                }
-
-                break;
-
-            case DOWN:
-                currentWorldCoordinateY = gameSpriteRenderInformation.getWorldCoordinateY() + characterInformation.getSpeed();
-
-                if (currentWorldCoordinateY <= enemyInformation.actionAreaY() + enemyInformation.actionAreaHeight()) {
-                    this.gameSpriteRenderInformation.setWorldCoordinateY(currentWorldCoordinateY);
-                    this.gameSpriteRenderInformation.setScreenCoordinateY(gameSpriteRenderInformation.getScreenCoordinateY() + characterInformation.getSpeed());
-                }
-
-                break;
-
-            case RIGHT:
-                currentWorldCoordinateX = gameSpriteRenderInformation.getWorldCoordinateX() + characterInformation.getSpeed();
-
-                if (currentWorldCoordinateX <= enemyInformation.actionAreaX() + enemyInformation.actionAreaWidth()) {
-                    this.gameSpriteRenderInformation.setWorldCoordinateX(currentWorldCoordinateX);
-                    this.gameSpriteRenderInformation.setScreenCoordinateX(gameSpriteRenderInformation.getScreenCoordinateX() + characterInformation.getSpeed());
-                }
-
-                break;
-
-            case LEFT:
-                currentWorldCoordinateX = gameSpriteRenderInformation.getWorldCoordinateX() - characterInformation.getSpeed();
-
-                if (currentWorldCoordinateX >= enemyInformation.actionAreaX()) {
-                    this.gameSpriteRenderInformation.setWorldCoordinateX(currentWorldCoordinateX);
-                    this.gameSpriteRenderInformation.setScreenCoordinateX(gameSpriteRenderInformation.getScreenCoordinateX() - characterInformation.getSpeed());
-                }
-
-                break;
-        }
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        characterInformation.setCurrentHealth(characterInformation.getCurrentHealth() - damage);
-    }
-
     protected void attack() {
-        if (now - lastTimeAttacked >= intervalBetweenAttacks ) {
-            int mainCharacterX = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX();
-            int mainCharacterY = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY();
-            int mainCharacterWidth = mainCharacter.getGameSpriteRenderInformation().getTargetWidth();
-            int mainCharacterHeight = mainCharacter.getGameSpriteRenderInformation().getTargetHeight();
+        if (isBlocked)
+            return;
+        if (isPlayerWithinAttackZone()) {
+            mainCharacter.takeDamage(characterInformation.getAttackPower());
+            lastTimeAttacked = now;
+            if (characterAnimation != null) {
+                isBlocked = true;
+                switch (characterAnimation.currentAnimationState) {
+                    case IdleUP, WalkingUP:
+                        characterAnimation.currentAnimationState = AttackingUp;
+                        break;
 
-            if (mainCharacterX < gameSpriteRenderInformation.getWorldCoordinateX() + gameSpriteRenderInformation.getTargetWidth() &&
-                    mainCharacterX + mainCharacterWidth >= gameSpriteRenderInformation.getWorldCoordinateX() &&
-                    mainCharacterY < gameSpriteRenderInformation.getTargetHeight() + gameSpriteRenderInformation.getWorldCoordinateY() &&
-                    mainCharacterY + mainCharacterHeight >= gameSpriteRenderInformation.getWorldCoordinateY()
-            ) {
-                mainCharacter.takeDamage(characterInformation.attackPower);
-                lastTimeAttacked = now;
+                    case IdleDOWN, WalkingDOWN:
+                        characterAnimation.currentAnimationState = AttackingDown;
+                        break;
+
+                    case IdleLEFT, WalkingLEFT:
+                        characterAnimation.currentAnimationState = AttackingLeft;
+                        break;
+
+                    case IdleRIGHT, WalkingRIGHT:
+                        characterAnimation.currentAnimationState = AttackingRight;
+                        break;
+                }
             }
         }
-
     }
+
+    @Override
+    public String[] interact() {
+        return null;
+    }
+
+    @Override
+    public void changePlayersAnswer(Directions direction) {}
+
+    public void setCharacterAnimation(EnemyAnimation characterAnimation) {
+        super.setCharacterAnimation(characterAnimation);
+    }
+
 }
