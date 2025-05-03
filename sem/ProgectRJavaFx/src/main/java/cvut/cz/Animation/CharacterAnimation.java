@@ -1,8 +1,13 @@
 package cvut.cz.Animation;
 
+/**
+ * Saves animations for game characters
+ */
 public class CharacterAnimation {
     public AnimationStates previousAnimationState;
     public AnimationStates currentAnimationState;
+
+    //Saves index of current image to draw in animation
     public int currentAnimation;
 
 
