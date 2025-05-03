@@ -4,7 +4,7 @@ import cvut.cz.GameSprite.GameSpriteRenderInformation;
 import cvut.cz.GameSprite.GameSpriteSourceInformation;
 
 import static cvut.cz.Animation.AnimationStates.*;
-import static cvut.cz.Animation.AnimationStates.WalkingLEFT;
+import static cvut.cz.Animation.AnimationStates.WalkingLeft;
 
 public class Zombie extends Enemy{
 
@@ -23,7 +23,7 @@ public class Zombie extends Enemy{
         switch (direction) {
             case UP:
                 currentWorldCoordinateY = gameSpriteRenderInformation.getWorldCoordinateY() - speed;
-                characterAnimation.currentAnimationState = WalkingUP;
+                characterAnimation.currentAnimationState = WalkingUp;
                 if (currentWorldCoordinateY >= actionAreaInformation.actionAreaY()){
                     this.gameSpriteRenderInformation.setWorldCoordinateY(currentWorldCoordinateY);
                     this.gameSpriteRenderInformation.setScreenCoordinateY(gameSpriteRenderInformation.getScreenCoordinateY() - speed);
@@ -33,7 +33,7 @@ public class Zombie extends Enemy{
 
             case DOWN:
                 currentWorldCoordinateY = gameSpriteRenderInformation.getWorldCoordinateY() + speed;
-                characterAnimation.currentAnimationState = WalkingDOWN;
+                characterAnimation.currentAnimationState = WalkingDown;
 
                 if (currentWorldCoordinateY <= actionAreaInformation.actionAreaY() + actionAreaInformation.actionAreaHeight()) {
                     this.gameSpriteRenderInformation.setWorldCoordinateY(currentWorldCoordinateY);
@@ -44,7 +44,7 @@ public class Zombie extends Enemy{
 
             case RIGHT:
                 currentWorldCoordinateX = gameSpriteRenderInformation.getWorldCoordinateX() + speed;
-                characterAnimation.currentAnimationState = WalkingRIGHT;
+                characterAnimation.currentAnimationState = WalkingRight;
 
                 if (currentWorldCoordinateX <= actionAreaInformation.actionAreaX() + actionAreaInformation.actionAreaWidth()) {
                     this.gameSpriteRenderInformation.setWorldCoordinateX(currentWorldCoordinateX);
@@ -55,7 +55,7 @@ public class Zombie extends Enemy{
 
             case LEFT:
                 currentWorldCoordinateX = gameSpriteRenderInformation.getWorldCoordinateX() - speed;
-                characterAnimation.currentAnimationState = WalkingLEFT;
+                characterAnimation.currentAnimationState = WalkingLeft;
 
                 if (currentWorldCoordinateX >= actionAreaInformation.actionAreaX()) {
                     this.gameSpriteRenderInformation.setWorldCoordinateX(currentWorldCoordinateX);

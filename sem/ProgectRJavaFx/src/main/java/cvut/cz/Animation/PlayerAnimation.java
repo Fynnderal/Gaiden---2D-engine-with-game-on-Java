@@ -1,7 +1,7 @@
 package cvut.cz.Animation;
 
 /**
- * Saves animations for playable characters
+ * Saves the animations for the playable characters
  */
 public class PlayerAnimation extends CharacterAnimation {
 

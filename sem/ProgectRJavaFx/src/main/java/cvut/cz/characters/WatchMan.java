@@ -6,7 +6,7 @@ import cvut.cz.GameSprite.GameSpriteSourceInformation;
 import java.util.Random;
 
 import static cvut.cz.Animation.AnimationStates.*;
-import static cvut.cz.Animation.AnimationStates.WalkingLEFT;
+import static cvut.cz.Animation.AnimationStates.WalkingLeft;
 
 public class WatchMan extends Enemy {
 
@@ -60,7 +60,7 @@ public class WatchMan extends Enemy {
             case UP:
                 currentWorldCoordinateY = gameSpriteRenderInformation.getWorldCoordinateY() - speed;
 
-                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingUp : WalkingUP;
+                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingUp : WalkingUp;
 
 
                 if (currentWorldCoordinateY >= actionAreaInformation.actionAreaY()) {
@@ -71,7 +71,7 @@ public class WatchMan extends Enemy {
 
             case DOWN:
                 currentWorldCoordinateY = gameSpriteRenderInformation.getWorldCoordinateY() + speed;
-                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingDown : WalkingDOWN;
+                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingDown : WalkingDown;
 
                 if (currentWorldCoordinateY <= actionAreaInformation.actionAreaY() + actionAreaInformation.actionAreaHeight()) {
                     this.gameSpriteRenderInformation.setWorldCoordinateY(currentWorldCoordinateY);
@@ -83,7 +83,7 @@ public class WatchMan extends Enemy {
             case RIGHT:
                 currentWorldCoordinateX = gameSpriteRenderInformation.getWorldCoordinateX() + speed;
 
-                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingRight : WalkingRIGHT;
+                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingRight : WalkingRight;
 
 
                 if (currentWorldCoordinateX <= actionAreaInformation.actionAreaX() + actionAreaInformation.actionAreaWidth()) {
@@ -95,7 +95,7 @@ public class WatchMan extends Enemy {
 
             case LEFT:
                 currentWorldCoordinateX = gameSpriteRenderInformation.getWorldCoordinateX() - speed;
-                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingLeft : WalkingLEFT;
+                characterAnimation.currentAnimationState = characterInformation.getCurrentState() == States.CHASING ? ChasingLeft : WalkingLeft;
 
                 if (currentWorldCoordinateX >= actionAreaInformation.actionAreaX()) {
                     this.gameSpriteRenderInformation.setWorldCoordinateX(currentWorldCoordinateX);
