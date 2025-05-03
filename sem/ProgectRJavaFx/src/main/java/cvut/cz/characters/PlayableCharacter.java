@@ -1,7 +1,5 @@
 package cvut.cz.characters;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import static cvut.cz.Animation.AnimationStates.*;
 
 import cvut.cz.Animation.PlayerAnimation;
@@ -11,14 +9,9 @@ import cvut.cz.items.Inventory;
 import cvut.cz.items.Item;
 import cvut.cz.Map.GameMap;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.net.URL;
-import java.io.FileReader;
 
 
 public abstract class PlayableCharacter extends GameCharacter {
@@ -87,19 +80,19 @@ public abstract class PlayableCharacter extends GameCharacter {
         switch (direction) {
             case UP:
                 this.gameSpriteRenderInformation.setWorldCoordinateY(gameSpriteRenderInformation.getWorldCoordinateY() - speed);
-                characterAnimation.currentAnimationState = WalkingUP;
+                characterAnimation.currentAnimationState = WalkingUp;
                 break;
             case DOWN:
                 this.gameSpriteRenderInformation.setWorldCoordinateY(gameSpriteRenderInformation.getWorldCoordinateY() + speed);
-                characterAnimation.currentAnimationState = WalkingDOWN;
+                characterAnimation.currentAnimationState = WalkingDown;
                 break;
             case RIGHT:
                 this.gameSpriteRenderInformation.setWorldCoordinateX(gameSpriteRenderInformation.getWorldCoordinateX() + speed);
-                characterAnimation.currentAnimationState = WalkingRIGHT;
+                characterAnimation.currentAnimationState = WalkingRight;
                 break;
             case LEFT:
                 this.gameSpriteRenderInformation.setWorldCoordinateX(gameSpriteRenderInformation.getWorldCoordinateX() - speed);
-                characterAnimation.currentAnimationState = WalkingLEFT;
+                characterAnimation.currentAnimationState = WalkingLeft;
                 break;
         }
         characterInformation.setCurrentState(States.IDLE);
