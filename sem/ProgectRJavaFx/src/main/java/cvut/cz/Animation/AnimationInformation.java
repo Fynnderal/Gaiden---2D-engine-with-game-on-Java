@@ -1,6 +1,7 @@
 package cvut.cz.Animation;
 
 /**
+ * Saves information about one frame of animation
  *
  * @param sourceX - Starting X coordinate in source image, from which animation is created
  * @param sourceY - Starting Y coordinate in source image, from which animation is created
