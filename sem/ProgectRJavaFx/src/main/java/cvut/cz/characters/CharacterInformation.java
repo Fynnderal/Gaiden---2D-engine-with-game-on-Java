@@ -1,6 +1,9 @@
 package cvut.cz.characters;
 
 
+/**
+ * Saves information about character
+ */
 public class CharacterInformation implements Cloneable{
     private States currentState;
     private int speed;
