@@ -1,19 +1,19 @@
 package cvut.cz.Animation;
 
 /**
- * Saves animations for game characters
+ * Saves the animations for the game characters
  */
 public class CharacterAnimation {
     public AnimationStates previousAnimationState;
     public AnimationStates currentAnimationState;
 
-    //Saves index of current image to draw in animation
+    //Saves the index of the current animation frame to draw
     public int currentAnimation;
 
 
     public CharacterAnimation(){
         previousAnimationState = null;
-        currentAnimationState = AnimationStates.IdleDOWN;
+        currentAnimationState = AnimationStates.IdleDown;
         currentAnimation = 0;
     }
 
@@ -36,6 +36,4 @@ public class CharacterAnimation {
     public AnimationInformation[] takingDamageDownAnimation;
     public AnimationInformation[] takingDamageLeftAnimation;
     public AnimationInformation[] takingDamageRightAnimation;
-
-
 }

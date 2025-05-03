@@ -1,15 +1,15 @@
 package cvut.cz.Animation;
 
 public enum AnimationStates {
-    IdleUP,
-    IdleDOWN,
-    IdleLEFT,
-    IdleRIGHT,
+    IdleUp,
+    IdleDown,
+    IdleLeft,
+    IdleRight,
 
-    WalkingUP,
-    WalkingDOWN,
-    WalkingLEFT,
-    WalkingRIGHT,
+    WalkingUp,
+    WalkingDown,
+    WalkingLeft,
+    WalkingRight,
 
     ChasingUp,
     ChasingDown,
