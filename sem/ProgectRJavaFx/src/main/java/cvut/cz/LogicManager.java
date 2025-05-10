@@ -5,7 +5,7 @@ import cvut.cz.Model.MapModel;
 import cvut.cz.Model.Updatable;
 import cvut.cz.characters.Directions;
 
-import cvut.cz.characters.GunSight;
+import cvut.cz.characters.CrossHair;
 import cvut.cz.items.InventoryCell;
 import cvut.cz.items.ItemInformation;
 import javafx.scene.input.KeyCode;
@@ -13,23 +13,39 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import java.io.FileWriter;
 import java.util.HashSet;
 
 import java.util.Set;
 import java.util.logging.Logger;
 
+
+/**
+ * Manages the logic and controls of the game, including player interactions,
+ * inventory management, and movement.
+ */
 public class LogicManager {
     private static final Logger logger = Logger.getLogger(LogicManager.class.getName());
 
     private final MainApplication mainApp;
+
+    // True if the player is selecting a cell to combine with another cell
     private boolean selectingCell;
+    // The cell that the player is selecting to combine with another cell
     private static InventoryCell selectedCell;
 
+    // The x and y coordinates of the mouse
     private int MouseX;
     private int MouseY;
 
+    // The set of currently pressed keys
     private static Set<KeyCode> pressedKeys;
 
+    /**
+     * Constructs a LogicManager with the specified main application instance.
+     *
+     * @param application The main application instance.
+     */
     public LogicManager(MainApplication application) {
         mainApp = application;
         pressedKeys = new HashSet<>();
@@ -37,21 +53,29 @@ public class LogicManager {
         setControls();
     }
 
+    /**
+     * Handles aiming logic when the right mouse button is pressed.
+     *
+     * @param e The mouse event triggered by pressing the right mouse button.
+     */
     private void aim(MouseEvent e){
         if (MainPlayerModel.getMainPlayerModel().getInventory().getEquippedCell() != null &&
-                MainPlayerModel.getMainPlayerModel().getMainPlayer().getWeaponsAndGunSights() != null) {
+                MainPlayerModel.getMainPlayerModel().getMainPlayer().getWeaponsAndCrossHairs() != null) {
 
             ItemInformation currentWeapon = MainPlayerModel.getMainPlayerModel().getInventory().getEquippedCell().getItem().getItemInformation();
             if (currentWeapon.name().equals("pistol") || currentWeapon.name().equals("shotgun")) {
                 MouseX = (int) e.getSceneX();
                 MouseY = (int) e.getSceneY();
                 MainPlayerModel.getMainPlayerModel().getMainPlayer().isAiming = true;
-                GunSight currentGunSight = MainPlayerModel.getMainPlayerModel().getMainPlayer().getWeaponsAndGunSights().get(currentWeapon.name());
-                MainPlayerModel.getMainPlayerModel().setCurrentGunSight(currentGunSight);
+                CrossHair currentCrossHair = MainPlayerModel.getMainPlayerModel().getMainPlayer().getWeaponsAndCrossHairs().get(currentWeapon.name());
+                MainPlayerModel.getMainPlayerModel().setCurrentGunSight(currentCrossHair);
             }
         }
     }
 
+    /**
+     * Sets up mouse controls for the game
+     */
     private void setMouseControls(){
         mainApp.getStage().getScene().setOnMouseDragged(e -> {
             MouseX = (int) e.getSceneX();
@@ -60,6 +84,8 @@ public class LogicManager {
 
         mainApp.getStage().getScene().setOnMousePressed(e -> {
             if (MainPlayerModel.getMainPlayerModel().isInMenu())
+                return;
+            if (MainPlayerModel.getMainPlayerModel().isInteracting() || MainPlayerModel.getMainPlayerModel().isInventoryActive())
                 return;
 
             switch (e.getButton()) {
@@ -83,6 +109,11 @@ public class LogicManager {
         });
     }
 
+    /**
+     * Handles interaction with NPCs when specific keys are pressed.
+     *
+     * @param e The key event triggered by pressing a key.
+     */
     private void interactWithNPC(KeyEvent e){
         if (MainPlayerModel.getMainPlayerModel().isInteracting()) {
             if (e.getCode() == KeyCode.W)
@@ -91,10 +122,12 @@ public class LogicManager {
                 MainPlayerModel.getMainPlayerModel().getCurrentNPCInteractingWith().changePlayersAnswer(Directions.DOWN);
         }
     }
-
+    /**
+     * Handles the logic for combining items in the inventory.
+     */
     private void controlCombiningItems(){
         if (selectingCell){
-            MainPlayerModel.getMainPlayerModel().getInventory().combineCells(selectedCell, MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
+            MainPlayerModel.getMainPlayerModel().getInventory().getInventoryController().combineCells(selectedCell, MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
             selectedCell = null;
             selectingCell = false;
         }else {
@@ -103,6 +136,11 @@ public class LogicManager {
         }
     }
 
+    /**
+     * Handles inventory controls based on key events.
+     *
+     * @param e The key event triggered by pressing a key.
+     */
     private void controlInventory(KeyEvent e){
         switch (e.getCode()) {
             case KeyCode.D:
@@ -130,34 +168,43 @@ public class LogicManager {
                 if (selectingCell)
                     break;
 
-                MainPlayerModel.getMainPlayerModel().getInventory().equipCell(MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
+                MainPlayerModel.getMainPlayerModel().getInventory().getInventoryController().equipCell(MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
                 break;
             case KeyCode.F:
                 if (selectingCell)
                     break;
 
-                MainPlayerModel.getMainPlayerModel().getInventory().useCell(MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
+                MainPlayerModel.getMainPlayerModel().getInventory().getInventoryController().useCell(MainPlayerModel.getMainPlayerModel().getMainPlayer());
                 break;
             case KeyCode.K:
                 if (selectingCell)
                     break;
 
-                MainPlayerModel.getMainPlayerModel().getInventory().discardCell(MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
+                MainPlayerModel.getMainPlayerModel().getInventory().getInventoryController().discardCell(MainPlayerModel.getMainPlayerModel().getInventory().getSelectedInventoryCell());
                 break;
         }
     }
 
+    /**
+     * Handles player controls based on key events.
+     *
+     * @param e The key event triggered by pressing a key.
+     */
     private void controlPlayer(KeyEvent e){
         if (e.getCode() == KeyCode.E)
             MainPlayerModel.getMainPlayerModel().takeItem();
-        else if (e.getCode() == KeyCode.SPACE)
-            MainPlayerModel.getMainPlayerModel().teleportMainPlayer();
-        else if (e.getCode() == KeyCode.ENTER)
-            MainPlayerModel.getMainPlayerModel().getMainPlayer().getInventory().writeAvailableItems();
+        else if (e.getCode() == KeyCode.ENTER){
+            System.out.println("X: " + MainPlayerModel.getMainPlayerModel().getMainPlayer().getGameSpriteRenderInformation().getWorldCoordinateX());
+            System.out.println("Y: " + MainPlayerModel.getMainPlayerModel().getMainPlayer().getGameSpriteRenderInformation().getWorldCoordinateY());
+            System.out.println("=====================================================================");
+        }
         else
             pressedKeys.add(e.getCode());
     }
 
+    /**
+     * Sets up key controls for the game, including handling key presses and releases.
+     */
     private void setKeyControls(){
         mainApp.getStage().getScene().setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ESCAPE) {
@@ -167,6 +214,7 @@ public class LogicManager {
             if (MainPlayerModel.getMainPlayerModel().isInMenu())
                 return;
 
+            // Opens inventory
             if (!MainPlayerModel.getMainPlayerModel().isInteracting() && e.getCode() == KeyCode.TAB &&
                 MainPlayerModel.getMainPlayerModel().getInventory() != null) {
 
@@ -197,29 +245,67 @@ public class LogicManager {
         mainApp.getStage().getScene().setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
     }
 
+    /**
+     * Sets up all controls for the game, including mouse and key controls.
+     */
     private void setControls(){
         setMouseControls();
         setKeyControls();
     }
 
+    /**
+     * Moves the inventory pointer in the specified direction.
+     *
+     * @param direction The direction to move the pointer.
+     */
     private void moveInventoryPointer(Directions direction) {
-        MainPlayerModel.getMainPlayerModel().getInventory().movePointer(direction);
+        MainPlayerModel.getMainPlayerModel().getInventory().getInventoryController().movePointer(direction);
     }
 
+    /**
+     * Moves the player in the specified horizontal and vertical directions.
+     *
+     * @param horizontalDirection The horizontal direction to move the player.
+     * @param verticalDirection The vertical direction to move the player.
+     */
     private void movePlayer(Directions horizontalDirection, Directions verticalDirection) {
         MainPlayerModel.getMainPlayerModel().movePlayer(horizontalDirection, verticalDirection);
     }
 
+    /**
+     * Updates the game logic, including checking controls and updating updatable objects.
+     */
     public void update() {
-            if (MainPlayerModel.getMainPlayerModel().isInMenu() || MainPlayerModel.getMainPlayerModel().getMainPlayer().isDead())
-                return;
+        if (MainPlayerModel.getMainPlayerModel().isInMenu() || MainPlayerModel.getMainPlayerModel().getMainPlayer().isDead())
+            return;
 
-            checkControls();
-            for (Updatable updatable: MapModel.getMapModel().getUpdatableObjects())
-                updatable.update();
+        checkPressedKeys();
+        for (Updatable updatable: MapModel.getMapModel().getUpdatableObjects())
+            updatable.update();
+
+        if (MapModel.getMapModel().getPassageBetweenLevels() != null){
+            if (MapModel.getMapModel().getPassageBetweenLevels().isPlayerWithinPassage(MainPlayerModel.getMainPlayerModel().getMainPlayer())) {
+                //saves information about the current items
+                MainPlayerModel.getMainPlayerModel().getInventory().getInventoryController().writeAvailableItems(MainPlayerModel.getMainPlayerModel().getPathToItems());
+
+                MapModel.getMapModel().setCurrentLevel(MapModel.getMapModel().getCurrentLevel() + 1);
+
+                //saves information about the current level to a file
+                try(FileWriter fileWriter = new FileWriter(MapModel.getMapModel().getPathToFileWithLevel(), false)) {
+                    fileWriter.write(String.valueOf(MapModel.getMapModel().getCurrentLevel()));
+                } catch (Exception e) {
+                    logger.severe("Failed to write level to file: " + e.getMessage());
+                }
+
+                mainApp.startGame(false);
+            }
+        }
     }
-
-    private void checkControls() {
+    
+    /**
+     * Checks the set of the pressed keys and updates the player's state accordingly.
+     */
+    private void checkPressedKeys() {
         if (MainPlayerModel.getMainPlayerModel().getMainPlayer().isAiming){
             MainPlayerModel.getMainPlayerModel().getCurrentGunSight().getGameSpriteRenderInformation().setScreenCoordinateX(MouseX);
             MainPlayerModel.getMainPlayerModel().getCurrentGunSight().getGameSpriteRenderInformation().setScreenCoordinateY(MouseY);
