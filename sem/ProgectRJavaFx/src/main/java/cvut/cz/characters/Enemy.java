@@ -21,6 +21,16 @@ public abstract class Enemy extends NPC{
     // Vertical movement direction at the moment
     protected Directions currentVerticalDirection;
 
+    /**
+     * Initializes the enemy to specified values.
+     * IsInteractable is set to false.
+     * IntervalBetweenAttacks is set to 1000.
+     * @param characterInformation - keeps information about the character
+     * @param gameSpriteSourceInformation - keeps information about the character sprite
+     * @param gameSpriteRenderInformation - keeps information about the final image of character on the screen
+     * @param actionAreaInformation - keeps information about action area of the enemy
+     * @param mainCharacter - keeps reference to the main character
+     */
     public Enemy(CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation,
                  GameSpriteRenderInformation gameSpriteRenderInformation, ActionAreaInformation actionAreaInformation, PlayableCharacter mainCharacter)
     {
@@ -158,40 +168,44 @@ public abstract class Enemy extends NPC{
         return directions;
     }
 
-
+    /**
+     * Extends method animate() from class GameCharacter. Adds logic for handling unique animations of enemy.
+     */
     @Override
     protected void animate() {
         super.animate();
+
+        EnemyAnimation enemyAnimation = (EnemyAnimation) characterAnimation;
         switch (characterAnimation.currentAnimationState) {
             case AttackingUp:
-                applyAnimation(((EnemyAnimation) characterAnimation).attackUpAnimation);
+                applyAnimation(enemyAnimation.attackUpAnimation);
                 break;
 
             case AttackingDown:
-                applyAnimation(((EnemyAnimation) characterAnimation).attackDownAnimation);
+                applyAnimation(enemyAnimation.attackDownAnimation);
                 break;
 
             case AttackingLeft:
-                applyAnimation(((EnemyAnimation) characterAnimation).attackLeftAnimation);
+                applyAnimation(enemyAnimation.attackLeftAnimation);
                 break;
 
             case AttackingRight:
-                applyAnimation(((EnemyAnimation) characterAnimation).attackRightAnimation);
+                applyAnimation(enemyAnimation.attackRightAnimation);
                 break;
             case ChasingUp:
-                applyAnimation(((EnemyAnimation) characterAnimation).chasingUpAnimation);
+                applyAnimation(enemyAnimation.chasingUpAnimation);
                 break;
 
             case ChasingDown:
-                applyAnimation(((EnemyAnimation) characterAnimation).chasingDownAnimation);
+                applyAnimation(enemyAnimation.chasingDownAnimation);
                 break;
 
             case ChasingLeft:
-                applyAnimation(((EnemyAnimation) characterAnimation).chasingLeftAnimation);
+                applyAnimation(enemyAnimation.chasingLeftAnimation);
                 break;
 
             case ChasingRight:
-                applyAnimation(((EnemyAnimation) characterAnimation).chasingRightAnimation);
+                applyAnimation(enemyAnimation.chasingRightAnimation);
                 break;
         }
     }
@@ -204,17 +218,19 @@ public abstract class Enemy extends NPC{
     public boolean isPlayerWithinAttackZone(){
         int mainCharacterX = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateX();
         int mainCharacterY = mainCharacter.getGameSpriteRenderInformation().getWorldCoordinateY();
-        int mainCharacterWidth = mainCharacter.getGameSpriteRenderInformation().getTargetWidth();
-        int mainCharacterHeight = mainCharacter.getGameSpriteRenderInformation().getTargetHeight();
+        int mainCharacterWidth = mainCharacter.getCollisionWidth();
+        int mainCharacterHeight = mainCharacter.getCollisionHeight();
 
-        //To be reachable for attack the main character sprite must cover a half of the enemy sprite
-        return (mainCharacterX < gameSpriteRenderInformation.getWorldCoordinateX() + gameSpriteRenderInformation.getTargetWidth() / 2 &&
+        //To be reachable for an attack the main character sprite must cover a half of the enemy sprite
+        return (mainCharacterX < gameSpriteRenderInformation.getWorldCoordinateX() + collisionWidth / 2 &&
                 mainCharacterX + mainCharacterWidth / 2 >= gameSpriteRenderInformation.getWorldCoordinateX() &&
-                mainCharacterY < gameSpriteRenderInformation.getTargetHeight() / 2 + gameSpriteRenderInformation.getWorldCoordinateY() &&
+                mainCharacterY < collisionHeight / 2 + gameSpriteRenderInformation.getWorldCoordinateY() &&
                 mainCharacterY + mainCharacterHeight / 2 >= gameSpriteRenderInformation.getWorldCoordinateY());
     }
 
-
+    /**
+     * Implements abstract method attack from GameCharacter. It handles simple inflicting damage and animations.
+     */
     @Override
     protected void attack() {
         if (isBlocked)
@@ -246,16 +262,28 @@ public abstract class Enemy extends NPC{
         }
     }
 
-    //Player can't interact with an enemy
+    /**
+     * Player cannot interact with an enemy.
+     *
+     * @return null as interaction is not allowed.
+     */
     @Override
     public String[] interact() {
         return null;
     }
 
-    //Player can't hava a conversation with an enemy
-    @Override
+    /**
+     * Player cannot have a conversation with an enemy.
+     *
+     * @param direction The direction of the player's answer (not used).
+     */    @Override
     public void changePlayersAnswer(Directions direction) {}
 
+    /**
+     * Sets the character animation for the enemy.
+     *
+     * @param characterAnimation The animation to set.
+     */
     public void setCharacterAnimation(EnemyAnimation characterAnimation) {
         super.setCharacterAnimation(characterAnimation);
     }
