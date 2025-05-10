@@ -1,40 +1,47 @@
 package cvut.cz.items;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import cvut.cz.GameSprite.GameSprite;
 import cvut.cz.GameSprite.GameSpriteRenderInformation;
 import cvut.cz.GameSprite.GameSpriteSourceInformation;
-import cvut.cz.characters.Directions;
-import cvut.cz.characters.PlayableCharacter;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
+/**
+ * Represents the inventory of the player.
+ * It manages the creation of the inventory, adding items, and organizing inventory cells.
+ */
 public class Inventory extends GameSprite {
-    Logger logger = Logger.getLogger(Inventory.class.getName());
-
-    private final static ObjectMapper mapper = new ObjectMapper();
-
-    protected static final String pathToItems = "playerItems.json";
-
     private final InventoryInformation inventoryInformation;
-    private final List<Item> items;
-    private final List<InventoryCell> cells;
     private final InventoryCellGeneralInformation inventoryCellGeneralInformation;
 
-    private int currentCell;
+    //items that inventory contains
+    private final List<Item> items;
+
+    //cells of which inventory consist
+    private final List<InventoryCell> cells;
+
+    //cell in which currently equipped item is located
     private InventoryCell equippedCell;
+
+    //pointer that is used by player to choose item
     private Pointer pointer;
+
+    //all items that inventory can contain. Key is the name of the item, Item is instance of this item.
     private Map<String, Item> possibleItems;
 
-    private PlayableCharacter character;
+    private final InventoryController inventoryController;
 
+    /**
+     * Constructs an Inventory object with the specified information and sprite details.
+     *
+     * @param inventoryInformation Information about the inventory layout and properties.
+     * @param inventoryCellGeneralInformation General information about the inventory cells.
+     * @param gameSpriteSourceInformation Source information for the inventory's sprite.
+     * @param gameSpriteRenderInformation Render information for the inventory's sprite.
+     */
     public Inventory(InventoryInformation inventoryInformation, InventoryCellGeneralInformation inventoryCellGeneralInformation,
                      GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
 
@@ -43,54 +50,73 @@ public class Inventory extends GameSprite {
         this.gameSpriteRenderInformation.setWorldCoordinateX(0);
         this.inventoryInformation = inventoryInformation;
         this.inventoryCellGeneralInformation = inventoryCellGeneralInformation;
-        this.currentCell = 0;
         this.cells = new ArrayList<>();
         this.items =  new ArrayList<>();
-
-        readAvailableItems();
+        this.inventoryController = new InventoryController(this);
         setCells();
     }
 
-    public void addItemToInventory(Item item) {
+    /**
+     * Adds an item to the inventory.
+     * If there is no space available, the item is not added.
+     *
+     * @param item The item to be added.
+     * @return True if the item was added successfully, false otherwise.
+     */
+    public boolean addItemToInventory(Item item) {
         if (item == null)
-            return;
+            return false;
 
+        //first available cell that contains no item
         InventoryCell emptyCell = null;
 
+        //checks all cells if there is the same item in the inventory
         for (InventoryCell cell : cells) {
             if (cell.getItem() == null) {
                 if (emptyCell == null)
                     emptyCell = cell;
                 continue;
             }
+            //if cell contains the same item as item, it just increases number of items.
             if (cell.getItem().getItemInformation().name().equals(item.getItemInformation().name())) {
                 cell.setItemAmount(cell.getItemAmount() + item.getAmount());
                 adjustItem(item, cell.getCoordinateX(), cell.getCoordinateY());
-                return;
+                return true;
             }
         }
 
+        //if there is empty cell in the inventory, add item to this cell
         if (emptyCell != null) {
             adjustItem(item, emptyCell.getCoordinateX(), emptyCell.getCoordinateY());
             emptyCell.setItem(item);
+            return true;
         }
+
+        return false;
     }
 
+    /**
+     * Creates and configures the cells of the inventory.
+     */
     private void setCells() {
         int columnCounter = 0;
         int rowCounter = 0;
         int currentX, currentY;
         Item currentItem;
+
         for (int i = 0; i < inventoryInformation.numberOfCells(); i++) {
             if (columnCounter == inventoryInformation.numberOfCellsInRow()) {
                 rowCounter++;
                 columnCounter = 0;
             }
 
+            //X coordinate (in pixels) of the current cell
             currentX = inventoryInformation.firstCellCoordinateX() + columnCounter * (inventoryCellGeneralInformation.cellWidth() + inventoryInformation.gapBetweenCellsX());
+            //Y coordinate (in pixels) of the current cell
             currentY = inventoryInformation.firstCellCoordinateY() + rowCounter * (inventoryCellGeneralInformation.cellHeight() + inventoryInformation.gapBetweenCellsY());
 
-            if (items == null || i >= items.size())
+            //if there is more cells than items, next cell must  contain nothing
+            if (i >= items.size())
                 currentItem = null;
             else {
                 currentItem = items.get(i);
@@ -103,122 +129,12 @@ public class Inventory extends GameSprite {
         }
     }
 
-    public void movePointer(Directions direction) {
-        if (pointer == null)
-            return;
-
-        if (cells.isEmpty())
-            logger.severe("There is no inventory cells");
-
-        switch(direction){
-            case RIGHT:
-                currentCell = ++currentCell % cells.size();
-                break;
-
-            case LEFT:
-                currentCell = --currentCell % cells.size();
-                if (currentCell < 0)
-                    currentCell = cells.size() +currentCell;
-                break;
-
-            case DOWN:
-                currentCell = (currentCell + inventoryInformation.numberOfCellsInRow()) % cells.size();
-                break;
-            case UP:
-                currentCell = (currentCell - inventoryInformation.numberOfCellsInRow()) % cells.size();
-                if (currentCell < 0)
-                    currentCell = cells.size() +currentCell;
-                break;
-
-        }
-        pointer.getGameSpriteRenderInformation().setScreenCoordinateX(cells.get(currentCell).getCoordinateX());
-        pointer.getGameSpriteRenderInformation().setScreenCoordinateY(cells.get(currentCell).getCoordinateY());
-    }
-
-    public void combineCells(InventoryCell firstCell, InventoryCell secondCell){
-        if (possibleItems == null)
-            return;
-
-        if (firstCell == null || secondCell == null)
-            return;
-
-        if (firstCell.getItem() == null || secondCell.getItem() == null)
-            return;
-
-        Map<String, String> canBeCombinedWithInto1 = firstCell.getItem().getItemInformation().canBeCombinedWithInto();
-        Map<String, String> canBeCombinedWithInto2 = secondCell.getItem().getItemInformation().canBeCombinedWithInto();
-
-        if (canBeCombinedWithInto1 == null || canBeCombinedWithInto2 == null)
-            return;
-
-        if (canBeCombinedWithInto1.containsKey(secondCell.getItem().getItemInformation().name())){
-            String resultItemName = canBeCombinedWithInto1.get(secondCell.getItem().getItemInformation().name());
-
-            for (InventoryCell inventoryCell: cells) {
-                if (inventoryCell.getItem() == null)
-                    continue;
-
-                if (inventoryCell.getItem().getItemInformation().name().equals(resultItemName)) {
-                    inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() + 1);
-                    discardCell(firstCell);
-                    discardCell(secondCell);
-                    return;
-                }
-            }
-            firstCell.setItem(adjustItem(possibleItems.get(resultItemName).clone(), firstCell.getCoordinateX(), firstCell.getCoordinateY()));
-            discardCell(secondCell);
-        }
-    }
-
-    public void discardCell(InventoryCell inventoryCell){
-        if (inventoryCell == null)
-            return;
-
-        if (inventoryCell.getItem() == null)
-            return;
-
-        if (!inventoryCell.getItem().getItemInformation().canBeDiscarded())
-            return;
-
-        inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() - 1);
-    }
-
-    public void equipCell(InventoryCell inventoryCell){
-        if (inventoryCell == null)
-            return;
-
-        if (inventoryCell.getItem() == null)
-            return;
-
-        if (!inventoryCell.getItem().getItemInformation().canBeEquipped())
-            return;
-
-        if (equippedCell == inventoryCell) {
-            equippedCell = null;
-            inventoryCell.setIsItemEquipped(false);
-        }else{
-            if (equippedCell != null)
-                equippedCell.setIsItemEquipped(false);
-            inventoryCell.setIsItemEquipped(true);
-            equippedCell = inventoryCell;
-        }
-    }
-
-    public void useCell(InventoryCell inventoryCell) {
-        if (inventoryCell == null)
-            return;
-
-        if (inventoryCell.getItem() == null)
-            return;
-
-        if (!inventoryCell.getItem().getItemInformation().canBeUsed())
-            return;
-
-        character.useItem(inventoryCell.getItem());
-
-        inventoryCell.setItemAmount(inventoryCell.getItem().getAmount() - 1);
-    }
-
+    /**
+     * Finds the inventory cell that contains an item with a specific name.
+     *
+     * @param nameOfItem The name of the item to find.
+     * @return The inventory cell containing the item, or null if the item is not found.
+     */
     public InventoryCell getInventoryCellByName(String nameOfItem){
         for (InventoryCell inventoryCell: cells) {
             if (inventoryCell.getItem() == null)
@@ -230,10 +146,23 @@ public class Inventory extends GameSprite {
         return null;
     }
 
-    private Item adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
+    /**
+     * Prepares an item to be added to an inventory cell.
+     * Adjusts the item's size and coordinates to fit within the cell.
+     *
+     * @param item The item to adjust.
+     * @param inventoryCellX The X coordinate (in pixels) of the target inventory cell.
+     * @param inventoryCellY The Y coordinate (in pixels) of the target inventory cell.
+     */
+    public void adjustItem(Item item, int inventoryCellX, int inventoryCellY) {
+        /*
+        It calculates scale factor, than multiplies inventory's sprite by it to fit the inventory cell
+        Scale factor must be minimum of maximal width scale factor and maximal height scale factor to preserve proportions
+         */
         double widthScaleFactor = (double)inventoryCellGeneralInformation.itemWidthInCell() / item.getGameSpriteSourceInformation().getSourceWidth();
         double heightScaleFactor = (double)inventoryCellGeneralInformation.itemHeightInCell() / item.getGameSpriteSourceInformation().getSourceHeight();
         double scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
+
 
         item.getGameSpriteRenderInformation().setTargetWidth((int) (item.getGameSpriteSourceInformation().getSourceWidth() * scaleFactor));
         item.getGameSpriteRenderInformation().setTargetHeight((int) (item.getGameSpriteSourceInformation().getSourceHeight() * scaleFactor));
@@ -241,37 +170,33 @@ public class Inventory extends GameSprite {
         int cellCenterX =  inventoryCellGeneralInformation.itemCoordinateXRelativeToCell() + inventoryCellGeneralInformation.itemWidthInCell() / 2;
         int cellCenterY = inventoryCellGeneralInformation.itemCoordinateYRelativeToCell() + inventoryCellGeneralInformation.itemHeightInCell() / 2;
 
+        /*
+        Center of the item's sprite must be in the center of the inventory cell.
+        It means that difference between item's X coordinate and cell's X coordinate must equal to a half of item's sprite width.
+        In a similar way difference between item's Y coordinate and cell's Y coordinate must equal to a half of item's sprite height.
+         */
         int itemCoordinateX = cellCenterX - item.getGameSpriteRenderInformation().getTargetWidth() / 2;
         int itemCoordinateY = cellCenterY - item.getGameSpriteRenderInformation().getTargetHeight() / 2;
 
         item.getGameSpriteRenderInformation().setScreenCoordinateX(inventoryCellX + itemCoordinateX);
         item.getGameSpriteRenderInformation().setScreenCoordinateY(inventoryCellY + itemCoordinateY);
-
-        return item;
     }
 
-    public void readAvailableItems() {
-        try (FileReader fileReader = new FileReader(pathToItems)) {
-            Object[] temp = mapper.readValue(fileReader, Item[].class);
-            for (Object object: temp){
-                if (object instanceof Item){
-                    items.add((Item) object);
-                }
-            }
-        } catch (IOException | ClassCastException e) {
-            System.err.println("[ERROR] Problem with reading json file. Problem: " + e.getMessage());
-        }
-
-    }
-
-    public void writeAvailableItems() {
-        try (FileWriter fileWriter = new FileWriter(pathToItems)) {
-            mapper.writeValue(fileWriter, getItems().toArray());
-        } catch (IOException e) {
-            System.err.println("[ERROR] Problem with writing into json file. Problem: " + e.getMessage());
+    /**
+     * Clears all items from the inventory.
+     */
+    public void deleteitems() {
+        for (InventoryCell cell : cells) {
+            if (cell == null || cell.getItem() == null)
+                continue;
+            cell.setItem(null);
         }
     }
-
+    /**
+     * Retrieves the list of items currently in the inventory.
+     *
+     * @return A list of items in the inventory.
+     */
     public List<Item> getItems() {
         items.clear();
         for (InventoryCell cell: cells) {
@@ -279,17 +204,25 @@ public class Inventory extends GameSprite {
                 continue;
             items.add(cell.getItem());
         }
-        return items;
+        return  List.copyOf(items);
     }
 
-    public InventoryCell getSelectedInventoryCell(){ return cells.get(currentCell); }
+    public InventoryCell getSelectedInventoryCell(){ return cells.get(inventoryController.getCurrentCell()); }
     public List<InventoryCell> getCells() { return cells; }
     public InventoryCell getEquippedCell() { return equippedCell; }
     public InventoryCellGeneralInformation getInventoryCellGeneralInformation() { return inventoryCellGeneralInformation; }
+    public InventoryInformation getInventoryInformation() { return inventoryInformation; }
     public Pointer getPointer() { return pointer; }
     public Map<String, Item> getPossibleItems() {return possibleItems;}
+    public InventoryController getInventoryController() { return inventoryController; }
 
+    /**
+     * Attaches a pointer to the inventory.
+     *
+     * @param pointer The pointer to be attached.
+     */
     public void setPointer(Pointer pointer) {
+        //By default pointer's coordinates and size equal to coordinates of the first cell
         pointer.getGameSpriteRenderInformation().setScreenCoordinateX(inventoryInformation.firstCellCoordinateX());
         pointer.getGameSpriteRenderInformation().setScreenCoordinateY(inventoryInformation.firstCellCoordinateY());
         pointer.getGameSpriteRenderInformation().setTargetWidth(inventoryCellGeneralInformation.cellWidth());
@@ -297,6 +230,11 @@ public class Inventory extends GameSprite {
         this.pointer = pointer;
     }
 
+    /**
+     * Sets the list of items in the inventory.
+     *
+     * @param items The list of items to be set.
+     */
     public void setItems(List<Item> items) {
         if (items == null)
             return;
@@ -307,5 +245,5 @@ public class Inventory extends GameSprite {
     }
 
     public void setPossibleItems(Map<String, Item> possibleItems) {this.possibleItems = possibleItems; }
-    public void setCharacter(PlayableCharacter character) { this.character = character; }
+    public void setEquippedCell(InventoryCell equippedCell) { this.equippedCell = equippedCell; }
 }
