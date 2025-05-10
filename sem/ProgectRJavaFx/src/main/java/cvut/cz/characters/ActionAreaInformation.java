@@ -1,12 +1,16 @@
 package cvut.cz.characters;
 
 /**
- * Saves information about action area of character within which he can act
+ * Represents information about the action area of a character within which they can act.
  *
- * @param actionAreaX - X coordinate (in pixels) of action area relative to map
- * @param actionAreaY - Y coordinate (in pixels) of action area relative to map
- * @param actionAreaWidth - width of action area
- * @param actionAreaHeight - height of action area
- * @param spottingRadius - radius within which NPC can detect the main character
+ * @param actionAreaX      The X coordinate (in pixels) of the action area relative to the map.
+ * @param actionAreaY      The Y coordinate (in pixels) of the action area relative to the map.
+ * @param actionAreaWidth  The width of the action area (in pixels).
+ * @param actionAreaHeight The height of the action area (in pixels).
+ * @param spottingRadius   The radius (in pixels) within which an NPC can detect the main character.
  */
-public record ActionAreaInformation(int actionAreaX, int actionAreaY, int actionAreaWidth, int actionAreaHeight, int spottingRadius){}
+public record ActionAreaInformation(int actionAreaX,
+                                    int actionAreaY,
+                                    int actionAreaWidth,
+                                    int actionAreaHeight,
+                                    int spottingRadius){}
