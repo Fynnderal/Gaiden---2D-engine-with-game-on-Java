@@ -17,24 +17,48 @@ import javafx.scene.text.Font;
 import java.net.URL;
 import java.util.logging.Logger;
 
+/**
+ * A class responsible for creating and managing the graphical user interface (GUI) elements of the game.
+ * This includes menus, health panels, loading screens, and other UI components.
+ */
 public class GUICreator {
     private final MainApplication mainApp;
 
     private static final Logger logger = Logger.getLogger(GUICreator.class.getName());
 
-    private ProgressBar healthBar;
+    // Screen that is displayed when the game is paused
     private VBox inGameMenu;
+    // Main menu of the game
     private VBox mainMenu;
-    private VBox gameOverScreen;
-    private HBox healthPanel;
-    private VBox dialoguePanel;
-    private VBox loadScreen;
-    private ProgressBar loadingBar;
 
+    // Screen that is displayed when the player dies
+    private VBox gameOverScreen;
+    // Screen that is displayed when the game is loading
+    private VBox loadScreen;
+
+    // Displays the health of the player
+    private HBox healthPanel;
+    // Displays dialogue while the player is interacting with an NPC
+    private VBox dialoguePanel;
+
+    private ProgressBar loadingBar;
+    private ProgressBar healthBar;
+
+    /**
+     * Constructor for the GUICreator class.
+     *
+     * @param mainApp The main application instance.
+     */
     public GUICreator(MainApplication mainApp) {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Creates a styled menu button with the specified text.
+     *
+     * @param text The text to display on the button.
+     * @return A Button object with the specified text and styling.
+     */
     public Button createMenuButton(String text) {
         Button button = new Button(text);
 
@@ -45,18 +69,23 @@ public class GUICreator {
         button.setTextFill(Color.WHITE);
         button.setFont(mainApp.getFont());
 
+        // if the cursor is over the button, change the color to grey
         button.setOnMouseEntered(_ -> button.setStyle("-fx-background-color: black; -fx-text-fill: grey;"));
+        // if the cursor is not over the button, change the color back to white
         button.setOnMouseExited(_ -> button.setStyle("-fx-background-color: black; -fx-text-fill: white;"));
 
         return button;
     }
 
+    /**
+     * Creates the main menu of the game with options to continue, start a new game, or quit.
+     */
     public void createMainMenu() {
         Button continueGameButton = createMenuButton("Continue");
-        continueGameButton.setOnAction(_ -> mainApp.startGame());
+        continueGameButton.setOnAction(_ -> mainApp.startGame(false));
 
         Button newGameButton = createMenuButton("New Game");
-        newGameButton.setOnAction(_ -> mainApp.startGame());
+        newGameButton.setOnAction(_ -> mainApp.startGame(true));
 
         Button quitGameButton = createMenuButton("Quit");
         quitGameButton.setOnAction(_ -> System.exit(0));
@@ -69,6 +98,9 @@ public class GUICreator {
         mainMenu.setSpacing(100);
     }
 
+    /**
+     * Creates the loading screen with a progress bar and a loading label.
+     */
     public void createLoadScreen() {
         loadScreen = new VBox();
         loadScreen.setAlignment(Pos.CENTER);
@@ -86,6 +118,9 @@ public class GUICreator {
         loadScreen.setVisible(false);
     }
 
+    /**
+     * Creates the health panel displaying the player's health with a progress bar and a heart icon.
+     */
     public void createHealthPanel() {
         healthPanel = new HBox();
         StackPane.setAlignment(healthPanel, Pos.TOP_LEFT);
@@ -96,6 +131,7 @@ public class GUICreator {
         healthBar.setStyle("-fx-accent: red; -fx-control-inner-background: black;");
         StackPane.setMargin(healthBar, new Insets(16, 0, 0, 70));
 
+        // Creates image of a heart for health bar
         ImageView healthBarDecoration = new ImageView();
 
         URL pathToUI = MainApplication.class.getResource("/cvut/cz/UI.png");
@@ -121,10 +157,13 @@ public class GUICreator {
         healthPanel.setVisible(false);
     }
 
+    /**
+     * Creates the game over screen with options to restart or quit.
+     */
     public void createGameOverScreen() {
         Button restartButton = createMenuButton("Restart");
         restartButton.setOnAction(_ -> {
-            mainApp.startGame();
+            mainApp.startGame(false);
             MainPlayerModel.getMainPlayerModel().setIsInMenu(false);
         });
 
@@ -146,6 +185,9 @@ public class GUICreator {
 
     }
 
+    /**
+     * Creates the in-game menu with options to continue or quit.
+     */
     public void  createInGameMenu() {
         Button continueButton = createMenuButton("Continue");
         continueButton.setOnAction(_ -> MainPlayerModel.getMainPlayerModel().setIsInMenu(false));
@@ -161,6 +203,9 @@ public class GUICreator {
         inGameMenu.setSpacing(100);
     }
 
+    /**
+     * Creates the dialogue panel for displaying dialogues.
+     */
     public void createDialoguePanel() {
         dialoguePanel = new VBox();
 
@@ -174,15 +219,60 @@ public class GUICreator {
         dialoguePanel.setVisible(false);
     }
 
+    /**
+     * Gets the loading bar.
+     *
+     * @return The ProgressBar object representing the loading bar.
+     */
     public ProgressBar getLoadingBar() { return loadingBar; }
+
+    /**
+     * Gets the health bar.
+     *
+     * @return The ProgressBar object representing the health bar.
+     */
     public ProgressBar getHealthBar() { return healthBar; }
 
+    /**
+     * Gets the game over screen.
+     *
+     * @return The VBox object representing the game over screen.
+     */
     public VBox getGameOverScreen() { return gameOverScreen; }
+
+    /**
+     * Gets the in-game menu.
+     *
+     * @return The VBox object representing the in-game menu.
+     */
     public VBox getInGameMenu() { return inGameMenu; }
+
+    /**
+     * Gets the dialogue panel.
+     *
+     * @return The VBox object representing the dialogue panel.
+     */
     public VBox getDialoguePanel() { return dialoguePanel; }
+
+    /**
+     * Gets the loading screen.
+     *
+     * @return The VBox object representing the loading screen.
+     */
     public VBox getLoadScreen() { return loadScreen; }
+
+    /**
+     * Gets the main menu.
+     *
+     * @return The VBox object representing the main menu.
+     */
     public VBox getMainMenu() { return mainMenu; }
 
+    /**
+     * Gets the health panel.
+     *
+     * @return The HBox object representing the health panel.
+     */
     public HBox getHealthPanel() { return healthPanel; }
 
 }
