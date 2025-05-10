@@ -1,5 +1,9 @@
 package cvut.cz.Animation;
 
+/**
+ * Enum representing the various animation states for characters in the game.
+ * Each state corresponds to a specific action or posture of the character in different directions.
+ */
 public enum AnimationStates {
     IdleUp,
     IdleDown,
