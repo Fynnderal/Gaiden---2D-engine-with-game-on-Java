@@ -84,7 +84,7 @@ public class OfficeWorker extends PlayableCharacter{
     }
 
     /**
-     * Determines the direction in which the player performs an action.
+     * Determines the direction of the animation of the action.
      * Updates the animation state based on the direction and whether the player is aiming or shooting.
      *
      * @param direction The direction in which the action is performed.

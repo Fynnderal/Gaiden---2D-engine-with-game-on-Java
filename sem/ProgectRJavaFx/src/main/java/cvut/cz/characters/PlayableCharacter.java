@@ -33,8 +33,6 @@ public abstract class PlayableCharacter extends GameCharacter {
     //Contains pairs where key is a name of weapon and value is cross hair that matches that weapon.
     protected Map<String, CrossHair> weaponsAndCrossHairs;
 
-
-
     public boolean isAiming;
 
     /**
