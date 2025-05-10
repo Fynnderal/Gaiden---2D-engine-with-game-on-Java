@@ -16,6 +16,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
+/**
+ * Handles the loading of map sections and their associated resources.
+ * This class implements the Runnable interface to allow asynchronous execution.
+ */
 public class MapLoader implements Runnable{
     private static final Logger logger = Logger.getLogger(MapLoader.class.getName());
 
@@ -24,6 +28,12 @@ public class MapLoader implements Runnable{
 
     private List<MapSection> mapSections;
 
+    /**
+     * Constructs a MapLoader with the specified main application and map URL.
+     *
+     * @param mainApp The main application instance.
+     * @param pathToMap The URL of the map resource.
+     */
     public MapLoader(MainApplication mainApp, URL pathToMap) {
         this.mainApp = mainApp;
         this.pathToMap = pathToMap;
@@ -44,6 +54,9 @@ public class MapLoader implements Runnable{
         }
     }
 
+    /**
+     * Executes the map loading process.
+     */
     @Override
     public void run() {
         mapSections = MapModel.getMapModel().getMap().getMapSections();
@@ -62,11 +75,14 @@ public class MapLoader implements Runnable{
         executorService.shutdown();
 
         String currentPath;
+
+        // Adding images for the sections to collection Map.
         for (GameSprite gameSprite : MapModel.getMapModel().getDrawableObjects()) {
             currentPath = String.valueOf(gameSprite.getGameSpriteSourceInformation().getPathImage());
             mainApp.getRenderManager().getImagesToDraw().put(currentPath, new Image(currentPath));
         }
 
+        // Updating progress for the loading bar
         Platform.runLater(() -> {
             mainApp.getGuiCreator().getLoadingBar().setProgress(1);
             mainApp.getGuiCreator().getLoadScreen().setVisible(false);
@@ -75,12 +91,19 @@ public class MapLoader implements Runnable{
         mainApp.setRunning(true);
     }
 
+    /**
+     * Processes a single map section by copying its pixels and saving the result.
+     *
+     * @param mapSection The map section to process.
+     * @param executorService The executor service for managing threads.
+     * @param counter The counter for tracking progress.
+     */
     private void processSection(MapSection mapSection, ExecutorService executorService, Counter counter) {
         WritableImage writableImage = new WritableImage(mapSection.getGameSpriteRenderInformation().getTargetWidth(), mapSection.getGameSpriteRenderInformation().getTargetHeight());
 
         PixelWriter pixelWriter = writableImage.getPixelWriter();
         if (pixelWriter == null) {
-            logger.severe("PixelWriter is null");
+            logger.severe("Section " + counter.getCounter() + "PixelWriter is null");
             return;
         }
 
@@ -107,6 +130,13 @@ public class MapLoader implements Runnable{
 
     }
 
+    /**
+     * Saves a processed map section to a file and updates its image path.
+     *
+     * @param mapSection The map section to save.
+     * @param counter The counter for generating unique file names.
+     * @param writableImage The image to save.
+     */
     private void saveSection(MapSection mapSection, Counter counter, WritableImage writableImage) {
         try {
             File file = new File("map" + counter.getCounter() + ".png");
