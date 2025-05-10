@@ -1,6 +1,7 @@
 package cvut.cz.characters;
 
 
+import com.sun.security.jgss.GSSUtil;
 import cvut.cz.Animation.AnimationInformation;
 import static cvut.cz.Animation.AnimationStates.*;
 
@@ -33,25 +34,53 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
     // Current time (in milliseconds)
     protected long now;
 
+    //Used to define if the character is ready to perform action or he is blocked by previous action.
     protected boolean isBlocked;
     protected boolean isDead;
 
+    // Size of collision of the player
+    protected int collisionWidth;
+    protected  int collisionHeight;
+
+    /**
+     * Initializes the GameCharacter with the specified parameters.
+     *
+     * @param characterInformation Information about the character.
+     * @param gameSpriteSourceInformation Information about the sprite source.
+     * @param gameSpriteRenderInformation Information about the sprite rendering.
+     * This information is used to set the size of the collision box.
+     */
     public GameCharacter(CharacterInformation characterInformation, GameSpriteSourceInformation gameSpriteSourceInformation, GameSpriteRenderInformation gameSpriteRenderInformation) {
         super(gameSpriteSourceInformation, gameSpriteRenderInformation);
-        this.characterInformation = characterInformation.clone();
+        if (characterInformation !=null)
+            this.characterInformation = characterInformation.clone();
+
+        if (gameSpriteRenderInformation != null) {
+            this.collisionWidth = gameSpriteRenderInformation.getTargetWidth();
+            this.collisionHeight = gameSpriteRenderInformation.getTargetHeight();
+        }
+
         this.isDead = false;
         this.dyingTime = 10000;
         this.gettingDamageTime = 200;
         this.now = System.currentTimeMillis();
     }
 
-
+    /**
+     * Calculates the length of a vector between two points.
+     *
+     * @param x1 X coordinate of the first point.
+     * @param y1 Y coordinate of the first point.
+     * @param x2 X coordinate of the second point.
+     * @param y2 Y coordinate of the second point.
+     * @return The length of the vector.
+     */
     protected int calculateLengthOfVector(int x1, int y1, int x2, int y2) {
         return (int) Math.ceil(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
     }
 
     /**
-     * Selects animation based on the current state of the animation
+     * Selects animation based on the current state of the animations
      */
     protected void animate(){
         if (characterAnimation.previousAnimationState != characterAnimation.currentAnimationState) {
@@ -135,9 +164,9 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
     }
 
     /**
-     * Manages animation and apply it to the character
+     * Applies the specified animation to the character.
      *
-     * @param animation - animation to be applied
+     * @param animation The animation to apply.
      */
     protected void applyAnimation(AnimationInformation[] animation) {
         if (animation == null)
@@ -152,7 +181,7 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         this.gameSpriteRenderInformation.setTargetHeight(animation[characterAnimation.currentAnimation].targetHeight());
         this.gameSpriteRenderInformation.setTargetWidth(animation[characterAnimation.currentAnimation].targetWidth());
 
-        //next frame is ready to be drawn
+        // Moves to the next frame of the animation.
         characterAnimation.currentAnimation++;
         characterAnimation.currentAnimation %= animation.length;
     }
@@ -175,17 +204,21 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
         if (characterAnimation != null) {
             animate();
 
-            if (!isBlocked)
+            if (!isBlocked) {
                 idle();
+            }
         }
     }
 
     /**
-     * Set the animation state based on the direction of the previous animation.
+     * Sets the animation state based on the direction of the previous animation.
      *
-     * @param animationStates - Array of animation states that should be applied. it must consist of 4 elements, one for each direction.
+     * @param animationStates Array of animation states to apply. Must contain four elements, one for each direction.
      */
     protected void setAnimationStateDirection(AnimationStates[] animationStates){
+        if (characterAnimation == null)
+            return;
+
         switch (characterAnimation.currentAnimationState) {
             case IdleUp, WalkingUp, AttackingUp, ShootingPistolUp, ShootingShotGunUp, TakingDamageUp, DyingUp, AimingPistolUp, AimingShotGunUp, ChasingUp:
                 characterAnimation.currentAnimationState = animationStates[0];
@@ -205,9 +238,9 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
 
 
     /**
-     * Manages taking damage by the character
+     * Handles the character taking damage.
      *
-     * @param damage - amount of damage to be taken
+     * @param damage The amount of damage to take.
      */
     public void takeDamage(int damage) {
         characterInformation.setCurrentHealth(characterInformation.getCurrentHealth() - damage);
@@ -222,26 +255,84 @@ public abstract class GameCharacter extends GameSprite implements Updatable {
     }
 
     /**
-     * Manages dying of the character
+     * Handles the character's death.
      */
     public void die(){
         isBlocked = true;
         startedDyingTime = now;
+        if (characterAnimation == null)
+            isDead = true;
+
         setAnimationStateDirection(new AnimationStates[]{DyingUp, DyingDown, DyingLeft, DyingRight});
     }
-
+    /**
+     * Gets the character's information.
+     *
+     * @return The character's information.
+     */
     public CharacterInformation getCharacterInformation() { return characterInformation; }
+
+    /**
+     * Gets the character's animation.
+     *
+     * @return The character's animation.
+     */
     public CharacterAnimation getCharacterAnimation() { return characterAnimation; }
 
+    /**
+     * Gets the width of collision for the playable character.
+     * @return The width of collision.
+     */
+    public int getCollisionWidth() {
+        return collisionWidth;
+    }
+
+    /**
+     * Gets the height of collision for the playable character.
+     * @return The height of collision.
+     */
+    public int getCollisionHeight() {
+        return collisionHeight;
+    }
+
+    /**
+     * Checks if the character is dead.
+     *
+     * @return True if the character is dead, false otherwise.
+     */
     public boolean isDead() {return isDead; }
+
+    /**
+     * Checks if the character is blocked from performing actions.
+     *
+     * @return True if the character is blocked, false otherwise.
+     */
     public boolean isBlocked(){ return isBlocked; }
 
+    /**
+     * Sets the character's animation.
+     *
+     * @param characterAnimation The animation to set.
+     */
     public void setCharacterAnimation(CharacterAnimation characterAnimation) {
         this.characterAnimation = characterAnimation;
+        if (characterAnimation == null)
+            return;
+
         this.characterAnimation.previousAnimationState = null;
         this.characterAnimation.currentAnimationState = IdleDown;
     }
 
+    /**
+     * Moves the character in the specified direction with the given speed.
+     *
+     * @param direction The direction to move.
+     * @param speed The speed of movement.
+     */
     protected abstract void move(Directions direction, int speed);
+
+    /**
+     * Handles the character's attack logic.
+     */
     protected  abstract void attack();
 }
