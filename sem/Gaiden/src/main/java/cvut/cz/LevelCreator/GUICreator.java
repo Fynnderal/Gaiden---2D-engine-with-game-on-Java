@@ -88,7 +88,13 @@ public class GUICreator {
         Button quitGameButton = createMenuButton("Quit");
         quitGameButton.setOnAction(_ -> System.exit(0));
 
+        Label gameLabel = new Label("Gaiden");
+        gameLabel.setFont(Font.loadFont(String.valueOf(mainApp.getPathToFont()), 140));
+        gameLabel.setTextFill(Color.RED);
+
         mainMenu = new VBox();
+
+        mainMenu.getChildren().add(gameLabel);
         mainMenu.getChildren().add(continueGameButton);
         mainMenu.getChildren().add(newGameButton);
         mainMenu.getChildren().add(quitGameButton);
