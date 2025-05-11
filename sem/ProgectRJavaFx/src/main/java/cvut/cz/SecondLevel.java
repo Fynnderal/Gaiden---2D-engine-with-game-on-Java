@@ -116,7 +116,7 @@ public class SecondLevel extends FirstLevel{
         itemsOnMap.add(itemCreator.createShotGunShell(4195, 1056, 0.08, 3));
 
 
-        itemsOnMap.add(itemCreator.creatPistolBullet(4256, 2206, 0.4, 5));
+        itemsOnMap.add(itemCreator.creatPistolBullet(4256, 2206, 0.2, 5));
 
 
         itemsOnMap.add(itemCreator.createMedKit(4900, 3540, 0.2, 2));
@@ -133,7 +133,7 @@ public class SecondLevel extends FirstLevel{
 
         itemsOnMap.add(itemCreator.createMedKit(8814, 5413, 0.9, 2));
 
-        itemsOnMap.add(itemCreator.createPistolBullet(9151, 6740, 0.4, 4));
+        itemsOnMap.add(itemCreator.createPistolBullet(9151, 6740, 0.2, 4));
         itemsOnMap.add(itemCreator.createChocolateBar(9512, 6469, 0.1, 2));
         itemsOnMap.add(itemCreator.createChocolateBar(9626, 5950, 0.1, 1));
 

@@ -1,6 +1,7 @@
 package cvut.cz.Map;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -114,7 +115,7 @@ public class MapConstructor {
         int column = 0, row = 0, idx;
         List <Tile> sectionTiles = new ArrayList<>();
 
-        try (Scanner scanner = new Scanner(new File(pathToSection.getPath()))) {
+        try (Scanner scanner = new Scanner(pathToSection.openStream())) {
             // First two numbers in the file are the world coordinates of the map section
             currentSectionWorldX = scanner.nextInt();
             currentSectionWorldY = scanner.nextInt();
@@ -149,6 +150,9 @@ public class MapConstructor {
         } catch (FileNotFoundException e) {
             logger.severe("Map File was not found");
         }
+        catch (IOException e){
+            logger.severe("Problem reading map file: " + e.getMessage());
+        }
 
         currentSectionHeight = Tile.getSourceTileSize() * row;
 
@@ -174,7 +178,7 @@ public class MapConstructor {
     private void createCollisions() {
         mapCollisions = new ArrayList<>();
         int x, y, w, h;
-        try (Scanner scanner = new Scanner(new File(mapCollisionsPath.getPath()))) {
+        try (Scanner scanner = new Scanner(mapCollisionsPath.openStream())) {
             while (scanner.hasNextInt()) {
                 // Read the coordinates of the collision
                 x = scanner.nextInt();

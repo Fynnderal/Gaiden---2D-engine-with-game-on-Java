@@ -27,7 +27,7 @@ public class MapConstructorTest {
     void setUp() {
         mapSlicer = new MapSlicer(null, 16,0,0,600,2701);
         mapSectionsPaths = new ArrayList<>();
-        mapSectionsPaths.add(MapConstructorTest.class.getClassLoader().getResource("mapSection0.txt"));
+        mapSectionsPaths.add(MapConstructorTest.class.getResource("mapSection0.txt"));
 
         mapCollisionsPath = MapConstructor.class.getClassLoader().getResource("collisions");
         mapInformation = new MapInformation(0, 0, 0, 0);

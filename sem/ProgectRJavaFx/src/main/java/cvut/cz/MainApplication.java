@@ -4,7 +4,6 @@ import cvut.cz.LevelCreator.GUICreator;
 import cvut.cz.LevelCreator.LevelCreator;
 import cvut.cz.Model.MainPlayerModel;
 import cvut.cz.Model.MapModel;
-import cvut.cz.Utils.LoggerController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -98,13 +97,6 @@ public class MainApplication extends Application {
     }
 
 
-    public static void main(String[] args) {
-        if (args.length > 0){
-            if (args[0].equals("loggersOff"))
-                LoggerController.offLoggers();
-        }
-        launch();
-    }
 
     /**
      * Creates the main scene for the application.
@@ -238,18 +230,19 @@ public class MainApplication extends Application {
         String pathToItems = "playerItems.json";
         String pathToLevel = "currentLevel.txt";
 
+        // Create the levelFile if it does not exist
         File levelFile = new File(pathToLevel);
         if (!levelFile.exists()) {
-            try {
-                if (!levelFile.createNewFile())
-                    throw new IOException("Can't create file");
-
+            try (FileWriter fileWriter = new FileWriter(levelFile, false)){
+                fileWriter.write("1");
             } catch (IOException e) {
-                logger.severe("Error while creating file with player items: " + levelFile.getAbsolutePath());
+                logger.severe("Error while writing to file with player items: " + levelFile.getAbsolutePath());
             }
         }
 
         File itemsFile = new File(pathToItems);
+
+        // Reset the files if deleteAllData is true
         if (deleteAllData) {
             if (itemsFile.exists()) {
                 if (!itemsFile.delete())
@@ -262,6 +255,7 @@ public class MainApplication extends Application {
             }
         }
 
+        // Create the items file if it does not exist
         try {
             if (!itemsFile.createNewFile())
                 throw new IOException("Can't create file");
@@ -270,14 +264,15 @@ public class MainApplication extends Application {
             logger.severe("Error while creating file with player items: " + itemsFile.getAbsolutePath());
         }
 
-
+        //Gets information about current level
         try (FileReader fileReader = new FileReader(levelFile)) {
             Scanner scanner = new Scanner(fileReader);
             MapModel.getMapModel().setCurrentLevel(scanner.nextInt());
         } catch (IOException e) {
             logger.severe("Error while reading file with player items: " + levelFile.getAbsolutePath());
         }
-        System.out.println(MapModel.getMapModel().getCurrentLevel());
+
+
         MainPlayerModel.getMainPlayerModel().setPathToItems(pathToItems);
         MapModel.getMapModel().setPathToFileWithLevel(pathToLevel);
 

@@ -74,12 +74,12 @@ public class MapLoader implements Runnable{
         }
         executorService.shutdown();
 
-        String currentPath;
+        URL currentPath;
 
         // Adding images for the sections to collection Map.
         for (GameSprite gameSprite : MapModel.getMapModel().getDrawableObjects()) {
-            currentPath = String.valueOf(gameSprite.getGameSpriteSourceInformation().getPathImage());
-            mainApp.getRenderManager().getImagesToDraw().put(currentPath, new Image(currentPath));
+            currentPath = gameSprite.getGameSpriteSourceInformation().getPathImage();
+            mainApp.getRenderManager().getImagesToDraw().put(String.valueOf(currentPath), new Image(String.valueOf(currentPath)));
         }
 
         // Updating progress for the loading bar

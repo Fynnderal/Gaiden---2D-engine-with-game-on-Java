@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.net.URL;
-import java.util.logging.Logger;
 
 /**
  * A class responsible for creating and managing the graphical user interface (GUI) elements of the game.
@@ -24,7 +23,6 @@ import java.util.logging.Logger;
 public class GUICreator {
     private final MainApplication mainApp;
 
-    private static final Logger logger = Logger.getLogger(GUICreator.class.getName());
 
     // Screen that is displayed when the game is paused
     private VBox inGameMenu;
@@ -135,10 +133,6 @@ public class GUICreator {
         ImageView healthBarDecoration = new ImageView();
 
         URL pathToUI = MainApplication.class.getResource("/cvut/cz/UI.png");
-        if (pathToUI == null) {
-            logger.severe("Could not find UI.png");
-            return;
-        }
 
 
         healthBarDecoration.setImage(new Image(String.valueOf(pathToUI)));

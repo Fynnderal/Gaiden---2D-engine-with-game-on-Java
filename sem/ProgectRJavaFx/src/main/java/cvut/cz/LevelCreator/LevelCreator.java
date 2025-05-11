@@ -187,7 +187,9 @@ public class LevelCreator {
         MapInformation mapInformation = new MapInformation(0, 0, 7, 7);
         MapModel.getMapModel().createMap(mapSlicer, pathToCollisions , pathToSections, mapInformation);
 
-        new Thread(new MapLoader(mainApplication, pathToMap)).start();
+        Thread th = new Thread(new MapLoader(mainApplication, pathToMap));
+        th.setDaemon(true);
+        th.start();
     }
 
     /**

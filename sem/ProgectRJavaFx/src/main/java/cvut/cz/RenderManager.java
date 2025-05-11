@@ -77,7 +77,6 @@ public class RenderManager{
             sprite.getGameSpriteRenderInformation().getScreenCoordinateY() + sprite.getGameSpriteRenderInformation().getTargetHeight() >= 0
         ) {
             gc.drawImage(image, sprite.getGameSpriteSourceInformation().getSourceCoordinateX(), sprite.getGameSpriteSourceInformation().getSourceCoordinateY(), sprite.getGameSpriteSourceInformation().getSourceWidth(), sprite.getGameSpriteSourceInformation().getSourceHeight(), sprite.getGameSpriteRenderInformation().getScreenCoordinateX() * mainApp.getRENDER_SCALE_FACTOR(), sprite.getGameSpriteRenderInformation().getScreenCoordinateY() * mainApp.getRENDER_SCALE_FACTOR(), sprite.getGameSpriteRenderInformation().getTargetWidth() * mainApp.getRENDER_SCALE_FACTOR(), sprite.getGameSpriteRenderInformation().getTargetHeight() * mainApp.getRENDER_SCALE_FACTOR());
-
         }
     }
 
