@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="ProgectRJavaFx:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b409ceb8-40df-4205-a26a-29269766298c" name="Changes" comment="Jar file was fixed">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/ProgectRJavaFx_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/ProgectRJavaFx_jar/ProgectRJavaFx.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Animation/AnimationInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Animation/AnimationStates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Animation/CharacterAnimation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Animation/EnemyAnimation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Animation/PlayerAnimation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/FirstLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/GameSprite/GameSprite.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/GameSprite/GameSpriteRenderInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/GameSprite/GameSpriteSourceInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Launcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/CharacterCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/GUICreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/ItemCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/LevelCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/LogicManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/MainApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/Collision.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/Door.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/GameMap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/MapConstructor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/MapInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/MapSection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/MapSlicer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/MapSpot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/PassageBetweenLevels.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/Tile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/VendingMachine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Map/Ventilation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Model/MapModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Model/Updatable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/RenderManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/SecondLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Utils/ImageCopy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Utils/LoggerController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/Utils/MapLoader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/ActionAreaInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/CharacterInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/CrossHair.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/Directions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/Enemy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/GameCharacter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/Merchant.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/NPC.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/PlayableCharacter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/States.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/WatchMan.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/characters/Zombie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/Inventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryCell.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryCellGeneralInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/Item.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/ItemInformation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/cvut/cz/items/Pointer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/Level1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection0.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection10.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection11.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection17.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection18.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection19.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection20.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection21.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection22.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection23.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection24.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection25.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection26.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection27.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection28.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection29.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection6.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection7.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/MapSections/mapSection9.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level1/collisions.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection0.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection10.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection11.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection13.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection14.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection15.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection17.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection18.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection19.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection20.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection21.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection22.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection23.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection24.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection25.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection26.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection27.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection28.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection29.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection5.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection6.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection7.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection8.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/MapSections/mapSection9.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/collisions.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Level2/level2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/MainCharacter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Merchant.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/PistolBullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/ShotGunShell.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Shotgun.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Shotgungunsight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Teabag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/UI.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/Zombie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/brokenscrewdriver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/chocolateBar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/collision.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/crowbar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/cupoftea.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/currentLevel.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/ducttape.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/key.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/keyDoor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/mago3.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/medkit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/pistol.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/pistolgunsight.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/rustDoor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/screwdriver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/vendingmachine.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/ventilation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/watchman.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/cvut/cz/water.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Map/GameMapTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Map/MapConstructorTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/characters/GameCharacterTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/characters/OfficeWorkerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/characters/WatchManTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/items/InventoryControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/items/InventoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/collisions" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/mapSection0.txt" beforeDir="false" />
+    </list>
+    <list id="acf4a34c-2236-4825-b9cd-4d01add29244" name="Unversioned Files" comment="Resources are added" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;abdzhaid&quot;,
+      &quot;fullname&quot;: &quot;Aidar Abdzhanov&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;git@gitlab.fel.cvut.cz:B242_B0B36PJV/abdzhaid.git&quot;,
+    &quot;second&quot;: &quot;05005a7c-1eda-4c72-973e-069fa9f89c54&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="autoscrollToSource" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2urYkG7A55CZlVmachxWgZNr2zc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GameManager.executor": "Run",
+    "Application.Test.executor": "Run",
+    "Application.ViewManager.executor": "Run",
+    "Application.ViewManagerOffLoggers.executor": "Run",
+    "JAR Application.ProgectRJavaFx.jar.executor": "Run",
+    "JUnit.GameCharacterTest.executor": "Run",
+    "JUnit.GameMapTest.executor": "Run",
+    "JUnit.InventoryControllerTest.executor": "Run",
+    "JUnit.InventoryTest.executor": "Run",
+    "JUnit.MapConstructorTest.executor": "Run",
+    "JUnit.OfficeWorkerTest.executor": "Run",
+    "JUnit.WatchManTest.executor": "Run",
+    "JUnit.WatchManTest.update_setsSpeedToHalfWhenAlarmed.executor": "Run",
+    "JUnit.WatchManTest.update_setsStateToAlarmedWhenPlayerInActionArea.executor": "Run",
+    "JUnit.WatchManTest.update_setsStateToIdleWhenPlayerNotInActionArea.executor": "Run",
+    "JUnit.java in ProgectRJavaFx.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/semestralka/abdzhaid/sem/ProgectRJavaFx/src/main/resources/cvut/cz/Level2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15234375",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz\Level2" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\test\resources" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\java" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz\Level2" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz\Level1" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz\Level1\MapSections" />
+      <recent name="D:\semestralka\abdzhaid\sem\ProgectRJavaFx\src\main\resources\cvut\cz\MapSections\Level1" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="cvut.cz" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cvut.cz.characters" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JAR Application.ProgectRJavaFx.jar">
+    <configuration name="ViewManager" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cvut.cz.MainApplication" />
+      <module name="ProgectRJavaFx" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewManagerOffLoggers" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cvut.cz.MainApplication" />
+      <module name="ProgectRJavaFx" />
+      <option name="PROGRAM_PARAMETERS" value="loggersOff" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewManagerOffLoggers" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cvut.cz.MainApplication" />
+      <module name="ProgectRJavaFx" />
+      <option name="PROGRAM_PARAMETERS" value="loggersOff" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewManagerOffLoggers" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cvut.cz.MainApplication" />
+      <module name="ProgectRJavaFx" />
+      <option name="PROGRAM_PARAMETERS" value="loggersOff" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewManager" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cvut.cz.MainApplication" />
+      <module name="ProgectRJavaFx" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewManager" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="cvut.cz.MainApplication" />
+      <module name="ProgectRJavaFx" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InventoryControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProgectRJavaFx" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="items.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="items" />
+      <option name="MAIN_CLASS_NAME" value="items.InventoryControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InventoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProgectRJavaFx" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="items.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="items" />
+      <option name="MAIN_CLASS_NAME" value="items.InventoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OfficeWorkerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProgectRJavaFx" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="characters.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="characters" />
+      <option name="MAIN_CLASS_NAME" value="characters.OfficeWorkerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in ProgectRJavaFx" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ProgectRJavaFx" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProgectRJavaFx.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/ProgectRJavaFx_jar/ProgectRJavaFx.jar" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.ViewManager" />
+      <item itemvalue="Application.ViewManagerOffLoggers" />
+      <item itemvalue="JAR Application.ProgectRJavaFx.jar" />
+      <item itemvalue="JUnit.java in ProgectRJavaFx" />
+      <item itemvalue="JUnit.InventoryControllerTest" />
+      <item itemvalue="JUnit.InventoryTest" />
+      <item itemvalue="JUnit.OfficeWorkerTest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JAR Application.ProgectRJavaFx.jar" />
+        <item itemvalue="JUnit.java in ProgectRJavaFx" />
+        <item itemvalue="JUnit.InventoryControllerTest" />
+        <item itemvalue="JUnit.InventoryTest" />
+        <item itemvalue="JUnit.OfficeWorkerTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.109" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.109" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b409ceb8-40df-4205-a26a-29269766298c" name="Changes" comment="" />
+      <changelist id="acf4a34c-2236-4825-b9cd-4d01add29244" name="Unversioned Files" comment="" />
+      <created>1743008303438</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743008303438</updated>
+      <workItem from="1743008304538" duration="1511000" />
+      <workItem from="1743009850810" duration="792000" />
+      <workItem from="1743010675077" duration="11433000" />
+      <workItem from="1743518439129" duration="21000" />
+      <workItem from="1743531340180" duration="5827000" />
+      <workItem from="1743600765418" duration="18178000" />
+      <workItem from="1743619715773" duration="4034000" />
+      <workItem from="1743624190610" duration="1279000" />
+      <workItem from="1743629082876" duration="2683000" />
+      <workItem from="1743698919288" duration="9878000" />
+      <workItem from="1743709921170" duration="113000" />
+      <workItem from="1743710042704" duration="93000" />
+      <workItem from="1743713848145" duration="2609000" />
+      <workItem from="1743781256036" duration="14531000" />
+      <workItem from="1744123566587" duration="18417000" />
+      <workItem from="1744142557046" duration="720000" />
+      <workItem from="1744195089987" duration="2398000" />
+      <workItem from="1744212666216" duration="13892000" />
+      <workItem from="1744313446807" duration="1582000" />
+      <workItem from="1744380880239" duration="20090000" />
+      <workItem from="1744449300393" duration="9341000" />
+      <workItem from="1744459175483" duration="3555000" />
+      <workItem from="1744560606735" duration="2905000" />
+      <workItem from="1744563737356" duration="12010000" />
+      <workItem from="1744578971720" duration="62000" />
+      <workItem from="1744579195350" duration="19000" />
+      <workItem from="1744723081260" duration="23638000" />
+      <workItem from="1744751469174" duration="3401000" />
+      <workItem from="1744901718943" duration="14740000" />
+      <workItem from="1744918092277" duration="1253000" />
+      <workItem from="1744971655315" duration="35798000" />
+      <workItem from="1745053239973" duration="39952000" />
+      <workItem from="1745141951093" duration="27135000" />
+      <workItem from="1745263256980" duration="5005000" />
+      <workItem from="1745310525834" duration="928000" />
+      <workItem from="1745314432741" duration="1443000" />
+      <workItem from="1745321190050" duration="18195000" />
+      <workItem from="1745354619692" duration="6651000" />
+      <workItem from="1745405126234" duration="289000" />
+      <workItem from="1745425479946" duration="6103000" />
+      <workItem from="1745431630934" duration="6025000" />
+      <workItem from="1745503554218" duration="1392000" />
+      <workItem from="1745511662464" duration="12979000" />
+      <workItem from="1745595074590" duration="15160000" />
+      <workItem from="1745658481147" duration="35171000" />
+      <workItem from="1745914628729" duration="5045000" />
+      <workItem from="1745935310442" duration="4141000" />
+      <workItem from="1745939493791" duration="241000" />
+      <workItem from="1745941435996" duration="14839000" />
+      <workItem from="1745960781262" duration="1598000" />
+      <workItem from="1746000863480" duration="6067000" />
+      <workItem from="1746013821345" duration="106000" />
+      <workItem from="1746013934562" duration="54058000" />
+      <workItem from="1746189128008" duration="23646000" />
+      <workItem from="1746264730955" duration="12496000" />
+      <workItem from="1746303568745" duration="7371000" />
+      <workItem from="1746350515180" duration="20987000" />
+      <workItem from="1746434116381" duration="200000" />
+      <workItem from="1746461562990" duration="290000" />
+      <workItem from="1746461864766" duration="3159000" />
+      <workItem from="1746469599423" duration="704000" />
+      <workItem from="1746628631609" duration="4146000" />
+      <workItem from="1746634636059" duration="234000" />
+      <workItem from="1746634940545" duration="527000" />
+      <workItem from="1746635484315" duration="67000" />
+      <workItem from="1746635624242" duration="67000" />
+      <workItem from="1746635860612" duration="51000" />
+      <workItem from="1746635920362" duration="760000" />
+      <workItem from="1746636697401" duration="48000" />
+      <workItem from="1746636869494" duration="311000" />
+      <workItem from="1746637241057" duration="121000" />
+      <workItem from="1746637579959" duration="2468000" />
+      <workItem from="1746695869814" duration="250000" />
+      <workItem from="1746696154963" duration="3469000" />
+      <workItem from="1746700593990" duration="242000" />
+      <workItem from="1746700872538" duration="29484000" />
+      <workItem from="1746741037861" duration="5658000" />
+      <workItem from="1746779075663" duration="35326000" />
+      <workItem from="1746820419423" duration="31000" />
+      <workItem from="1746821078020" duration="3980000" />
+      <workItem from="1746868883792" duration="31681000" />
+      <workItem from="1746907538830" duration="10451000" />
+      <workItem from="1746953022461" duration="2315000" />
+      <workItem from="1746956057660" duration="7248000" />
+      <workItem from="1746964752803" duration="61000" />
+      <workItem from="1746965541292" duration="89000" />
+    </task>
+    <task id="LOCAL-00114" summary="Javadoc to Door was added">
+      <option name="closed" value="true" />
+      <created>1746913752258</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913752258</updated>
+    </task>
+    <task id="LOCAL-00115" summary="Javadoc to Enemy was added">
+      <option name="closed" value="true" />
+      <created>1746913797519</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913797519</updated>
+    </task>
+    <task id="LOCAL-00116" summary="Javadoc to EnemyAnimation was added">
+      <option name="closed" value="true" />
+      <created>1746913807823</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913807823</updated>
+    </task>
+    <task id="LOCAL-00117" summary="Javadoc to FirstLevel was added">
+      <option name="closed" value="true" />
+      <created>1746913818266</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913818266</updated>
+    </task>
+    <task id="LOCAL-00118" summary="Javadoc to GameCharacter was added">
+      <option name="closed" value="true" />
+      <created>1746913847109</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913847109</updated>
+    </task>
+    <task id="LOCAL-00119" summary="Javadoc to GameMap was added">
+      <option name="closed" value="true" />
+      <created>1746913911486</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913911486</updated>
+    </task>
+    <task id="LOCAL-00120" summary="Javadoc to GameSprite was added">
+      <option name="closed" value="true" />
+      <created>1746913950174</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913950174</updated>
+    </task>
+    <task id="LOCAL-00121" summary="Javadoc to GameSpriteRenderInformation was added">
+      <option name="closed" value="true" />
+      <created>1746913959943</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913959943</updated>
+    </task>
+    <task id="LOCAL-00122" summary="Javadoc to GameSpriteSourceInformation was added">
+      <option name="closed" value="true" />
+      <created>1746913976143</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1746913976143</updated>
+    </task>
+    <task id="LOCAL-00123" summary="Javadoc to GUICreator was added">
+      <option name="closed" value="true" />
+      <created>1746914021710</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914021710</updated>
+    </task>
+    <task id="LOCAL-00124" summary="Javadoc to ImageCopy was added">
+      <option name="closed" value="true" />
+      <created>1746914034348</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914034348</updated>
+    </task>
+    <task id="LOCAL-00125" summary="Javadoc to Inventory was added">
+      <option name="closed" value="true" />
+      <created>1746914198815</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914198815</updated>
+    </task>
+    <task id="LOCAL-00126" summary="Javadoc to InventoryCell was added">
+      <option name="closed" value="true" />
+      <created>1746914208558</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914208558</updated>
+    </task>
+    <task id="LOCAL-00127" summary="Javadoc to InventoryCellGeneralInformation was added">
+      <option name="closed" value="true" />
+      <created>1746914221746</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914221746</updated>
+    </task>
+    <task id="LOCAL-00128" summary="Javadoc to InventoryController was added">
+      <option name="closed" value="true" />
+      <created>1746914242552</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914242552</updated>
+    </task>
+    <task id="LOCAL-00129" summary="Javadoc to InventoryInformation was added">
+      <option name="closed" value="true" />
+      <created>1746914258913</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914258913</updated>
+    </task>
+    <task id="LOCAL-00130" summary="Javadoc to Item was added">
+      <option name="closed" value="true" />
+      <created>1746914269035</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914269035</updated>
+    </task>
+    <task id="LOCAL-00131" summary="Javadoc to ItemCreator was added">
+      <option name="closed" value="true" />
+      <created>1746914282245</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914282245</updated>
+    </task>
+    <task id="LOCAL-00132" summary="Javadoc to ItemInformation was added">
+      <option name="closed" value="true" />
+      <created>1746914292410</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914292410</updated>
+    </task>
+    <task id="LOCAL-00133" summary="Javadoc to LevelCreator was added">
+      <option name="closed" value="true" />
+      <created>1746914333850</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914333850</updated>
+    </task>
+    <task id="LOCAL-00134" summary="Javadoc to LoggerController was added">
+      <option name="closed" value="true" />
+      <created>1746914354089</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914354089</updated>
+    </task>
+    <task id="LOCAL-00135" summary="Javadoc to LogicManager was added">
+      <option name="closed" value="true" />
+      <created>1746914365745</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914365745</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Javadoc to MainApplication was added">
+      <option name="closed" value="true" />
+      <created>1746914386161</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914386161</updated>
+    </task>
+    <task id="LOCAL-00137" summary="Javadoc to MainPlayerModel was added">
+      <option name="closed" value="true" />
+      <created>1746914443912</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914443912</updated>
+    </task>
+    <task id="LOCAL-00138" summary="Javadoc to MapConstructor was added">
+      <option name="closed" value="true" />
+      <created>1746914455292</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914455292</updated>
+    </task>
+    <task id="LOCAL-00139" summary="Javadoc to MapInformation was added">
+      <option name="closed" value="true" />
+      <created>1746914466285</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914466285</updated>
+    </task>
+    <task id="LOCAL-00140" summary="Javadoc to MapLoader was added">
+      <option name="closed" value="true" />
+      <created>1746914501894</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914501894</updated>
+    </task>
+    <task id="LOCAL-00141" summary="Javadoc to MapModel was added">
+      <option name="closed" value="true" />
+      <created>1746914513467</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914513467</updated>
+    </task>
+    <task id="LOCAL-00142" summary="Javadoc to MapSection was added">
+      <option name="closed" value="true" />
+      <created>1746914521648</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914521648</updated>
+    </task>
+    <task id="LOCAL-00143" summary="Javadoc to MapSlicer was added">
+      <option name="closed" value="true" />
+      <created>1746914565646</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914565646</updated>
+    </task>
+    <task id="LOCAL-00144" summary="Javadoc to MapSpot was added">
+      <option name="closed" value="true" />
+      <created>1746914575971</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914575971</updated>
+    </task>
+    <task id="LOCAL-00145" summary="Javadoc to Merchant was added">
+      <option name="closed" value="true" />
+      <created>1746914585531</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914585531</updated>
+    </task>
+    <task id="LOCAL-00146" summary="Javadoc to NPC was added">
+      <option name="closed" value="true" />
+      <created>1746914627243</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914627243</updated>
+    </task>
+    <task id="LOCAL-00147" summary="Javadoc to OfficeWorker was added">
+      <option name="closed" value="true" />
+      <created>1746914638150</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914638150</updated>
+    </task>
+    <task id="LOCAL-00148" summary="Javadoc to PassageBetweenLevels was added">
+      <option name="closed" value="true" />
+      <created>1746914651298</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914651298</updated>
+    </task>
+    <task id="LOCAL-00149" summary="Javadoc to PlayableCharacter was added">
+      <option name="closed" value="true" />
+      <created>1746914678426</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914678426</updated>
+    </task>
+    <task id="LOCAL-00150" summary="Javadoc to PlayerAnimation was added">
+      <option name="closed" value="true" />
+      <created>1746914689316</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914689316</updated>
+    </task>
+    <task id="LOCAL-00151" summary="Javadoc to Pointer was added">
+      <option name="closed" value="true" />
+      <created>1746914698675</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914698675</updated>
+    </task>
+    <task id="LOCAL-00152" summary="Javadoc to RenderManager was added">
+      <option name="closed" value="true" />
+      <created>1746914710187</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914710187</updated>
+    </task>
+    <task id="LOCAL-00153" summary="Javadoc to States was added">
+      <option name="closed" value="true" />
+      <created>1746914719091</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914719091</updated>
+    </task>
+    <task id="LOCAL-00154" summary="Javadoc to Tile was added">
+      <option name="closed" value="true" />
+      <created>1746914769762</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914769762</updated>
+    </task>
+    <task id="LOCAL-00155" summary="Javadoc to Updatable was added">
+      <option name="closed" value="true" />
+      <created>1746914783790</created>
+      <option name="number" value="00155" />
+      <option name="presentableId" value="LOCAL-00155" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914783790</updated>
+    </task>
+    <task id="LOCAL-00156" summary="Javadoc to VendingMachine was added">
+      <option name="closed" value="true" />
+      <created>1746914844059</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914844059</updated>
+    </task>
+    <task id="LOCAL-00157" summary="Javadoc to Ventilation was added">
+      <option name="closed" value="true" />
+      <created>1746914868490</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914868490</updated>
+    </task>
+    <task id="LOCAL-00158" summary="Javadoc to WatchMan was added">
+      <option name="closed" value="true" />
+      <created>1746914921586</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914921586</updated>
+    </task>
+    <task id="LOCAL-00159" summary="Javadoc to Zombie was added">
+      <option name="closed" value="true" />
+      <created>1746914960553</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1746914960553</updated>
+    </task>
+    <task id="LOCAL-00160" summary="Javadoc to Zombie was added">
+      <option name="closed" value="true" />
+      <created>1746915058291</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1746915058291</updated>
+    </task>
+    <task id="LOCAL-00161" summary="Javadoc to Zombie was added">
+      <option name="closed" value="true" />
+      <created>1746918403891</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1746918403891</updated>
+    </task>
+    <task id="LOCAL-00162" summary="Jar file was fixed">
+      <option name="closed" value="true" />
+      <created>1746963956284</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1746963956284</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Javadoc to MainPlayerModel was added" />
+    <MESSAGE value="Javadoc to MapConstructor was added" />
+    <MESSAGE value="Javadoc to MapInformation was added" />
+    <MESSAGE value="Javadoc to MapLoader was added" />
+    <MESSAGE value="Javadoc to MapModel was added" />
+    <MESSAGE value="Javadoc to MapSection was added" />
+    <MESSAGE value="Javadoc to MapSlicer was added" />
+    <MESSAGE value="Javadoc to MapSpot was added" />
+    <MESSAGE value="Javadoc to Merchant was added" />
+    <MESSAGE value="Javadoc to NPC was added" />
+    <MESSAGE value="Javadoc to OfficeWorker was added" />
+    <MESSAGE value="Javadoc to PassageBetweenLevels was added" />
+    <MESSAGE value="Javadoc to PlayableCharacter was added" />
+    <MESSAGE value="Javadoc to PlayerAnimation was added" />
+    <MESSAGE value="Javadoc to Pointer was added" />
+    <MESSAGE value="Javadoc to RenderManager was added" />
+    <MESSAGE value="Javadoc to States was added" />
+    <MESSAGE value="Javadoc to Tile was added" />
+    <MESSAGE value="Javadoc to Updatable was added" />
+    <MESSAGE value="Javadoc to VendingMachine was added" />
+    <MESSAGE value="Javadoc to Ventilation was added" />
+    <MESSAGE value="Javadoc to WatchMan was added" />
+    <MESSAGE value="Resources are added" />
+    <MESSAGE value="Javadoc to Zombie was added" />
+    <MESSAGE value="Jar file was fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jar file was fixed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/Enemy.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>259</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>225</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/Enemy.java</url>
+          <line>243</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>154</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/PlayableCharacter.java</url>
+          <line>150</line>
+          <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/GameCharacter.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/LevelCreator.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/LevelCreator.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/CharacterCreator.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/GUICreator.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/GUICreator.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MapModel.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="135" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/FirstLevel.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/ItemCreator.java</url>
+          <line>257</line>
+          <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/Enemy.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/Enemy.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/NPC.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="155" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="157" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/PlayableCharacter.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryController.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryCell.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="162" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryController.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryController.java</url>
+          <line>162</line>
+          <option name="timeStamp" value="164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/LevelCreator.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/LevelCreator.java</url>
+          <line>159</line>
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>97</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>194</line>
+          <option name="timeStamp" value="170" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LogicManager.java</url>
+          <line>117</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LogicManager.java</url>
+          <line>278</line>
+          <option name="timeStamp" value="173" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/characters/WatchManTest.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="176" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/FirstLevel.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/FirstLevel.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="180" />
+        </line-breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.reflect.InvocationTargetException" package="java.lang.reflect" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/items/InventoryCell.java</url>
+          <line>73</line>
+          <properties class="cvut.cz.items.InventoryCell" method="setItemAmount">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Map/GameMap.java</url>
+          <line>190</line>
+          <properties class="cvut.cz.Map.GameMap">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>258</line>
+          <properties class="cvut.cz.characters.OfficeWorker" method="useItem">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/GUICreator.java</url>
+          <line>121</line>
+          <properties class="cvut.cz.LevelCreator.GUICreator" method="createHealthPanel">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/GUICreator.java</url>
+          <line>101</line>
+          <properties class="cvut.cz.LevelCreator.GUICreator" method="createLoadScreen">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>161</line>
+          <properties class="cvut.cz.Model.MainPlayerModel" method="translatePlayerRight">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>193</line>
+          <properties class="cvut.cz.Model.MainPlayerModel" method="movePlayer">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/FirstLevel.java</url>
+          <line>47</line>
+          <properties class="cvut.cz.FirstLevel" method="createGUI">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LogicManager.java</url>
+          <line>270</line>
+          <properties class="cvut.cz.LogicManager" method="movePlayer">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LogicManager.java</url>
+          <line>60</line>
+          <properties class="cvut.cz.LogicManager" method="aim">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LogicManager.java</url>
+          <line>250</line>
+          <properties class="cvut.cz.LogicManager" method="setControls">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="142" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/RenderManager.java</url>
+          <line>114</line>
+          <properties class="cvut.cz.RenderManager" method="drawInventory">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="143" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/Enemy.java</url>
+          <line>217</line>
+          <properties class="cvut.cz.characters.Enemy" method="isPlayerWithinAttackZone">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/LevelCreator/ItemCreator.java</url>
+          <line>177</line>
+          <properties class="cvut.cz.LevelCreator.ItemCreator" method="creatPistolBullet">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Map/GameMap.java</url>
+          <line>187</line>
+          <properties class="cvut.cz.Map.GameMap" method="moveObjectsOnMap">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="151" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/Merchant.java</url>
+          <line>136</line>
+          <properties class="cvut.cz.characters.Merchant" method="sellItem">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/characters/OfficeWorker.java</url>
+          <line>92</line>
+          <properties class="cvut.cz.characters.OfficeWorker" method="chooseActionDirection">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/items/Inventory.java</url>
+          <line>100</line>
+          <properties class="cvut.cz.items.Inventory" method="setCells">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/cvut/cz/Model/MainPlayerModel.java</url>
+          <line>96</line>
+          <properties class="cvut.cz.Model.MainPlayerModel" method="translatePlayerDown">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/test/java/characters/WatchManTest.java</url>
+          <line>76</line>
+          <properties class="characters.WatchManTest">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="177" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
