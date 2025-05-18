@@ -1,7 +1,0 @@
-мая 11, 2025 3:50:21 PM com.sun.javafx.application.PlatformImpl startup
-WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @3b1de8e8'
-мая 11, 2025 3:50:22 PM cvut.cz.MainApplication configureManager
-INFO: Finished setting stage
-Screen Width: 1536,000000
-Screen Height: 864,000000
-Scaling factor: 1,000000
