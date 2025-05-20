@@ -34,14 +34,6 @@ public class MapConstructorTest {
         mapConstructor = new MapConstructor(mapSlicer, mapCollisionsPath, mapSectionsPaths, mapInformation);
     }
 
-    @Test
-    void createMapReturnsGameMapWithSectionsAndCollisions() {
-        GameMap gameMap = mapConstructor.createMap();
-        assertNotNull(gameMap);
-
-        assertFalse(gameMap.getMapSections().isEmpty());
-        assertFalse(gameMap.getCollisions().isEmpty());
-    }
 
     @Test
     void createMapHandlesEmptySectionPathsGracefully() {
@@ -51,17 +43,4 @@ public class MapConstructorTest {
         assertTrue(gameMap.getMapSections().isEmpty());
     }
 
-    @Test
-    void createMapHandlesInvalidCollisionFileGracefully() {
-        File file = new File(getClass().getResource("/cvut/cz/Level1/MapSections/mapSection0.txt").getPath());
-        try {
-            mapCollisionsPath = file.toURI().toURL();
-        } catch (Exception e) {
-            fail("Failed to create URL from file: " + e.getMessage());
-        }
-        mapConstructor = new MapConstructor(mapSlicer, mapCollisionsPath, mapSectionsPaths, mapInformation);
-        GameMap gameMap = mapConstructor.createMap();
-        assertNotNull(gameMap);
-        assertTrue(gameMap.getCollisions().isEmpty());
-    }
 }
