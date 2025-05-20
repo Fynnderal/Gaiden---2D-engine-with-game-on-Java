@@ -36,7 +36,7 @@ public class LoggerController {
 
 
             FileHandler fileHandler = new FileHandler(pathToLogs, true);
-            fileHandler.setFormatter(new SimpleFormatter()); // простой формат (как в консоли)
+            fileHandler.setFormatter(new SimpleFormatter());
 
             rootLogger.addHandler(fileHandler);
         } catch (Exception e) {

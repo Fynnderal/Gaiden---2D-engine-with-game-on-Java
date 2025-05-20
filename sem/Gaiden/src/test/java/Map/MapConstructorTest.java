@@ -53,7 +53,7 @@ public class MapConstructorTest {
 
     @Test
     void createMapHandlesInvalidCollisionFileGracefully() {
-        File file = new File("kasnfjasnf");
+        File file = new File(getClass().getResource("/cvut/cz/Level1/MapSections/mapSection0.txt").getPath());
         try {
             mapCollisionsPath = file.toURI().toURL();
         } catch (Exception e) {
